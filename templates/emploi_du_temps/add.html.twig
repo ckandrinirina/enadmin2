@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emploi du temps par niveaux{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Emploi du temps par niveaux
+            <small>{{ parcour.type }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Emploi du temps par niveaux</a></li>
+            <li class="active">{{ parcour.type }}</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}"><a href="{{ path('etemps',{'type':parcour.id,'niveaux':niveau.id}) }}">{{ niveau.niveau }}</a></li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Emploi du temps par niveaux</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>JOURS/HEURES</th>
+                                                {% for jour in jours %}
+                                                    <th>{{ jour.jours }}
+                                                {% endfor %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% set i = 0 %}
+                                                {% if i == 2 %}
+                                                    <td>PAUSE PAUSE PAUSE PAUSE PAUSE</td>
+                                                {% endif %}
+                                                {% set countadd = 0 %}
+                                                {% for heure in heures %}
+                                                
+                                                {% if i == 2 %}
+                                                <tr>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                    <td>PAUSE</td>
+                                                </tr>
+                                                {% endif %}
+                                                <tr>
+                                                    <td>{{ heure.heures }}</td>
+                                                    {% set j = 0 %}
+                                                    {% for ec in matriceEt[i] %}
+                                                    <td>
+                                                        <p class="center" id="eEt{{i}}{{j}}">{{ ec }}
+                                                            {% if ec == null %}
+                                                            {% set countadd = countadd + 1 %}
+                                                            <button 
+                                                                class="pull-right eptAdd" 
+                                                                id ="atat{{i}}{{j}}"
+                                                                data-id = "eEt{{i}}{{j}}"
+                                                                data-niveau = "{{n}}"
+                                                                data-heure = "{{heure.id}}"
+                                                                data-jour = "{{jours[i].id}}"
+                                                                data-type = "{{parcour.id}}"
+                                                                data-loader = "{{asset('assets/loader/ajax-loader-4.gif')}}"
+                                                                data-nh = "{{nh}}"
+                                                                data-nj = "{{nj}}"
+                                                            >
+                                                            Ajouter
+                                                            </button>
+                                                            {% endif %}
+                                                        </p>
+                                                    </td>
+                                                    {% set j = j + 1 %}
+                                                    {% endfor %}  
+                                                </tr>
+                                                {% set i = i + 1 %}
+                                                {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                        </table>
+                                        <div id="etcount" data-countadd = "{{countadd}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{asset('assets/js/etAdd.js')}}"></script>
+    {#<script src="{{asset('assets/js/etDel.js')}}"></script>
+    <script src="{{asset('assets/js/etEdit.js')}}"></script>#}
+{% endblock %}

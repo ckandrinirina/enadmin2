@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouté enseignant{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Ajouté enseignant
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Ajouté enseignant</a></li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ajouter un enseignant</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            {{ form_start(form,{'attr':{'novalidate' : 'novalidate'}}) }}
+            <div class="box-body">
+                <div class="form-group">
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.prenom) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.photo) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.contact) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.dateNaissance) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.lieuxNaissance) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.adresse) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.type) }}
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right">Valider</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {#{{ form_start(form,{'attr':{'novalidate' : 'novalidate'}}) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.photo) }}
+        {{ form_row(form.pere) }}
+        {{ form_row(form.professionPere) }}
+        {{ form_row(form.mere) }}
+        {{ form_row(form.professionMere) }}
+        {{ form_row(form.contact) }}
+        {{ form_row(form.date_naissance) }}
+        {{ form_row(form.lieuxNaissance) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.anneEntre) }}
+        {{ form_row(form.sexe) }}
+        {{ form_row(form.niveaux) }}
+        {{ form_row(form.anneUniversitaire) }}
+
+        <button type="submit" class="btn btn-primary">Ajouté</button>
+    {{ form_end(form) }}#}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+{% endblock %}

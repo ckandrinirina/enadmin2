@@ -1,0 +1,3 @@
+{% for type in enseignant_type %}
+    <li><a href="{{ path('enseignant',{'type':type.id}) }}">{{ type.type }}</a></li>
+{% endfor %}

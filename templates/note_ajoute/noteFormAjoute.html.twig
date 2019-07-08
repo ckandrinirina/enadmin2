@@ -1,0 +1,24 @@
+{# {% extends "base.html.twig" %} #}
+
+{# {% block body %} #}
+    {{ form_start(form) }}
+    <div class="input-group">
+        {{ form_row(form.valeur) }}
+        <span class="input-group-btn">
+            <button class="btn btn-primary tatara">{{ button_label|default('Enregistrer') }}</button>
+        </span>
+    </div>
+    {{ form_end(form) }}
+    <script src="{{asset('assets/js/noteAdd.js')}}"></script>
+{# {% endblock %} #}
+
+
+{# <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script> #}
+
+{# <div class="input-group margin">
+    <input type="text" class="form-control">
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-info btn-flat">Go!</button>
+    </span>
+</div> #}

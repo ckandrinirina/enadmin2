@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des EC par enseignant{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Repartition des EC par niveaux
+            <small>{{ parcour.type }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Repartition des EC par niveaux</a></li>
+            <li class="active">{{ parcour.type }}</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}"><a href="{{ path('repartitionEC',{'type':parcour.id,'niveaux':niveau.id}) }}">{{ niveau.niveau }}</a></li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Repartition des EC par niveaux</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>EC</th>
+                                                <th>UC</th>
+                                                <th>Semestre</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for rep in repartition %}
+                                                <tr>
+                                                    <td>{{ rep.ec.nom }}</td>
+                                                    <td>{{ rep.ec.UC.nom }}</td>
+                                                    <td>{{ rep.semestre.semestre }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>EC</th>
+                                                <th>UC</th>
+                                                <th>Semestre</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+{% endblock %}

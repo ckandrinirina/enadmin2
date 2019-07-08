@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des etudiants {{ parcour.type }}{% endblock %}
+{% block stylesheets %}
+    <style>
+        .color-palette {
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        .color-palette-set {
+            margin-bottom: 15px;
+        }
+
+        .color-palette span {
+            display: none;
+            font-size: 12px;
+        }
+
+        .color-palette:hover span {
+            display: block;
+        }
+
+        .color-palette-box h4 {
+            position: absolute;
+            top: 100%;
+            left: 25px;
+            margin-top: -40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            display: block;
+            z-index: 7;
+        }
+    </style>
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Liste des étudiants
+            <small>{{ parcour.type }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Liste des étudiants</a></li>
+            <li class="active">{{ parcour.type }}</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}"><a href="{{ path('list',{'type':parcour.id,'niveaux':niveau.id}) }}">{{ niveau.niveau }}</a></li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title col-md-4">Liste des etudiants</h3>
+                                        <a href="{{path('list_pdf',{'type':parcour.id,'niveaux':n})}}" class="pull-right btn  btn-social btn-flickr"><i class="fa fa-file-pdf-o"></i> Générer un PDF </a>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Contact</th>
+                                                <th>Sexe</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for etudiant in etudiants %}
+                                                <tr>
+                                                    <td>{{ etudiant.nom }}</td>
+                                                    <td>{{ etudiant.prenom }}</td>
+                                                    <td>{{ etudiant.contact }}</td>
+                                                    <td>{{ etudiant.sexe.sexe }}</td>
+                                                    <td>
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}"> fiche individuel</a>
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'ratrapage':'0' })}}"> fiche de note</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Contact</th>
+                                                <th>Sexe</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {# // <script>
+    //     $(function () {
+    //         $('#example1').DataTable()
+    //     })
+    // </script> #}
+{% endblock %}

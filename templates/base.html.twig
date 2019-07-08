@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('dist/css/skins/skin-blue.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/myCss.css') }}">
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            {{ include('layout/header.html.twig') }}
+            {{ include('layout/leftSide.html.twig') }}
+            <div class="content-wrapper">
+                {% block insideHeader %}{% endblock %}
+                <section class="content container-fluid">
+                    {% block body %}{% endblock %}
+                </section>
+            </div>
+            {{ include('layout/footer.html.twig') }}
+            {{ include('layout/rightSide.html.twig') }}
+            <div class="control-sidebar-bg"></div>
+            {% block javascripts %}{% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,159 @@
+<aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+            <div class="pull-left image">
+            {% if is_granted('ROLE_USER') %}
+            {% if app.user.etudiant == NULL %}
+                <img src"image.jpg">
+            {% else %}
+                <img src="{{ asset(app.user.etudiant.photo) }}" class="img-circle" alt="User Image">
+            {% endif %}
+            {% elseif is_granted('ROLE_ADMIN')%}
+                <img src="{{ asset(app.user.enseignant.photo) }}" class="img-circle" alt="User Image">
+            {% endif %}
+            </div>
+            <div class="pull-left info">
+                {% if is_granted('ROLE_USER') %}
+                {% if app.user.etudiant != NULL %}
+                    <p>{{ app.user.etudiant.nom }}{{ '  ' }}{{ app.user.etudiant.prenom }}</p>
+                {% endif %}
+                {% elseif is_granted('ROLE_ADMIN')%}
+                    <p>{{ app.user.enseignant.nom }}{{ '  ' }}{{ app.user.enseignant.prenom }}</p>
+                {% endif %}
+                <!-- Status -->
+                <a href="#"><i class="fa fa-circle text-success"></i> Connecter</a>
+            </div>
+        </div>
+
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">LISTE ET REPARTITION</li>
+            <li class="{% if status == "homme" %} {{ "active" }} {% endif %}"><a href="{{ path('accueil') }}"><i class="fa  fa-suitcase"></i> <span>Tableau de bord</span></a></li>
+            <li class="treeview {% if status == "listE" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-group"></i> <span>Liste des étudiants</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::listAll')) }}
+                </ul>
+            </li>
+
+            <li class="treeview {% if status == "listEns" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Liste des enseignants</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::enseignant_type')) }}
+                </ul>
+            </li>
+
+            {# <li class="{% if status == "listeEc" %} {{ "active" }} {% endif %}"><a href="{{ path('e_c') }}"><i class="fa  fa-folder-open-o"></i> <span>Liste des EC par enseignant</span></a></li> #}
+            {# <li class="{% if status == "UCEC" %} {{ "active" }} {% endif %}"><a href="{{ path('ucList') }}"><i class="fa  fa-folder-open-o"></i> <span>Liste des EC par UE</span></a></li> #}
+
+            <li class="treeview {% if status == "r_u_b_n" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Repartitions des UE et EC</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::repartition_uc_by_niveau')) }}
+                </ul>
+            </li>
+
+            {# <li class="treeview {% if status == "listeRep" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Repartition EC par niveaux</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::repartition')) }}
+                </ul>
+            </li> #}
+            
+            <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Emploi du temps</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTemps')) }}
+                </ul>
+            </li>
+
+            <li class="treeview {% if status == "notelist" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Liste des notes</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::noteList')) }}
+                </ul>
+            </li>
+
+            <li class="treeview {% if status == "noteresult" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Résultat de l'éxamen</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::noteResult')) }}
+                </ul>
+            </li>
+
+            <li class="header">AJOUT ET MODIFICATION</li>
+
+            <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté étudiant</span></a></li>
+            <li class="{% if status == "addEns" %} {{ "active" }} {% endif %}"><a href="{{ path('enseignant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté enseignant</span></a></li>
+            <li class="treeview {% if status == "noteAjoute" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Ajouté des notes</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::noteAjoute')) }}
+                </ul>
+            </li>
+            <li class="{% if status == "add_ec" %} {{ "active" }} {% endif %}"><a href="{{ path('add_ec') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté un EC</span></a></li>
+            <li class="{% if status == "addUc" %} {{ "active" }} {% endif %}"><a href="{{ path('add_u_c') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté un UE</span></a></li>
+            <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Emploi du temps</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTempsEdit')) }}
+                </ul>
+            </li>
+
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

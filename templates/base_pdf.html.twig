@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Générer un PDF</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <style type="text/css">
+            body 
+            {
+              background: rgb(204, 204, 204);
+            }
+            #root 
+            {
+              background: white;
+              display: block;
+              margin: 0 auto;
+              margin-bottom: 0.5cm;
+              box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+            }
+            #img_head
+            {
+              width: 21cm;
+            }
+            #root[size="A4"] 
+            {
+              width: 21cm;
+              height: 29.7cm;
+            }
+
+            #root[size="A4"][layout="portrait"] 
+            {
+              width: 29.7cm;
+              height: 21cm;
+            }
+            #button_generate
+            {
+                margin-bottom:0.2cm;
+                margin-top:0.2cm;
+            }
+
+            #contenu
+            {
+                margin-top : 1cm;
+            }
+
+            #footer_pdf
+            {
+                width: 17cm;
+                margin-left:2cm;
+            } 
+
+        </style>
+        {% block custom_style %}{% endblock %}
+    </head>
+    <body>
+        <div class="text-center">
+            {% block return_top %}{% endblock %}
+            <button onclick="test()" id="button_generate" class="btn btn-danger"><i class="glyphicon glyphicon-download-alt"></i>   Télécharger le PDF</button>
+        </div>
+        {% block config %}{% endblock %}
+            <div id="content" class="row">
+                <div class="col-sm-12">
+                    {% block tete %}{% endblock %}
+                    <div id="contenu">
+                        {% block body %}{% endblock %}
+                    </div>
+                    <div id="footer_pdf">
+                        {% block footer_pdf %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            {% block return_bottom %}{% endblock %}
+            <button onclick="test()" id="button_generate" class="btn btn-danger"><i class="glyphicon glyphicon-download-alt"></i>   Télécharger le PDF</button>
+        </div>
+        <script src="{{ asset('html_pdf/html2pdf.bundle.min.js') }}" /></script>
+        {% block script_function %}{% endblock %}
+    </body>
+</html>

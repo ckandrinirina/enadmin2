@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche de note
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Fiche de note
+            {# <small>{{ parcour.type }}</small> #}
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Fiche de note</a>
+            </li>
+            {# <li class="active">{{ parcour.type }}</li> #}
+        </ol>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {# // <script>
+            //     $(function () {
+            //         $('#example1').DataTable()
+            //     })
+            // </script> #}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
+                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'ratrapage':'1' })}}">{{ niveau.niveau }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div
+                            class="col-md-12">
+                            <!-- Custom Tabs (Pulled to the right) -->
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs pull-right">
+                                    {% for semestre in semestres %}
+                                        <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
+                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':semestre.id,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    <li class="pull-left header">
+                                        <i class="fa fa-th"></i>
+                                        Semestre</li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1-1">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Listes des notes par niveaux   :</h3>
+                                                        <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
+                                                            <i class="fa fa-file-pdf-o"></i>
+                                                            Générer un PDF
+                                                        </a>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-info" type="button">
+                                                                {% if rat == 0 %}
+                                                                    {{ 'Premier session' }}
+                                                                {% else  %}
+                                                                    {{ 'Ratrapage' }}
+                                                                {% endif %}
+                                                            </button>
+                                                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                                                <span class="caret"></span>
+                                                                <span class="sr-only">Toggle Dropdown</span>
+                                                            </button>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'0'}) }}">Premier session</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        <h4>
+                                                            Relevé de Notes par EC et UE et Résulatats du semestre
+                                                        </h4>
+                                                        <ul class="list-group list-group-unbordered col-md-8">
+                                                            <li class="list-group-item">
+                                                                <b>Nom et prénoms</b>
+                                                                <p class="pull-right">{{etudiant.nom}}
+                                                                    {{etudiant.prenom}}</p>
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <b>Date de naissance</b>
+                                                                <p class="pull-right">{{ etudiant.dateNaissance | date('d/m/Y')  }}</p>
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <b>Numéro d'inscription</b>
+                                                                <p class="pull-right">13,287</p>
+                                                            </li>
+                                                        </ul>
+                                                        {%  for n_ue in note_ue %}
+                                                            <table class="table table-bordered table-striped" id="example1">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Elements constitutifs de l'UE
+                                                                            {{n_ue.uc.nom}}</th>
+                                                                        <th>Coef</th>
+                                                                        <th>Note/20</th>
+                                                                        <th>Note*coeff</th>
+                                                                        <th>Crédit</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for note in n_ue.notes %}
+                                                                        <tr>
+                                                                            <td>{{ note.EC.nom }}</td>
+                                                                            <td>{{ note.EC.coefficient }}</td>
+                                                                            <td>{{ note.valeur }}</td>
+                                                                            <td>{{ note.valueCoeff }}</td>
+                                                                            <td>{{ note.EC.credit }}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>Total</th>
+                                                                        <th>{{ n_ue.uc.coefficient }}</th>
+                                                                        <th></th>
+                                                                        <th>{{n_ue.valueCoeff}}</th>
+                                                                        <th>{{n_ue.credit}}</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Résultat</th>
+                                                                        <th></th>
+                                                                        <th>
+                                                                            {% if n_ue.valueCoeff < 10 %}Acquis{% else %}Ajourné
+                                                                            {% endif %}
+                                                                        </th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                            <br/>
+                                                        {% endfor %}
+                                                        <br/>
+                                                        <div class="col-md-4">
+                                                            <table class="table table-bordered table-striped">
+                                                                <tr>
+                                                                    <th>Moyenne Semestrielle</th>
+                                                                    <th>{{ moyenne }}
+                                                                        /20</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Crédit Acquis</th>
+                                                                    <th>{{ credit_aquis }}</th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div
+                            class="col-xs-12">{# <div class="box box-default">
+                                                                <div class="box-header with-border">
+                                                                    <h3 class="box-title">Historique par année universitaire</h3>
+                                                                </div>
+                                                                <div class="box-body">
+                                                                    {% for aun in allAu %}
+                                                                        <a type="button" class="btn btn-info" href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':rat}) }}">
+                                                                            {{ aun.anneUniversitaire }}
+                                                                        </a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div> #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

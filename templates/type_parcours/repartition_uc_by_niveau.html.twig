@@ -1,0 +1,4 @@
+{% for type in allTypeParcours %}
+    {% set niveaux = type.niveauxs['0'].id %}
+    <li><a href="{{ path('repartition_uc_by_niveau',{'type':type.id , 'niveau':niveaux}) }}">{{ type.type }}</a></li>
+{% endfor %}

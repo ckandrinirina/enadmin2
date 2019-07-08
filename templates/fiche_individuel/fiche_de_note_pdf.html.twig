@@ -1,0 +1,171 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block return_bottom %}
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+            .margin-left-4 {
+                margin-left: 0.4cm;
+            }
+            /* tr {
+               height : 1px;
+           } */
+            td,
+            th {
+                font-size: 0.8em
+            }
+            .tableb {
+                margin-left: 0.4cm;
+                margin-right: 0.4cm;
+                width: 20.2cm;
+            }
+            .header {
+                font-size: 0.8em;
+            }
+            .marg-top
+            {
+                margin-top:0.1cm;
+            }
+        </style>
+    {% endblock %}
+
+    {% block tete %}
+        <div class="header">
+            <div class="col-md-5 margin-left-4">
+                <p class="text-center">Université d'Antananarivo</p>
+                <p class="text-center">Ecole Supérieure Polytechnique</p>
+                <p>Domaine : Sciences de l'ingénieur
+                </p>
+                <p>Mention : Electronique
+                </p>
+                <p>Parcours : Electronique et commande
+                </p>
+                <p>Niveau : L3
+                </p>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+                <p>Année Universitaire</p>
+                <p>Semestre
+                    <strong>S5</strong>
+                </p>
+                <p></p>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block body %}
+        <div class="tableb">
+            <ul class="list-group list-group-unbordered col-md-8 haeder">
+                <h4 style="font-size:0.8em">
+                    <strong>Relevé de Notes par EC et UE et Résultats du semestre</strong>
+                </h4>
+                <li class="list-group-item">
+                    <b style="font-size:0.8em">Nom et prénoms</b>
+                    <p class="pull-right" style="font-size:0.8em">{{etudiant.nom}}
+                        {{etudiant.prenom}}</p>
+                </li>
+                <li class="list-group-item">
+                    <b style="font-size:0.8em">Date de naissance</b>
+                    <p class="pull-right" style="font-size:0.8em">
+                        {{ etudiant.dateNaissance | date('d/m/Y')  }}</p>
+                </li>
+                <li class="list-group-item" style="font-size:0.8em">
+                    <b>Numéro d'inscription</b>
+                    <p class="pull-right" style="font-size:0.8em">13,287</p>
+                </li>
+            </ul>
+            {%  for n_ue in note_ue %}
+                <table class="table table-bordered tablec marg-top" id="example1">
+                    <thead>
+                        <tr>
+                            <th>Elements constitutifs de l'UE
+                                {{n_ue.uc.nom}}</th>
+                            <th>Coef</th>
+                            <th>Note/20</th>
+                            <th>Note*coeff</th>
+                            <th>Crédit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in n_ue.notes %}
+                            <tr>
+                                <td>{{ note.EC.nom }}</td>
+                                <td>{{ note.EC.coefficient }}</td>
+                                <td>{{ note.valeur }}</td>
+                                <td>{{ note.valueCoeff }}</td>
+                                <td>{{ note.EC.credit }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total</th>
+                            <th>{{ n_ue.uc.coefficient }}</th>
+                            <th></th>
+                            <th>{{n_ue.valueCoeff}}</th>
+                            <th>{{n_ue.credit}}</th>
+                        </tr>
+                        <tr>
+                            <th>Résultat</th>
+                            <th></th>
+                            <th>
+                                {% if n_ue.valueCoeff < 10 %}Acquis{% else %}Ajourné
+                                {% endif %}
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            {% endfor %}
+        </div>
+        <div class="col-md-2" style="width:8cm">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Moyenne Semestrielle</th>
+                    <th>{{ moyenne }}
+                        /20</th>
+                </tr>
+                <tr>
+                    <th>Crédit Acquis</th>
+                    <th>{{ credit_aquis }}</th>
+                </tr>
+            </table>
+        </div>
+    {% endblock %}
+
+    {% block script_function %}
+        <script>
+            function test() {
+                var element = document.getElementById('content');
+                html2pdf().from(element).set({
+                    margin: 0.1,
+                    filename: 'test.pdf',
+                    html2canvas: {
+                        scale: 5
+                    },
+                    jsPDF: {
+                        orientation: 'portrait',
+                        unit: 'in',
+                        format: 'letter',
+                        compressPDF: false
+                    }
+                }).save();
+            }
+        </script>
+    {% endblock %}
+
+    {% block footer_pdf %}{% endblock %}

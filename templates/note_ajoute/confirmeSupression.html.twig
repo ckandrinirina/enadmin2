@@ -1,0 +1,10 @@
+{% set idnote = note['0'].id %}
+<a class="btn btn-danger mamafa" data-idnote="{{ note['0'].id }}" href="{{path('deleteNote',{
+    'noteId':idnote,
+    'niveaux':niveau,
+    'semestre':semestre,
+    'au':au,
+    'ratrapage':ratrapage
+    })}}">Confirmer la supression ?</a>
+<script src="{{asset('assets/js/noteDel.js')}}"></script>
+

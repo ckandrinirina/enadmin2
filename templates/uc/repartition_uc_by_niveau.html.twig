@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Repartition UC par niveau
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Repartitions des UE et UC
+            <small>{{ parcour.type }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Repartitions des UE et UC</a>
+            </li>
+            <li class="active">{{ parcour.type }}</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
+                            <a href="{{ path('repartition_uc_by_niveau',{'type':parcour.id,'niveau':niveau.id}) }}">{{ niveau.niveau }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="box-header">
+                    <h3 class="box-title col-md-4"></h3>
+                    <a href="{{path('repartition_uc_by_niveau_pdf',{'type':parcour.id,'niveau':n})}}" class="pull-right btn  btn-social btn-flickr">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Générer un PDF
+                    </a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="nav-tabs-custom">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_1">
+                                            <div class="col-md-12">
+                                                <div class="nav-tabs-custom">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane active" id="tab_1-1">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <div class="box">
+
+                                                                        {% for sem in semestre %}
+                                                                            <div class="box-body col-xs-6">
+                                                                                <h3 class="text-muted text-center">{{ sem.semestre }}</h3>
+                                                                                <table class="table table-bordered table-striped" id="example1">
+                                                                                    {% for ue in sem.uEs %}
+                                                                                        <thead class="col-sm-offset-8">
+                                                                                            <tr>
+                                                                                                <th>{{ue.nom}}</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            {% for ec in ue.ecs %}
+                                                                                                <tr>
+                                                                                                    <td>{{ ec.nom }}</td>
+                                                                                                    <td>{{ ec.code }}</td>
+                                                                                                    <td>{{ ec.credit }}
+                                                                                                        crédits</td>
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                        </tbody>
+                                                                                    {% endfor %}
+                                                                                </table>
+                                                                            </div>
+                                                                        {% endfor %}
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+{% endblock %}

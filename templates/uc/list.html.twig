@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des EC par enseignant{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Liste des EC par UE
+            {#<small>{{ parcour.type }}</small>#}
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Liste des EC par UE</a></li>
+            {#<li class="active">{{ parcour.type }}</li>#}
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for u in uc %}
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ u.nom }}</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>EC</th>
+                                <th>Enseignant</th>
+                            </tr>
+                            {% set i=0 %}
+                            {% for EC in u.eCs %}
+                                <tr>
+                                    <td>{{ i }}</td>
+                                    <td>{{ EC.nom }}</td>
+                                    <td>
+                                    {% for enseignant in EC.enseignant %}
+                                        {{ enseignant.nom }}{{ '  ' }}{{ enseignant.prenom }}{{ ',' }}
+                                    {% endfor %}
+                                    </td>
+                                </tr>
+                                {% set i=i+1 %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        {% endfor %}
+    </div>
+    {#    {% for enseignant in enseignants %}
+            <h1>{{ enseignant.nom }}</h1>
+            {% for EC in enseignant.eCs %}
+                {{ EC.nom }}
+            {% endfor %}
+        {% endfor %}#}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+{% endblock %}

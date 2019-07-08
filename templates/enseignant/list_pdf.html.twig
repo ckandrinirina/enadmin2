@@ -1,0 +1,86 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block return_bottom %}
+        <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+            #custom_table {
+                width: 17cm;
+                margin-left: 2cm;
+            }
+            .margin-bottom-2 {
+                margin-top: 1cm;
+            }
+        </style>
+    {% endblock %}
+
+    {% block tete %}
+        <img src="{{ asset('en_tete/tete.jpg') }}" id="img_head"/>
+    {% endblock %}
+
+    {% block body %}
+        <h4 class="lead text-center">
+            <strong>LISTE DES ENSEIGNANTS VACATAIRE AU TITRE DE L'ANNEE {{ annee }} (ENSEIGNANTS PERMANENTS AU SEINS DE L'ESPA)</strong>
+        </h4>
+        <table class="table table-bordered" id="custom_table">
+        {% set i = 1 %}
+            <tr>
+                <td><strong>Numéro</strong></td>
+                <td><strong>Nom et Prénom</strong></td>
+                <td><strong>Matières enseignées</strong></td>
+            </tr>
+            {% for enseignant in enseignants %}
+                <tr>
+                    <td>
+                        <strong>n°{{i}}</strong>
+                    </td>
+                    <td>
+                        {{ enseignant.nom|upper }}  {{enseignant.prenom}}  
+                    </td>
+                    <td>
+                        {% for ec in enseignant.eCs %}
+                            {{ ec.nom }}</br>
+                        {% endfor %}
+                    </td>
+                </tr>
+             {% set i = i + 1 %}   
+            {% endfor %}
+        </table>
+    {% endblock %}
+
+    {% block script_function %}
+        <script>
+            function test() {
+                var element = document.getElementById('content');
+                html2pdf().from(element).set({
+                    margin: 0.1,
+                    filename: 'test.pdf',
+                    html2canvas: {
+                        scale: 5
+                    },
+                    jsPDF: {
+                        orientation: 'portrait',
+                        unit: 'in',
+                        format: 'letter',
+                        compressPDF: false
+                    }
+                }).save();
+            }
+        </script>
+    {% endblock %}
+    
+    {% block footer_pdf %}
+    {% endblock %}

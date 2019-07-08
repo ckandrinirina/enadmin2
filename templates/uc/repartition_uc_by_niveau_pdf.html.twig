@@ -1,0 +1,86 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" layout="portrait" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        <a href="{{path('repartition_uc_by_niveau',{'type':parcour.id,'niveau':n})}}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block return_bottom %}
+        <a href="{{path('repartition_uc_by_niveau',{'type':parcour.id,'niveau':n})}}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+           tr {
+               height : 1px;
+           }
+           td,th
+           {
+               font-size : 0.9em
+           }
+        </style>
+    {% endblock %}
+
+    {% block tete %}{% endblock %}
+
+    {% block body %}
+        <h4 class="text-center">
+            <strong>REPARTITIONS DES UE ET EC POUR LE NIVEAU
+                {{ niv_name.niveau }}</strong>
+        </h4>
+        <div>
+        {% for sem in semestre %}
+            <div class="col-xs-6" id="my_tableau">
+                <h4 class="text-center">{{ sem.semestre }}</h3>
+                <table class="table table-bordered">
+                    {% for ue in sem.uEs %}
+                        <thead class="col-sm-offset-8">
+                            <tr>
+                                <th>{{ue.nom}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ec in ue.ecs %}
+                                <tr>
+                                    <td>{{ ec.nom }}</td>
+                                    <td>{{ ec.code }}</td>
+                                    <td>{{ ec.credit }}
+                                        crédits</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% block script_function %}
+        <script>
+            function test() {
+                var element = document.getElementById('content');
+                html2pdf().from(element).set({
+                    margin: 0.1,
+                    filename: 'test.pdf',
+                    html2canvas: {
+                        scale: 5
+                    },
+                    jsPDF: {
+                        orientation: 'landscape',
+                        unit: 'in',
+                        format: 'letter',
+                        compressPDF: false
+                    }
+                }).save();
+            }
+        </script>
+    {% endblock %}
+
+    {% block footer_pdf %}{% endblock %}

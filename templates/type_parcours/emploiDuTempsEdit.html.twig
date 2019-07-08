@@ -1,0 +1,4 @@
+{% for type in allTypeParcours %}
+    {% set niveaux = type.niveauxs['0'].id %}
+    <li><a href="{{ path('add_etemps',{'type':type.id , 'niveaux':niveaux}) }}">{{ type.type }}</a></li>
+{% endfor %}

@@ -1,0 +1,89 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        <a href="{{ path('list',{'type':parcour.id,'niveaux':n}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block return_bottom %}
+        <a href="{{ path('list',{'type':parcour.id,'niveaux':n}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+            #custom_table {
+                width: 17cm;
+                margin-left: 2cm;
+            }
+            .margin-bottom-2 {
+                margin-top: 1cm;
+            }
+        </style>
+    {% endblock %}
+
+    {% block tete %}
+        <img src="{{ asset('en_tete/tete.jpg') }}" id="img_head"/>
+    {% endblock %}
+
+    {% block body %}
+        <h4 class="lead text-center">
+            <strong>LISTE DES ETUDIANTS
+                {{ niv_name.niveau }}</strong>
+        </h4>
+        <table class="table table-bordered" id="custom_table">
+            {% for etudiant in etudiants %}
+                <tr>
+                    <td>
+                        <strong>n°1</strong>
+                    </td>
+                    <td>
+                        <strong>{{ etudiant.nom|upper }}
+                            {{etudiant.prenom}}</strong>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+
+    {% block script_function %}
+        <script>
+            function test() {
+                var element = document.getElementById('content');
+                html2pdf().from(element).set({
+                    margin: 0.1,
+                    filename: 'test.pdf',
+                    html2canvas: {
+                        scale: 5
+                    },
+                    jsPDF: {
+                        orientation: 'portrait',
+                        unit: 'in',
+                        format: 'letter',
+                        compressPDF: false
+                    }
+                }).save();
+            }
+        </script>
+    {% endblock %}
+    
+    {% block footer_pdf %}
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    La responsable de la mention Electronique
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                <p>Antananarivo le
+                    {{ "now"|date("d/m/Y") }}
+                </p>
+            </div>
+        </div>
+        <p class="margin-bottom-2">RAMANANTSIHOARANA Harisoa Nathalie</p>
+    {% endblock %}
