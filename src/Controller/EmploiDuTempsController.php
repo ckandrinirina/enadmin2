@@ -47,7 +47,7 @@ class EmploiDuTempsController extends AbstractController
     );
     }
     /**
-     * @Route("/emploi/du/temps/add/{type}/{niveaux}", name="add_etemps")
+     * @Route("/emploi/du/temps/add/{type}/{niveaux}", name="add_etemps",options = { "expose" = true })
      */
     public function add($type, $niveaux,EtService $etService)
     {
@@ -91,10 +91,13 @@ class EmploiDuTempsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $et = new EmploiDuTemps();
 
-        $recRepository = $em->getRepository(RepartitionEC::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
+        $ec_repository = $em->getRepository(EC::class);
+        $joursRepository =$em->getRepository(Jours::class);
+        $heuresRepository = $em->getRepository(Heures::class);
+        $heures = $heuresRepository->find($heure);
+        $jours = $joursRepository->find($jour);
         $niveaux = $niveauxRepository->find($niveau);
-        $ec = $recRepository->findByNiveaux($niveaux);
         //atreto aloha
         $form = $this->createForm(EcChoiceType::class,$et);
 
@@ -102,7 +105,11 @@ class EmploiDuTempsController extends AbstractController
 
         if($form->isSubmitted())
         {
-           dump($et);
+            $et->setHeure($heures);
+            $et->setJour($jours);
+            $et->setNiveau($niveaux);
+            $em->persist($et);
+            $em->flush();
         }
         return $this->render('emploi_du_temps/ecChoice.html.twig',
         [
