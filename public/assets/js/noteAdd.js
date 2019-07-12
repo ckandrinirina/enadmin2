@@ -34,7 +34,7 @@ $(function(){
     {
         let nbrEc = document.getElementsByClassName('noteAdd')['0'].dataset.nbrec
         let nbrEt = document.getElementsByClassName('noteAdd')['0'].dataset.nbret
-        for(var i=0 ; i<nbrEt ; i++)
+        for(var i=0 ; i<nbrEc ; i++)
         {
             for(var j=0 ; j<nbrEc ; j++)
             {

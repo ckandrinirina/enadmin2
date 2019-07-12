@@ -45,6 +45,7 @@ class EtService
         {
             $matriceEt = NULL;
         }
+        dump($matriceEt);
         return $matriceEt;
     }
 }

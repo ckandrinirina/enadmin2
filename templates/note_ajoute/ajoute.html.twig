@@ -109,7 +109,7 @@
                                                                                     {% elseif value == 'pas de note' %}
                                                                                         {% set countAdd = countAdd + 1 %}
                                                                                         <p class="text-red" id="note{{i}}{{j}}">{{ value }}
-                                                                                            <button href="{{ path('note_ajoute_formulaire',{ 'etudiant':idEtOrd[i], 'ec':idEcOrd[j], 'semestre':s, 'niveau':n, 'au':auid, 'ratrapage':rat}) }}" class="pull-right noteAdd" id="a{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}">
+                                                                                            <button href="{{ path('note_ajoute_formulaire',{ 'etudiant':idEtOrd[i], 'ec':idEcOrd[j], 'semestre':s, 'niveau':n, 'au':auid, 'ratrapage':rat}) }}" class="pull-right noteAdd" id="a{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-i="{{i}}" data-j="{{j}}">
                                                                                                 <span class="fa fa-plus"></span>
                                                                                             </button>
                                                                                         </p>
@@ -122,6 +122,7 @@
                                                                                             {# <button href="#" class="pull-right noteEdit" id="e{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
                                                                                                 <span class="fa fa-pencil"></span>
                                                                                             </button> #}
+
                                                                                         </p>
                                                                                     {% else %}
                                                                                         {% set countDel = countDel + 1 %}
@@ -132,9 +133,92 @@
                                                                                             {# <button href="#" class="pull-right noteEdit" id="e{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
                                                                                                 <span class="fa fa-pencil"></span>
                                                                                             </button> #}
+
                                                                                         </p>
                                                                                     {% endif %}
                                                                                 </td>
+                                                                                <script>
+                                                                                    $(function () {
+                                                                                        let i = {{ i }}
+                                                                                        let j = {{ j }}
+                                                                                        $('#a' + i + j).on('click', function (event) {
+                                                                                            let id = document.getElementById($(this).attr('id'))
+                                                                                            event.preventDefault()
+                                                                                            idA = '#' + id.dataset.id
+                                                                                            loader = id.dataset.loader
+                                                                                            $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                                                                                            etudiant = id.dataset.etudiant
+                                                                                            ec = id.dataset.ec
+                                                                                            semestre = id.dataset.semestre
+                                                                                            niveau = id.dataset.niveau
+                                                                                            au = id.dataset.au
+                                                                                            ratrapage = id.dataset.ratrapage
+                                                                                            type = id.dataset.type
+
+                                                                                            $(idA).load(Routing.generate('note_ajoute_formulaire', {
+                                                                                                etudiant: etudiant,
+                                                                                                ec: ec,
+                                                                                                semestre: semestre,
+                                                                                                niveau: niveau,
+                                                                                                au: au,
+                                                                                                ratrapage: ratrapage
+                                                                                            }))
+                                                                                        })
+
+                                                                                        $('#d' + i + j).on('click', function (event) {
+                                                                                            let id = document.getElementById($(this).attr('id'))
+                                                                                            event.preventDefault()
+                                                                                            idA = '#' + id.dataset.id
+                                                                                            loader = id.dataset.loader
+                                                                                            $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                                                                                            etudiant = id.dataset.etudiant
+                                                                                            ec = id.dataset.ec
+                                                                                            semestre = id.dataset.semestre
+                                                                                            niveau = id.dataset.niveau
+                                                                                            au = id.dataset.au
+                                                                                            ratrapage = id.dataset.ratrapage
+                                                                                            type = id.dataset.type
+                                                                                            valeur = id.dataset.valeur
+
+                                                                                            $(idA).load(Routing.generate('confirmeSupression', {
+                                                                                                etudiant: etudiant,
+                                                                                                ec: ec,
+                                                                                                semestre: semestre,
+                                                                                                niveau: niveau,
+                                                                                                au: au,
+                                                                                                ratrapage: ratrapage,
+                                                                                                valeur: valeur
+                                                                                            }))
+                                                                                        })
+                                                                                        // $('#e' + i + j).on('click', function (event) {
+                                                                                        //     var edit = 1
+                                                                                        //     let id = document.getElementById($(this).attr('id'))
+                                                                                        //     event.preventDefault()
+                                                                                        //     idA = '#' + id.dataset.id
+                                                                                        //     loader = id.dataset.loader
+                                                                                        //     $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                                                                                        //     etudiant = id.dataset.etudiant
+                                                                                        //     ec = id.dataset.ec
+                                                                                        //     semestre = id.dataset.semestre
+                                                                                        //     niveau = id.dataset.niveau
+                                                                                        //     au = id.dataset.au
+                                                                                        //     ratrapage = id.dataset.ratrapage
+                                                                                        //     type = id.dataset.type
+                                                                                        //     valeur = id.dataset.valeur
+
+                                                                                        //     $(idA).load(Routing.generate('editNote', {
+                                                                                        //         etudiant: etudiant,
+                                                                                        //         ec: ec,
+                                                                                        //         semestre: semestre,
+                                                                                        //         niveau: niveau,
+                                                                                        //         au: au,
+                                                                                        //         ratrapage: ratrapage,
+                                                                                        //         valeur: valeur,
+                                                                                        //         edit: edit
+                                                                                        //     }))
+                                                                                        // })
+                                                                                    });
+                                                                                </script>
                                                                                 {% set j = j+1 %}
                                                                             {% endfor %}
                                                                         </tr>
@@ -163,7 +247,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -174,7 +257,7 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{asset('assets/js/noteAdd.js')}}"></script>
-    <script src="{{asset('assets/js/noteDel.js')}}"></script>
-    <script src="{{asset('assets/js/noteEdit.js')}}"></script>
+    {#<script src="{{asset('assets/js/noteAdd.js')}}"></script>
+                                <script src="{{asset('assets/js/noteDel.js')}}"></script>
+                                <script src="{{asset('assets/js/noteEdit.js')}}"></script>#}
 {% endblock %}

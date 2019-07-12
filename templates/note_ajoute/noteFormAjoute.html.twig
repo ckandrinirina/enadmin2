@@ -1,15 +1,46 @@
 {# {% extends "base.html.twig" %} #}
 
 {# {% block body %} #}
-    {{ form_start(form) }}
-    <div class="input-group">
-        {{ form_row(form.valeur) }}
-        <span class="input-group-btn">
-            <button class="btn btn-primary tatara">{{ button_label|default('Enregistrer') }}</button>
-        </span>
-    </div>
-    {{ form_end(form) }}
-    <script src="{{asset('assets/js/noteAdd.js')}}"></script>
+{{ form_start(form) }}
+    <div class="input-group"> {{ form_row(form.valeur) }}
+    <span class="input-group-btn">
+        <button class="btn btn-primary tatara">{{ button_label|default('Enregistrer') }}</button>
+    </span>
+</div>
+{{ form_end(form) }}
+<script>
+    $(function () {
+        $('.tatara').on('click', function (event) {
+            event.preventDefault()
+            var valeur = $('#note_valeur').val()
+            if (valeur < 0 || valeur > 20) {
+                alert('entré une valeur entre 0 et 20')
+                $(':input').not(':button, :submit, :reset, :hidden').val('')
+            } else {
+                $.post(Routing.generate('note_ajoute_formulaire', {
+                    etudiant: etudiant,
+                    ec: ec,
+                    semestre: semestre,
+                    niveau: niveau,
+                    au: au,
+                    ratrapage: ratrapage
+                }), {
+                    'note[valeur]': valeur
+                }, function () {
+                    $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                    window.location = Routing.generate('note_ajoute', {
+                        type: type,
+                        semestre: semestre,
+                        niveaux: niveau,
+                        au: au,
+                        ratrapage: ratrapage
+                    })
+                })
+            };
+        })
+    })
+</script>
+{#<script src="{{asset('assets/js/noteAdd.js')}}"></script>#}
 {# {% endblock %} #}
 
 

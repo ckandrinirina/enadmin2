@@ -82,7 +82,7 @@ class EtudiantsFixtures extends Fixture implements OrderedFixtureInterface
         $etudiant4->setAdresse('adresse_etudiant4');
         $etudiant4->setAnneEntre('2013');
         $etudiant4->setSexe($this->getReference('homme'));
-        $etudiant4->setNiveaux($this->getReference('LP1'));
+        $etudiant4->setNiveaux($this->getReference('L1'));
         $etudiant4->setParcour($this->getReference('professionel'));
         $etudiant4->setAnneUniversitaire($this->getReference('2018/2019'));
         $manager->persist($etudiant4);
@@ -101,7 +101,7 @@ class EtudiantsFixtures extends Fixture implements OrderedFixtureInterface
         $etudiant5->setAdresse('adresse_etudiant5');
         $etudiant5->setAnneEntre('2013');
         $etudiant5->setSexe($this->getReference('femme'));
-        $etudiant5->setNiveaux($this->getReference('LP1'));
+        $etudiant5->setNiveaux($this->getReference('L1'));
         $etudiant5->setParcour($this->getReference('professionel'));
         $etudiant5->setAnneUniversitaire($this->getReference('2018/2019'));
         $manager->persist($etudiant5);
@@ -120,10 +120,11 @@ class EtudiantsFixtures extends Fixture implements OrderedFixtureInterface
         $etudiant6->setAdresse('adresse_etudiant6');
         $etudiant6->setAnneEntre('2013');
         $etudiant6->setSexe($this->getReference('homme'));
-        $etudiant6->setNiveaux($this->getReference('LP1'));
+        $etudiant6->setNiveaux($this->getReference('L1'));
         $etudiant6->setParcour($this->getReference('professionel'));
         $etudiant6->setAnneUniversitaire($this->getReference('2018/2019'));
         $manager->persist($etudiant6);
+
 
         $manager->flush();
 
