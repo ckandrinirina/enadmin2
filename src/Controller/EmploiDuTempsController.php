@@ -20,7 +20,7 @@ class EmploiDuTempsController extends AbstractController
     /**
      * @Route("/emploi/du/temps/{type}/{niveaux}", name="etemps")
      */
-    public function index($type, $niveaux)
+    public function index(EtService $etService,$type, $niveaux)
     {
         $status = 'etemps';
         $em = $this->getDoctrine()->getManager();
@@ -34,6 +34,7 @@ class EmploiDuTempsController extends AbstractController
 
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
+        $matriceEt = $etService->generateMatriceEt($niveaux,$heures,$jours);
 
         return $this->render('emploi_du_temps/index.html.twig',
         [
@@ -42,7 +43,8 @@ class EmploiDuTempsController extends AbstractController
             'status'=>$status,
             'n' => $niveaux,
             'jours' => $jours,
-            'heures' => $heures
+            'heures' => $heures,
+            'matriceEt'=> $matriceEt,
         ]
     );
     }

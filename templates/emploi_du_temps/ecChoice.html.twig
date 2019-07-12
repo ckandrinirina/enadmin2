@@ -3,31 +3,31 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-        <a class="btn tatara">{{ button_label|default('Save') }}</a>
+        <button class="btn tatara">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
-    <script src="{{asset('assets/js/etAdd.js')}}"></script>
+    {# // <script src="{{asset('assets/js/etAdd.js')}}"></script> #}
     <script>
-    //     let n = document.getElementsByClassName('eptAdd')['0']
-    //     type = n.dataset.type
-    //     $('.tatara').on('click', function (event) {
-    //     var list = document.getElementById('ec_choice_ec');
-    //     var valeur = list.options[list.selectedIndex].value;
-    //     event.preventDefault()
-    //     $.post(Routing.generate('ec_choice', {
-    //         niveau: niveau,
-    //         jour : jok,
-    //         heure: hok,
-    //     }),
-    //     {
-    //         'ec_choice[ec]': valeur
-    //     },  function () {
-    //         $(idA).html('<img src="' + loader + '" class="text-center"/>')
-    //         console.log('ok')
-    //         window.location = Routing.generate('add_etemps', {
-    //             type: type,
-    //             niveaux: niveau,
-    //         })
-    //     })
-    // })
+        $(function () {
+                $('.tatara').on('click', function (event) {
+                var list = document.getElementById('ec_choice_ec');
+                var valeur = list.options[list.selectedIndex].value;
+                event.preventDefault()
+                $.post(Routing.generate('ec_choice', {
+                    niveau: niveau,
+                    jour : jour,
+                    heure: heure,
+                }),
+                {
+                    'ec_choice[ec]': valeur
+                },  function () {
+                    $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                    console.log('ok')
+                    window.location = Routing.generate('add_etemps', {
+                        type: type,
+                        niveaux: niveau,
+                    })
+                })
+            })
+        })
     </script>
 {% endblock %}

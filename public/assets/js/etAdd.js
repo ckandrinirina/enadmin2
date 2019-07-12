@@ -22,7 +22,7 @@ $(function () {
     } else if (count == 0) {} else {
         for (var i = 0; i < nj; i++) {
             for (var j = 0; j < nj; j++) {
-                $('#atat' + i + j).on('click', function (event) {
+               $('#atat' + i + j).on('click', function (event) {
                     let id = document.getElementById($(this).attr('id'))
                     event.preventDefault()
                     idA = '#' + id.dataset.id
@@ -35,13 +35,13 @@ $(function () {
                     jok = jour
                     hok = heure
                     $(idA).load(Routing.generate('ec_choice', {
-                        niveau: niveau,
+                         niveau: niveau,
                         jour: jok,
                         heure: hok
                     }))
                 })
             }
-        }
+        } 
         $('.tatara').on('click', function (event) {
             var list = document.getElementById('ec_choice_ec');
             var valeur = list.options[list.selectedIndex].value;
