@@ -100,8 +100,8 @@ class EmploiDuTempsController extends AbstractController
         $heures = $heuresRepository->find($heure);
         $jours = $joursRepository->find($jour);
         $niveaux = $niveauxRepository->find($niveau);
-        //atreto aloha
-        $form = $this->createForm(EcChoiceType::class,$et);
+        $options['data'] = $niveau;
+        $form = $this->createForm(EcChoiceType::class,$et,$options);
 
         $form->handleRequest($request);
 
