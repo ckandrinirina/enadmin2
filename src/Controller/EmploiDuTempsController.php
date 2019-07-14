@@ -106,23 +106,38 @@ class EmploiDuTempsController extends AbstractController
 
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $semestreRepository = $em->getRepository(Semestre::class);
-        $joursRepository =$em->getRepository(Jours::class);
+        $joursRepository = $em->getRepository(Jours::class);
         $heuresRepository = $em->getRepository(Heures::class);
+        $repartionRepository = $em->getRepository(RepartitionEC::class);
+        $ecRepository = $em->getRepository(EC::class);
+
         $heures = $heuresRepository->find($heure);
         $jours = $joursRepository->find($jour);
         $niveaux = $niveauxRepository->find($niveau);
         $semestre = $semestreRepository->find($semestre);
+
+        $ec = $repartionRepository->findByNiveauxBySemestre($niveau,$semestre);
+        $i=0;
+        foreach($ec as $e)
+        {
+            $ec_value[$i]=$ecRepository->find($e->getEc());
+            $i=$i+1;
+        }
+
+        $option['data'] = $ec_value;
         //atreto aloha
-        $form = $this->createForm(EcChoiceType::class,$et);
+        $form = $this->createForm(EcChoiceType::class,$et,$option);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted())
         {
+            $data = $form->getData();
             $et->setHeure($heures);
             $et->setJour($jours);
             $et->setNiveau($niveaux);
             $et->setSemestre($semestre);
+            $et->setEc($data['ec']);
             dump($et);
             $em->persist($et);
             $em->flush();
@@ -147,7 +162,7 @@ class EmploiDuTempsController extends AbstractController
             'heure' => $heure,
             'semestre' => $semestre,
             'niveau' => $niveau,
-        ]);
+        ]); 
     }
     /**
      * @Route("note/delete/{niveau}/{jour}/{heure}/{semestre}/{etId}", name="deletEt",options = { "expose" = true })

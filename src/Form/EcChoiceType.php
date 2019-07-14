@@ -8,17 +8,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\EmploiDuTemps;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EcChoiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $options['data'];
         $builder
-            ->add('ec',EntityType::class,[
-                'class'=>EC::class,
-                'choice_label' => function(EC $ec)
+            ->add('ec',ChoiceType::class,[
+                'choices'=> $data,
+                'choice_label' => function(EC $ec, $key, $value)
                 {
-                    return ($ec->getNom()); 
+                    return $ec->getNom();
+                },
+                'choice_attr' => function(EC $ec, $key, $value) {
+                    return ['value' => $ec->getId()];
                 },
                 'label' => false
             ])
@@ -28,7 +33,7 @@ class EcChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EmploiDuTemps::class,
+            'data_class' => null,
         ]);
     }
 }
