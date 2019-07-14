@@ -138,7 +138,6 @@ class EmploiDuTempsController extends AbstractController
             $et->setNiveau($niveaux);
             $et->setSemestre($semestre);
             $et->setEc($data['ec']);
-            dump($et);
             $em->persist($et);
             $em->flush();
         }

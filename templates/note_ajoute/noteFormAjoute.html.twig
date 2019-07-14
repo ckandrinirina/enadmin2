@@ -3,10 +3,10 @@
 {# {% block body %} #}
 {{ form_start(form) }}
     <div class="input-group"> {{ form_row(form.valeur) }}
-    <span class="input-group-btn">
-        <button class="btn btn-primary tatara">{{ button_label|default('Enregistrer') }}</button>
-    </span>
-</div>
+        <span class="input-group-btn">
+            <button class="btn btn-primary tatara">{{ button_label|default('Enregistrer') }}</button>
+        </span>
+    </div>
 {{ form_end(form) }}
 <script>
     $(function () {

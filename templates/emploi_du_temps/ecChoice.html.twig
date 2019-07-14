@@ -3,30 +3,33 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-        <button class="btn tatara">{{ button_label|default('Save') }}</button>
+    <div class="input-group">{{ form_row(form.ec) }}
+        <span class="input-group-btn">
+            <button class="btn btn-primary tatara pull-right">{{ button_label|default('Enregistrer') }}</button>
+        </span>
+    </div>
     {{ form_end(form) }}
     {# // <script src="{{asset('assets/js/etAdd.js')}}"></script> #}
     <script>
         $(function () {
-                $('.tatara').on('click', function (event) {
+            $('.tatara').on('click', function (event) {
                 var list = document.getElementById('ec_choice_ec');
                 var valeur = list.options[list.selectedIndex].value;
                 event.preventDefault()
                 $.post(Routing.generate('ec_choice', {
                     niveau: niveau,
-                    jour : jour,
+                    jour: jour,
                     heure: heure,
-                    semestre:semestre
-                }),
-                {
+                    semestre: semestre
+                }), {
                     'ec_choice[ec]': valeur
-                },  function () {
+                }, function () {
                     $(idA).html('<img src="' + loader + '" class="text-center"/>')
                     console.log('ok')
                     window.location = Routing.generate('add_etemps', {
                         type: type,
                         niveaux: niveau,
-                        semestre:semestre
+                        semestre: semestre
                     })
                 })
             })
