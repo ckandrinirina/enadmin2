@@ -34,16 +34,18 @@ class EmploiDuTempsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function find_by_niveaux_semestres($niveaux, $semestre)
+    public function find_by_niveaux_semestres_jours($niveaux, $semestre,$jours)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.ec','ec')
             ->addSelect('ec')
             ->innerJoin('ec.enseignant','ens')
             ->where('e.niveau = :val1')
+            ->andWhere('e.jour = :val2')
             ->andWhere('e.semestre= :val4')
-            ->orderBy('e.jour','ASC')
+            ->orderBy('e.heure','ASC')
             ->setParameter('val1', $niveaux)
+            ->setParameter('val2',$jours)
             ->setParameter('val4', $semestre)
             ->getQuery()
             ->getResult();

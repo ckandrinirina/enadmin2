@@ -51,38 +51,29 @@
                     <strong>ENSEIGNANTS</strong>
                 </td>
             </tr>
-            {% set temp_jour = '' %}
-            {% for e in et %}
-                {% if temp_jour != e.jour.jours %}
-                    <tr>
-                        <td>
-                            {{e.jour.jours}}
-                            {% set temp_jour = e.jour.jours %}
-                        </td>
-                        <td>
-                            {% for e1 in et %}
-                                {% if temp_jour == e1.jour.jours %}
-                                    {{e1.heure.heures}}<br/>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for e2 in et %}
-                                {% if temp_jour == e2.jour.jours %}
-                                    {{e2.ec.nom}}<br/>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for e3 in et %}
-                                {% if temp_jour == e3.jour.jours %}
-                                    {{e3.ec.enseignant.nom}}
-                                    {{e3.ec.enseignant.prenom}}<br/>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endif %}
+            {% set i = 0 %}
+            {% for j in jours %}
+                <tr>
+                    <td>
+                        {{j.jours}}
+                    </td>
+                    <td>
+                        {% for e in et[i] %}
+                            {{e.heure.heures}}<br/>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for e in et[i] %}
+                            {{e.ec.nom}}<br/>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for e in et[i] %}
+                            {{e.ec.enseignant.nom}}  {{e.ec.enseignant.prenom}}<br/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% set i = i + 1 %}
             {% endfor %}
         </table>
     {% endblock %}

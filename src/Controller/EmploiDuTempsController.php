@@ -70,14 +70,17 @@ class EmploiDuTempsController extends AbstractController
         $joursRepository = $em->getRepository(Jours::class);
         $etRepository = $em->getRepository(EmploiDuTemps::class);
 
-        $et = $etRepository->find_by_niveaux_semestres($niveaux,$semestre);
         $heures = $heuresRepository->findAll();
         $jours = $joursRepository->findAll();
-
+        $i=0;
+        foreach($jours as $jour)
+        {
+            $et[$i] = $etRepository->find_by_niveaux_semestres_jours($niveaux,$semestre,$jour);
+            $i++;
+        }
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
-        $matriceEt = $etService->generateMatriceEt($niveaux, $heures, $jours, $semestre);
 
         return $this->render(
             'emploi_du_temps/index_pdf.html.twig',
@@ -88,7 +91,6 @@ class EmploiDuTempsController extends AbstractController
                 'n' => $niveaux,
                 'jours' => $jours,
                 'heures' => $heures,
-                'matriceEt' => $matriceEt,
                 'semestre' => $semestre,
                 'semestres' => $sem,
                 's' => $semestre,
