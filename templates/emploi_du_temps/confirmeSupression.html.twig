@@ -1,0 +1,5 @@
+{% set idet = et['0'].id %}
+<a class="btn btn-danger mamafa" data-idet="{{ et['0'].id }}" href="{{path('deletEt',{
+    'etId':idet,'jour':jour , 'niveau':niveau ,'semestre':semestre,'heure':heure
+    })}}">Confirmer la supression ?</a>
+<script></script>

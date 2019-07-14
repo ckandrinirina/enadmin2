@@ -95,7 +95,11 @@
                                                                                     {% if ec == null %}
                                                                                         {% set countadd = countadd + 1 %}
                                                                                         <button class="pull-right eptAdd" id="atat{{i}}{{j}}" data-id="eEt{{i}}{{j}}" data-semestre="{{s}}" data-niveau="{{n}}" data-heure="{{heures[i].id}}" data-jour="{{jours[j].id}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nh="{{nh}}" data-nj="{{nj}}">
-                                                                                            Ajouter
+                                                                                            <span class="fa fa-plus"></span>
+                                                                                        </button>
+                                                                                    {% else %}
+                                                                                        <button href="#" class="pull-right EtDel" id="dEt{{i}}{{j}}" data-id="eEt{{i}}{{j}}" data-semestre="{{s}}" data-niveau="{{n}}" data-heure="{{heures[i].id}}" data-jour="{{jours[j].id}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nh="{{nh}}" data-nj="{{nj}}">
+                                                                                            <span class="fa fa-remove"></span>
                                                                                         </button>
                                                                                     {% endif %}
                                                                                 </p>
@@ -119,9 +123,29 @@
                                                                                             niveau: niveau,
                                                                                             jour: jour,
                                                                                             heure: heure,
-                                                                                            semestre : semestre
+                                                                                            semestre: semestre
                                                                                         }))
                                                                                     })
+
+                                                                                    $('#dEt' + i + j).on('click', function (event) {
+                                                                                            let id = document.getElementById($(this).attr('id'))
+                                                                                            event.preventDefault()
+                                                                                            idA = '#' + id.dataset.id
+                                                                                            loader = id.dataset.loader
+                                                                                            $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                                                                                            niveau = id.dataset.niveau
+                                                                                            heure = id.dataset.heure
+                                                                                            jour = id.dataset.jour
+                                                                                            type = id.dataset.type
+                                                                                            semestre = id.dataset.semestre
+
+                                                                                            $(idA).load(Routing.generate('confirmeSupression_et', {
+                                                                                                niveau: niveau,
+                                                                                                jour: jour,
+                                                                                                heure: heure,
+                                                                                                semestre: semestre
+                                                                                            }))
+                                                                                        })
                                                                                 })
                                                                             </script>
                                                                             {% set j = j + 1 %}
@@ -162,8 +186,8 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {#    <script>
-                    $(function () {
-                        $('#example1').DataTable()
-                    })
-                </script>#}
+                        $(function () {
+                            $('#example1').DataTable()
+                        })
+                    </script>#}
 {% endblock %}

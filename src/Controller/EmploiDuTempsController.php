@@ -132,4 +132,45 @@ class EmploiDuTempsController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/confirmeSupression_et/{niveau}/{jour}/{heure}/{semestre}" , name="confirmeSupression_et",options = { "expose" = true })
+     */
+    public function confirmeSupression($niveau,$jour,$heure,$semestre)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $etRepository = $em->getRepository(EmploiDuTemps::class);
+        $et = $etRepository->specialFindOne($niveau , $heure, $jour , $semestre);
+        return $this->render('emploi_du_temps/confirmeSupression.html.twig', [
+            'et' => $et,
+            'jour' => $jour,
+            'heure' => $heure,
+            'semestre' => $semestre,
+            'niveau' => $niveau,
+        ]);
+    }
+    /**
+     * @Route("note/delete/{niveau}/{jour}/{heure}/{semestre}/{etId}", name="deletEt",options = { "expose" = true })
+     */
+    public function delete($niveau , $jour , $heure,$semestre,$etId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $etRepository = $em->getRepository(EmploiDuTemps::class);
+        $niveauxRepository = $em->getRepository(Niveaux::class);
+
+        $niv = $niveauxRepository->find($niveau);
+        $et = $etRepository->find($etId);
+        $em->remove($et);
+        $em->flush();
+        return $this->redirectToRoute(
+            'add_etemps',
+            [
+                'type' =>$niv->getType()->getId(),
+                'jour' => $jour,
+                'heure' => $heure,
+                'semestre' => $semestre,
+                'niveaux' => $niveau,
+            ]
+        );
+    }
 }
