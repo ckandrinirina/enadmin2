@@ -19,15 +19,17 @@ class EmploiDuTempsRepository extends ServiceEntityRepository
         parent::__construct($registry, EmploiDuTemps::class);
     }
 
-    public function specialFindOne($niveaux,$heures,$jours)
+    public function specialFindOne($niveaux,$heures,$jours,$semestre)
     {
         return $this->createQueryBuilder('e')
             ->where('e.niveau = :val1')
             ->andWhere('e.heure= :val2')
             ->andWhere('e.jour= :val3')
+            ->andWhere('e.semestre= :val4')
             ->setParameter('val1',$niveaux)
             ->setParameter('val2',$heures)
             ->setParameter('val3',$jours)
+            ->setParameter('val4',$semestre)
             ->getQuery()
             ->getResult();
     }

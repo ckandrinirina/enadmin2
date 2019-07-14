@@ -54,6 +54,11 @@ class Semestre
      */
     private $noteUcs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmploiDuTemps", mappedBy="semestre")
+     */
+    private $emploiDuTemps;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
@@ -62,6 +67,7 @@ class Semestre
         $this->repartitionEC = new ArrayCollection();
         $this->uEs = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
+        $this->emploiDuTemps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -322,6 +328,37 @@ class Semestre
             // set the owning side to null (unless already changed)
             if ($noteUc->getSemestre() === $this) {
                 $noteUc->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmploiDuTemps[]
+     */
+    public function getEmploiDuTemps(): Collection
+    {
+        return $this->emploiDuTemps;
+    }
+
+    public function addEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
+    {
+        if (!$this->emploiDuTemps->contains($emploiDuTemp)) {
+            $this->emploiDuTemps[] = $emploiDuTemp;
+            $emploiDuTemp->setSemstre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploiDuTemp(EmploiDuTemps $emploiDuTemp): self
+    {
+        if ($this->emploiDuTemps->contains($emploiDuTemp)) {
+            $this->emploiDuTemps->removeElement($emploiDuTemp);
+            // set the owning side to null (unless already changed)
+            if ($emploiDuTemp->getSemstre() === $this) {
+                $emploiDuTemp->setSemstre(null);
             }
         }
 

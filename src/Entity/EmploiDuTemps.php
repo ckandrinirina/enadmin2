@@ -38,6 +38,11 @@ class EmploiDuTemps
      */
     private $ec;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="emploiDuTemps")
+     */
+    private $semestre;
+
     public function __construct()
     {
         $this->jours = new ArrayCollection();
@@ -204,6 +209,18 @@ class EmploiDuTemps
     public function setEc(?EC $ec): self
     {
         $this->ec = $ec;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
 
         return $this;
     }

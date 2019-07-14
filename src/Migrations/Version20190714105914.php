@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190706071851 extends AbstractMigration
+final class Version20190714105914 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -25,7 +25,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('CREATE TABLE anne_universitaire (id INT AUTO_INCREMENT NOT NULL, anne_universitaire VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE droit (id INT AUTO_INCREMENT NOT NULL, valeur INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ec (id INT AUTO_INCREMENT NOT NULL, uc_id INT DEFAULT NULL, enseignant_id INT DEFAULT NULL, nom VARCHAR(255) NOT NULL, coefficient DOUBLE PRECISION NOT NULL, code VARCHAR(255) NOT NULL, credit INT NOT NULL, INDEX IDX_8DE8BDFF4783DC6D (uc_id), INDEX IDX_8DE8BDFFE455FCC0 (enseignant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE emploi_du_temps (id INT AUTO_INCREMENT NOT NULL, jour_id INT DEFAULT NULL, heure_id INT DEFAULT NULL, niveau_id INT DEFAULT NULL, ec_id INT DEFAULT NULL, INDEX IDX_F86B32C1220C6AD0 (jour_id), INDEX IDX_F86B32C1F2A733EB (heure_id), INDEX IDX_F86B32C1B3E9C81 (niveau_id), INDEX IDX_F86B32C127634BEF (ec_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE emploi_du_temps (id INT AUTO_INCREMENT NOT NULL, jour_id INT DEFAULT NULL, heure_id INT DEFAULT NULL, niveau_id INT DEFAULT NULL, ec_id INT DEFAULT NULL, semstre_id INT DEFAULT NULL, INDEX IDX_F86B32C1220C6AD0 (jour_id), INDEX IDX_F86B32C1F2A733EB (heure_id), INDEX IDX_F86B32C1B3E9C81 (niveau_id), INDEX IDX_F86B32C127634BEF (ec_id), INDEX IDX_F86B32C1F8370AB1 (semstre_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE enseignant (id INT AUTO_INCREMENT NOT NULL, type_id INT NOT NULL, login_id INT DEFAULT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, contact VARCHAR(255) NOT NULL, adresse VARCHAR(255) NOT NULL, date_naissance DATE NOT NULL, lieux_naissance VARCHAR(255) NOT NULL, photo VARCHAR(255) DEFAULT NULL, INDEX IDX_81A72FA1C54C8C93 (type_id), UNIQUE INDEX UNIQ_81A72FA15CB2E05D (login_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE enseignant_type (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE etudiant (id INT AUTO_INCREMENT NOT NULL, sexe_id INT NOT NULL, niveaux_id INT NOT NULL, anne_universitaire_id INT NOT NULL, login_id INT DEFAULT NULL, parcour_id INT DEFAULT NULL, nom VARCHAR(100) NOT NULL, prenom VARCHAR(100) NOT NULL, photo VARCHAR(255) NOT NULL, pere VARCHAR(255) NOT NULL, profession_pere VARCHAR(255) NOT NULL, mere VARCHAR(255) NOT NULL, profession_mere VARCHAR(255) NOT NULL, contact VARCHAR(255) NOT NULL, date_naissance DATE NOT NULL, lieux_naissance VARCHAR(255) NOT NULL, adresse VARCHAR(255) NOT NULL, anne_entre VARCHAR(255) NOT NULL, is_sortant TINYINT(1) DEFAULT NULL, INDEX IDX_717E22E3448F3B3C (sexe_id), INDEX IDX_717E22E3AAC4B70E (niveaux_id), INDEX IDX_717E22E3E7D48F5 (anne_universitaire_id), UNIQUE INDEX UNIQ_717E22E35CB2E05D (login_id), INDEX IDX_717E22E39A561E99 (parcour_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -35,7 +35,8 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('CREATE TABLE login_type (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE niveaux (id INT AUTO_INCREMENT NOT NULL, type_id INT NOT NULL, niveau VARCHAR(255) NOT NULL, INDEX IDX_56F771A0C54C8C93 (type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE niveaux_uc (niveaux_id INT NOT NULL, uc_id INT NOT NULL, INDEX IDX_D2D77FF0AAC4B70E (niveaux_id), INDEX IDX_D2D77FF04783DC6D (uc_id), PRIMARY KEY(niveaux_id, uc_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE note (id INT AUTO_INCREMENT NOT NULL, etudiant_id INT NOT NULL, ec_id INT NOT NULL, semestre_id INT NOT NULL, anne_universitaire_id INT DEFAULT NULL, niveaux_id INT NOT NULL, valeur DOUBLE PRECISION NOT NULL, is_ratrapage TINYINT(1) NOT NULL, is_valide TINYINT(1) NOT NULL, INDEX IDX_CFBDFA14DDEAB1A3 (etudiant_id), INDEX IDX_CFBDFA1427634BEF (ec_id), INDEX IDX_CFBDFA145577AFDB (semestre_id), INDEX IDX_CFBDFA14E7D48F5 (anne_universitaire_id), INDEX IDX_CFBDFA14AAC4B70E (niveaux_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE note (id INT AUTO_INCREMENT NOT NULL, etudiant_id INT NOT NULL, ec_id INT NOT NULL, semestre_id INT NOT NULL, anne_universitaire_id INT DEFAULT NULL, niveaux_id INT NOT NULL, note_uc_id INT DEFAULT NULL, valeur DOUBLE PRECISION NOT NULL, is_ratrapage TINYINT(1) NOT NULL, is_valide TINYINT(1) NOT NULL, value_coeff DOUBLE PRECISION NOT NULL, INDEX IDX_CFBDFA14DDEAB1A3 (etudiant_id), INDEX IDX_CFBDFA1427634BEF (ec_id), INDEX IDX_CFBDFA145577AFDB (semestre_id), INDEX IDX_CFBDFA14E7D48F5 (anne_universitaire_id), INDEX IDX_CFBDFA14AAC4B70E (niveaux_id), INDEX IDX_CFBDFA1422937FBA (note_uc_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE note_uc (id INT AUTO_INCREMENT NOT NULL, uc_id INT DEFAULT NULL, etudiant_id INT DEFAULT NULL, semestre_id INT DEFAULT NULL, anne_universitaire_id INT DEFAULT NULL, niveaux_id INT DEFAULT NULL, value_coeff DOUBLE PRECISION NOT NULL, is_ratarapage TINYINT(1) NOT NULL, is_valide TINYINT(1) NOT NULL, credit INT NOT NULL, INDEX IDX_5EFEC0AB4783DC6D (uc_id), INDEX IDX_5EFEC0ABDDEAB1A3 (etudiant_id), INDEX IDX_5EFEC0AB5577AFDB (semestre_id), INDEX IDX_5EFEC0ABE7D48F5 (anne_universitaire_id), INDEX IDX_5EFEC0ABAAC4B70E (niveaux_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE repartition_ec (id INT AUTO_INCREMENT NOT NULL, ec_id INT DEFAULT NULL, niveaux_id INT DEFAULT NULL, semestre_id INT DEFAULT NULL, INDEX IDX_B0B7DF0927634BEF (ec_id), INDEX IDX_B0B7DF09AAC4B70E (niveaux_id), INDEX IDX_B0B7DF095577AFDB (semestre_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE school (id INT AUTO_INCREMENT NOT NULL, begin_at DATETIME NOT NULL, end_at DATETIME DEFAULT NULL, title VARCHAR(255) NOT NULL, content VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE scolarite (id INT AUTO_INCREMENT NOT NULL, etudiant_id INT NOT NULL, droit_id INT NOT NULL, numero_inscription VARCHAR(255) NOT NULL, date_inscription DATE NOT NULL, UNIQUE INDEX UNIQ_276250ABDDEAB1A3 (etudiant_id), INDEX IDX_276250AB5AA93370 (droit_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -52,6 +53,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE emploi_du_temps ADD CONSTRAINT FK_F86B32C1F2A733EB FOREIGN KEY (heure_id) REFERENCES heures (id)');
         $this->addSql('ALTER TABLE emploi_du_temps ADD CONSTRAINT FK_F86B32C1B3E9C81 FOREIGN KEY (niveau_id) REFERENCES niveaux (id)');
         $this->addSql('ALTER TABLE emploi_du_temps ADD CONSTRAINT FK_F86B32C127634BEF FOREIGN KEY (ec_id) REFERENCES ec (id)');
+        $this->addSql('ALTER TABLE emploi_du_temps ADD CONSTRAINT FK_F86B32C1F8370AB1 FOREIGN KEY (semstre_id) REFERENCES semestre (id)');
         $this->addSql('ALTER TABLE enseignant ADD CONSTRAINT FK_81A72FA1C54C8C93 FOREIGN KEY (type_id) REFERENCES enseignant_type (id)');
         $this->addSql('ALTER TABLE enseignant ADD CONSTRAINT FK_81A72FA15CB2E05D FOREIGN KEY (login_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE etudiant ADD CONSTRAINT FK_717E22E3448F3B3C FOREIGN KEY (sexe_id) REFERENCES sexe (id)');
@@ -71,6 +73,12 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA145577AFDB FOREIGN KEY (semestre_id) REFERENCES semestre (id)');
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14E7D48F5 FOREIGN KEY (anne_universitaire_id) REFERENCES anne_universitaire (id)');
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14AAC4B70E FOREIGN KEY (niveaux_id) REFERENCES niveaux (id)');
+        $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA1422937FBA FOREIGN KEY (note_uc_id) REFERENCES note_uc (id)');
+        $this->addSql('ALTER TABLE note_uc ADD CONSTRAINT FK_5EFEC0AB4783DC6D FOREIGN KEY (uc_id) REFERENCES uc (id)');
+        $this->addSql('ALTER TABLE note_uc ADD CONSTRAINT FK_5EFEC0ABDDEAB1A3 FOREIGN KEY (etudiant_id) REFERENCES etudiant (id)');
+        $this->addSql('ALTER TABLE note_uc ADD CONSTRAINT FK_5EFEC0AB5577AFDB FOREIGN KEY (semestre_id) REFERENCES semestre (id)');
+        $this->addSql('ALTER TABLE note_uc ADD CONSTRAINT FK_5EFEC0ABE7D48F5 FOREIGN KEY (anne_universitaire_id) REFERENCES anne_universitaire (id)');
+        $this->addSql('ALTER TABLE note_uc ADD CONSTRAINT FK_5EFEC0ABAAC4B70E FOREIGN KEY (niveaux_id) REFERENCES niveaux (id)');
         $this->addSql('ALTER TABLE repartition_ec ADD CONSTRAINT FK_B0B7DF0927634BEF FOREIGN KEY (ec_id) REFERENCES ec (id)');
         $this->addSql('ALTER TABLE repartition_ec ADD CONSTRAINT FK_B0B7DF09AAC4B70E FOREIGN KEY (niveaux_id) REFERENCES niveaux (id)');
         $this->addSql('ALTER TABLE repartition_ec ADD CONSTRAINT FK_B0B7DF095577AFDB FOREIGN KEY (semestre_id) REFERENCES semestre (id)');
@@ -91,6 +99,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE etudiant DROP FOREIGN KEY FK_717E22E3E7D48F5');
         $this->addSql('ALTER TABLE fiche_individuel DROP FOREIGN KEY FK_4DA93DE4E7D48F5');
         $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA14E7D48F5');
+        $this->addSql('ALTER TABLE note_uc DROP FOREIGN KEY FK_5EFEC0ABE7D48F5');
         $this->addSql('ALTER TABLE scolarite DROP FOREIGN KEY FK_276250AB5AA93370');
         $this->addSql('ALTER TABLE emploi_du_temps DROP FOREIGN KEY FK_F86B32C127634BEF');
         $this->addSql('ALTER TABLE fiche_individuel DROP FOREIGN KEY FK_4DA93DE427634BEF');
@@ -100,6 +109,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE enseignant DROP FOREIGN KEY FK_81A72FA1C54C8C93');
         $this->addSql('ALTER TABLE fiche_individuel DROP FOREIGN KEY FK_4DA93DE4DDEAB1A3');
         $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA14DDEAB1A3');
+        $this->addSql('ALTER TABLE note_uc DROP FOREIGN KEY FK_5EFEC0ABDDEAB1A3');
         $this->addSql('ALTER TABLE scolarite DROP FOREIGN KEY FK_276250ABDDEAB1A3');
         $this->addSql('ALTER TABLE emploi_du_temps DROP FOREIGN KEY FK_F86B32C1F2A733EB');
         $this->addSql('ALTER TABLE emploi_du_temps DROP FOREIGN KEY FK_F86B32C1220C6AD0');
@@ -108,10 +118,14 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE etudiant DROP FOREIGN KEY FK_717E22E3AAC4B70E');
         $this->addSql('ALTER TABLE niveaux_uc DROP FOREIGN KEY FK_D2D77FF0AAC4B70E');
         $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA14AAC4B70E');
+        $this->addSql('ALTER TABLE note_uc DROP FOREIGN KEY FK_5EFEC0ABAAC4B70E');
         $this->addSql('ALTER TABLE repartition_ec DROP FOREIGN KEY FK_B0B7DF09AAC4B70E');
         $this->addSql('ALTER TABLE semestre_niveaux DROP FOREIGN KEY FK_FDAD8D66AAC4B70E');
+        $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA1422937FBA');
+        $this->addSql('ALTER TABLE emploi_du_temps DROP FOREIGN KEY FK_F86B32C1F8370AB1');
         $this->addSql('ALTER TABLE fiche_individuel DROP FOREIGN KEY FK_4DA93DE45577AFDB');
         $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA145577AFDB');
+        $this->addSql('ALTER TABLE note_uc DROP FOREIGN KEY FK_5EFEC0AB5577AFDB');
         $this->addSql('ALTER TABLE repartition_ec DROP FOREIGN KEY FK_B0B7DF095577AFDB');
         $this->addSql('ALTER TABLE semestre_niveaux DROP FOREIGN KEY FK_FDAD8D665577AFDB');
         $this->addSql('ALTER TABLE semestre_uc DROP FOREIGN KEY FK_2D6467255577AFDB');
@@ -120,6 +134,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('ALTER TABLE niveaux DROP FOREIGN KEY FK_56F771A0C54C8C93');
         $this->addSql('ALTER TABLE ec DROP FOREIGN KEY FK_8DE8BDFF4783DC6D');
         $this->addSql('ALTER TABLE niveaux_uc DROP FOREIGN KEY FK_D2D77FF04783DC6D');
+        $this->addSql('ALTER TABLE note_uc DROP FOREIGN KEY FK_5EFEC0AB4783DC6D');
         $this->addSql('ALTER TABLE semestre_uc DROP FOREIGN KEY FK_2D6467254783DC6D');
         $this->addSql('ALTER TABLE enseignant DROP FOREIGN KEY FK_81A72FA15CB2E05D');
         $this->addSql('ALTER TABLE etudiant DROP FOREIGN KEY FK_717E22E35CB2E05D');
@@ -137,6 +152,7 @@ final class Version20190706071851 extends AbstractMigration
         $this->addSql('DROP TABLE niveaux');
         $this->addSql('DROP TABLE niveaux_uc');
         $this->addSql('DROP TABLE note');
+        $this->addSql('DROP TABLE note_uc');
         $this->addSql('DROP TABLE repartition_ec');
         $this->addSql('DROP TABLE school');
         $this->addSql('DROP TABLE scolarite');

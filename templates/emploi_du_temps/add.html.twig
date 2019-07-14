@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Emploi du temps par niveaux{% endblock %}
+{% block title %}Emploi du temps par niveaux
+    {{ parcour.type }}
+{% endblock %}
 
 {% block insideHeader %}
     <section class="content-header">
@@ -9,7 +11,10 @@
             <small>{{ parcour.type }}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Emploi du temps par niveaux</a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Emploi du temps par niveaux</a>
+            </li>
             <li class="active">{{ parcour.type }}</li>
         </ol>
     </section>
@@ -21,108 +26,123 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
-                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}"><a href="{{ path('etemps',{'type':parcour.id,'niveaux':niveau.id}) }}">{{ niveau.niveau }}</a></li>
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
+                            <a href="{{ path('add_etemps',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id}) }}">{{ niveau.niveau }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Emploi du temps par niveaux</h3>
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>JOURS/HEURES</th>
-                                                {% for jour in jours %}
-                                                    <th>{{ jour.jours }}
-                                                {% endfor %}
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% set i = 0 %}
-                                                {% if i == 2 %}
-                                                    <td>PAUSE PAUSE PAUSE PAUSE PAUSE</td>
-                                                {% endif %}
-                                                {% set countadd = 0 %}
-                                                {% for heure in heures %}
-                                                
-                                                {% if i == 2 %}
-                                                <tr>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                    <td>PAUSE</td>
-                                                </tr>
-                                                {% endif %}
-                                                <tr>
-                                                    <td>{{ heure.heures }}</td>
-                                                    {% set j = 0 %}
-                                                    {% for ec in matriceEt[i] %}
-                                                    <td>
-                                                        <p class="center" id="eEt{{i}}{{j}}">{{ ec }}
-                                                            {% if ec == null %}
-                                                            {% set countadd = countadd + 1 %}
-                                                            <button
-                                                                class="pull-right eptAdd" 
-                                                                id ="atat{{i}}{{j}}"
-                                                                data-id = "eEt{{i}}{{j}}"
-                                                                data-niveau = "{{n}}"
-                                                                data-heure = "{{heures[i].id}}"
-                                                                data-jour = "{{jours[j].id}}"
-                                                                data-type = "{{parcour.id}}"
-                                                                data-loader = "{{asset('assets/loader/ajax-loader-4.gif')}}"
-                                                                data-nh = "{{nh}}"
-                                                                data-nj = "{{nj}}"
-                                                            >
-                                                            Ajouter
-                                                            </button>
-                                                            {% endif %}
-                                                        </p>
-                                                    </td>
-                                                    <script>
-                                                        $(function () {
-                                                            i = {{i}}
-                                                            j = {{j}}
-                                                            $('#atat' + i + j).on('click', function (event) {
-                                                                let id = document.getElementById($(this).attr('id'))
-                                                                event.preventDefault()
-                                                                idA = '#' + id.dataset.id
-                                                                loader = id.dataset.loader
-                                                                $(idA).html('<img src="' + loader + '" class="text-center"/>')
-                                                                niveau = id.dataset.niveau
-                                                                heure = id.dataset.heure
-                                                                jour = id.dataset.jour
-                                                                type = id.dataset.type
-                                                                $(idA).load(Routing.generate('ec_choice', {
-                                                                     niveau: niveau,
-                                                                    jour: jour,
-                                                                    heure: heure
-                                                                }))
-                                                            })
-                                                        })
-                                                    </script>
-                                                    {% set j = j + 1 %}
-                                                    {% endfor %}  
-                                                </tr>
-                                                {% set i = i + 1 %}
-                                                {% endfor %}
-                                            </tbody>
-                                            <tfoot>
-                                        </table>
-                                        <div id="etcount" data-countadd = "{{countadd}}">
+                        <div
+                            class="col-md-12">
+                            <!-- Custom Tabs (Pulled to the right) -->
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs pull-right">
+                                    {% for semestre in semestres %}
+                                        <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
+                                            <a href="{{ path('add_etemps',{'type':parcour.id,'niveaux':n,'semestre':semestre.id}) }}">{{ semestre.semestre }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    <li class="pull-left header">
+                                        <i class="fa fa-th"></i>
+                                        Semestre</li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1-1">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Emploi du temps par niveaux   :</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        <table class="table table-bordered table-striped" id="example1">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>JOURS/HEURES</th>
+                                                                    {% for jour in jours %}
+                                                                        <th>{{ jour.jours }}
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% set i = 0 %}
+                                                                {% if i == 2 %}
+                                                                    <td>PAUSE PAUSE PAUSE PAUSE PAUSE</td>
+                                                                {% endif %}
+                                                                {% set countadd = 0 %}
+                                                                {% for heure in heures %}
+
+                                                                    {% if i == 2 %}
+                                                                        <tr>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                            <td>PAUSE</td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                    <tr>
+                                                                        <td>{{ heure.heures }}</td>
+                                                                        {% set j = 0 %}
+                                                                        {% for ec in matriceEt[i] %}
+                                                                            <td>
+                                                                                <p class="center" id="eEt{{i}}{{j}}">{{ ec }}
+                                                                                    {% if ec == null %}
+                                                                                        {% set countadd = countadd + 1 %}
+                                                                                        <button class="pull-right eptAdd" id="atat{{i}}{{j}}" data-id="eEt{{i}}{{j}}" data-semestre="{{s}}" data-niveau="{{n}}" data-heure="{{heures[i].id}}" data-jour="{{jours[j].id}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nh="{{nh}}" data-nj="{{nj}}">
+                                                                                            Ajouter
+                                                                                        </button>
+                                                                                    {% endif %}
+                                                                                </p>
+                                                                            </td>
+                                                                            <script>
+                                                                                $(function () {
+                                                                                    i = {{ i }}
+                                                                                    j = {{ j }}
+                                                                                    $('#atat' + i + j).on('click', function (event) {
+                                                                                        let id = document.getElementById($(this).attr('id'))
+                                                                                        event.preventDefault()
+                                                                                        idA = '#' + id.dataset.id
+                                                                                        loader = id.dataset.loader
+                                                                                        $(idA).html('<img src="' + loader + '" class="text-center"/>')
+                                                                                        niveau = id.dataset.niveau
+                                                                                        heure = id.dataset.heure
+                                                                                        jour = id.dataset.jour
+                                                                                        type = id.dataset.type
+                                                                                        semestre = id.dataset.semestre
+                                                                                        $(idA).load(Routing.generate('ec_choice', {
+                                                                                            niveau: niveau,
+                                                                                            jour: jour,
+                                                                                            heure: heure,
+                                                                                            semestre : semestre
+                                                                                        }))
+                                                                                    })
+                                                                                })
+                                                                            </script>
+                                                                            {% set j = j + 1 %}
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                    {% set i = i + 1 %}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                            <tfoot></tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12"></div>
                     </div>
                 </div>
             </div>
@@ -131,12 +151,19 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    {#<script src="{{asset('assets/js/etAdd.js')}}"></script>#}
-    {#<script src="{{asset('assets/js/etDel.js')}}"></script>
-    <script src="{{asset('assets/js/etEdit.js')}}"></script>#}
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {#    <script>
+                    $(function () {
+                        $('#example1').DataTable()
+                    })
+                </script>#}
 {% endblock %}

@@ -14,18 +14,20 @@ use App\Form\EcChoiceType;
 use App\Entity\EmploiDuTemps;
 use App\Entity\EC;
 use App\Entity\RepartitionEC;
+use App\Entity\Semestre;
 
 class EmploiDuTempsController extends AbstractController
 {
     /**
-     * @Route("/emploi/du/temps/{type}/{niveaux}", name="etemps")
+     * @Route("/emploi/du/temps/{type}/{niveaux}/{semestre}", name="etemps")
      */
-    public function index(EtService $etService,$type, $niveaux)
+    public function index(EtService $etService,$type,$niveaux,$semestre)
     {
         $status = 'etemps';
         $em = $this->getDoctrine()->getManager();
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
+        $semestreRepository = $em->getRepository(Semestre::class);
         $heuresRepository = $em->getRepository(Heures::class);
         $joursRepository = $em->getRepository(Jours::class);
 
@@ -34,7 +36,8 @@ class EmploiDuTempsController extends AbstractController
 
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
-        $matriceEt = $etService->generateMatriceEt($niveaux,$heures,$jours);
+        $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
+        $matriceEt = $etService->generateMatriceEt($niveaux,$heures,$jours,$semestre);
 
         return $this->render('emploi_du_temps/index.html.twig',
         [
@@ -45,18 +48,22 @@ class EmploiDuTempsController extends AbstractController
             'jours' => $jours,
             'heures' => $heures,
             'matriceEt'=> $matriceEt,
+            'semestre' => $semestre,
+            'semestres'=>$sem,
+            's'=> $semestre,
         ]
     );
     }
     /**
-     * @Route("/emploi/du/temps/add/{type}/{niveaux}", name="add_etemps",options = { "expose" = true })
+     * @Route("/emploi/du/temps/add/{type}/{niveaux}/{semestre}", name="add_etemps",options = { "expose" = true })
      */
-    public function add($type, $niveaux,EtService $etService)
+    public function add($type, $niveaux,$semestre,EtService $etService)
     {
         $status = 'etemps';
         $em = $this->getDoctrine()->getManager();
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
+        $semestreRepository = $em->getRepository(Semestre::class);
         $heuresRepository = $em->getRepository(Heures::class);
         $joursRepository = $em->getRepository(Jours::class);
 
@@ -66,10 +73,11 @@ class EmploiDuTempsController extends AbstractController
         $nh = count($heures);
         $nj = count($jours);
  
-        $matriceEt = $etService->generateMatriceEt($niveaux,$heures,$jours);
+        $matriceEt = $etService->generateMatriceEt($niveaux,$heures,$jours,$semestre);
 
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
+        $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
 
         return $this->render('emploi_du_temps/add.html.twig',
         [
@@ -81,25 +89,29 @@ class EmploiDuTempsController extends AbstractController
             'heures' => $heures,
             'matriceEt'=> $matriceEt,
             'nh' => $nh,
-            'nj' => $nj
+            'nj' => $nj,
+            'semestre' => $semestre,
+            'semestres'=>$sem,
+            's'=> $semestre,
         ]
     );
     }
     /**
-     * @Route("/ec/choice/{niveau}/{jour}/{heure}" , name="ec_choice", options = { "expose" = true },methods={"GET","POST"})
+     * @Route("/ec/choice/{niveau}/{jour}/{heure}/{semestre}" , name="ec_choice", options = { "expose" = true },methods={"GET","POST"})
      */
-    public function ecChoice(Request $request , $niveau , $jour , $heure)
+    public function ecChoice(Request $request , $niveau , $jour , $heure,$semestre)
     {
         $em = $this->getDoctrine()->getManager();
         $et = new EmploiDuTemps();
 
         $niveauxRepository = $em->getRepository(Niveaux::class);
-        $ec_repository = $em->getRepository(EC::class);
+        $semestreRepository = $em->getRepository(Semestre::class);
         $joursRepository =$em->getRepository(Jours::class);
         $heuresRepository = $em->getRepository(Heures::class);
         $heures = $heuresRepository->find($heure);
         $jours = $joursRepository->find($jour);
         $niveaux = $niveauxRepository->find($niveau);
+        $semestre = $semestreRepository->find($semestre);
         //atreto aloha
         $form = $this->createForm(EcChoiceType::class,$et);
 
@@ -110,6 +122,8 @@ class EmploiDuTempsController extends AbstractController
             $et->setHeure($heures);
             $et->setJour($jours);
             $et->setNiveau($niveaux);
+            $et->setSemestre($semestre);
+            dump($et);
             $em->persist($et);
             $em->flush();
         }

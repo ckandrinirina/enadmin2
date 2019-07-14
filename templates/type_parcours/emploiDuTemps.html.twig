@@ -1,4 +1,5 @@
 {% for type in allTypeParcours %}
     {% set niveaux = type.niveauxs['0'].id %}
-    <li><a href="{{ path('etemps',{'type':type.id , 'niveaux':niveaux}) }}">{{ type.type }}</a></li>
+    {% set semestre =  type.niveauxs['0'].semestres['0'].id %}
+    <li><a href="{{ path('etemps',{'type':type.id , 'niveaux':niveaux ,'semestre':semestre}) }}">{{ type.type }}</a></li>
 {% endfor %}

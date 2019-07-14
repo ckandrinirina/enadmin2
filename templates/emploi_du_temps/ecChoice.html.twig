@@ -16,6 +16,7 @@
                     niveau: niveau,
                     jour : jour,
                     heure: heure,
+                    semestre:semestre
                 }),
                 {
                     'ec_choice[ec]': valeur
@@ -25,6 +26,7 @@
                     window.location = Routing.generate('add_etemps', {
                         type: type,
                         niveaux: niveau,
+                        semestre:semestre
                     })
                 })
             })

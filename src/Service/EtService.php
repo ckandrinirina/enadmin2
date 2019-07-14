@@ -14,7 +14,7 @@ class EtService
         $this->em = $em;
     }
 
-    public function generateMatriceEt($niveaux,$heures,$jours)
+    public function generateMatriceEt($niveaux,$heures,$jours,$semestre)
     {
         $em = $this->em;
         $nbrJours = count($jours);
@@ -29,7 +29,7 @@ class EtService
                 {
                     $he = $heures[$i]->getId();
                     $jo = $jours[$j]->getId();
-                    $etByNiveauxByHeuresByJours = $etRepository->specialFindOne($niveaux,$he,$jo);
+                    $etByNiveauxByHeuresByJours = $etRepository->specialFindOne($niveaux,$he,$jo,$semestre);
                     if(isset($etByNiveauxByHeuresByJours['0']))
                     {
                         $matriceEt[$i][$j] = $etByNiveauxByHeuresByJours['0']->getEc()->getNom();
