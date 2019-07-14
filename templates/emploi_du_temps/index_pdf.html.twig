@@ -4,15 +4,15 @@
     {% endblock %}
 
     {% block return_top %}
-        {# <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('etemps',{'type':parcour.id,'niveaux':n,'semestre':s})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
-            Retourner à la liste</a> #}
+            Retourner à la liste</a>
     {% endblock %}
 
     {% block return_bottom %}
-        {# <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('etemps',{'type':parcour.id,'niveaux':n,'semestre':s})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
-            Retourner à la liste</a> #}
+            Retourner à la liste</a>
     {% endblock %}
 
     {% block custom_style %}
@@ -33,30 +33,56 @@
 
     {% block body %}
         <h4 class="lead text-center">
-            <strong>EMPLOI DU TEMPS </strong>
+            <strong>EMPLOI DU TEMPS
+            </strong>
         </h4>
         <table class="table table-bordered" id="custom_table">
             <tr>
-                <td><strong>JOURS</strong></td>
-                <td><strong>HEURES</strong></td>
-                <td><strong>MATIERES</strong></td>
-                <td><strong>ENSEIGNANTS</strong></td>
+                <td>
+                    <strong>JOURS</strong>
+                </td>
+                <td>
+                    <strong>HEURES</strong>
+                </td>
+                <td>
+                    <strong>MATIERES</strong>
+                </td>
+                <td>
+                    <strong>ENSEIGNANTS</strong>
+                </td>
             </tr>
+            {% set temp_jour = '' %}
             {% for e in et %}
-                <tr>
-                    <td>
-                        {{e.jour.jours}}
-                    </td>
-                    <td>
-                        {{e.heure.heures}}
-                    </td>
-                    <td>
-                        {{e.ec.nom}}
-                    </td>
-                    <td>
-                        {{e.ec.enseignant.nom}}  {{e.ec.enseignant.prenom}}
-                    </td>
-                </tr>
+                {% if temp_jour != e.jour.jours %}
+                    <tr>
+                        <td>
+                            {{e.jour.jours}}
+                            {% set temp_jour = e.jour.jours %}
+                        </td>
+                        <td>
+                            {% for e1 in et %}
+                                {% if temp_jour == e1.jour.jours %}
+                                    {{e1.heure.heures}}<br/>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for e2 in et %}
+                                {% if temp_jour == e2.jour.jours %}
+                                    {{e2.ec.nom}}<br/>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for e3 in et %}
+                                {% if temp_jour == e3.jour.jours %}
+                                    {{e3.ec.enseignant.nom}}
+                                    {{e3.ec.enseignant.prenom}}<br/>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </table>
     {% endblock %}
@@ -81,6 +107,19 @@
             }
         </script>
     {% endblock %}
-    
+
     {% block footer_pdf %}
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    La responsable de la mention Electronique
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                <p>Antananarivo le
+                    {{ "now"|date("d/m/Y") }}
+                </p>
+            </div>
+        </div>
+        <p class="margin-bottom-2">RAMANANTSIHOARANA Harisoa Nathalie</p>
     {% endblock %}

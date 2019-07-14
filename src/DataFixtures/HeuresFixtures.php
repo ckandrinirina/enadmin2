@@ -12,11 +12,11 @@ class HeuresFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $heures1 = new Heures();
-        $heures1->setHeures('7:30 à 9:30');
+        $heures1->setHeures('07:30 à 09:30');
         $manager->persist($heures1);
 
         $heures2 = new Heures();
-        $heures2->setHeures('9:30 à 11:30');
+        $heures2->setHeures('09:30 à 11:30');
         $manager->persist($heures2);
 
         $heures3 = new Heures();

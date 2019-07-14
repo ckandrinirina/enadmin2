@@ -42,6 +42,7 @@ class EmploiDuTempsRepository extends ServiceEntityRepository
             ->innerJoin('ec.enseignant','ens')
             ->where('e.niveau = :val1')
             ->andWhere('e.semestre= :val4')
+            ->orderBy('e.jour','ASC')
             ->setParameter('val1', $niveaux)
             ->setParameter('val4', $semestre)
             ->getQuery()
