@@ -19,21 +19,34 @@ class EmploiDuTempsRepository extends ServiceEntityRepository
         parent::__construct($registry, EmploiDuTemps::class);
     }
 
-    public function specialFindOne($niveaux,$heures,$jours,$semestre)
+    public function specialFindOne($niveaux, $heures, $jours, $semestre)
     {
         return $this->createQueryBuilder('e')
             ->where('e.niveau = :val1')
             ->andWhere('e.heure= :val2')
             ->andWhere('e.jour= :val3')
             ->andWhere('e.semestre= :val4')
-            ->setParameter('val1',$niveaux)
-            ->setParameter('val2',$heures)
-            ->setParameter('val3',$jours)
-            ->setParameter('val4',$semestre)
+            ->setParameter('val1', $niveaux)
+            ->setParameter('val2', $heures)
+            ->setParameter('val3', $jours)
+            ->setParameter('val4', $semestre)
             ->getQuery()
             ->getResult();
     }
 
+    public function find_by_niveaux_semestres($niveaux, $semestre)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.ec','ec')
+            ->addSelect('ec')
+            ->innerJoin('ec.enseignant','ens')
+            ->where('e.niveau = :val1')
+            ->andWhere('e.semestre= :val4')
+            ->setParameter('val1', $niveaux)
+            ->setParameter('val4', $semestre)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return EmploiDuTemps[] Returns an array of EmploiDuTemps objects
     //  */

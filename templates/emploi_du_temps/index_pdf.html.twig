@@ -1,0 +1,86 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        {# <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a> #}
+    {% endblock %}
+
+    {% block return_bottom %}
+        {# <a href="{{ path('enseignant',{'type':type}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a> #}
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+            #custom_table {
+                width: 19cm;
+                margin-left: 1cm;
+            }
+            .margin-bottom-2 {
+                margin-top: 1cm;
+            }
+        </style>
+    {% endblock %}
+
+    {% block tete %}
+        <img src="{{ asset('en_tete/tete.jpg') }}" id="img_head"/>
+    {% endblock %}
+
+    {% block body %}
+        <h4 class="lead text-center">
+            <strong>EMPLOI DU TEMPS </strong>
+        </h4>
+        <table class="table table-bordered" id="custom_table">
+            <tr>
+                <td><strong>JOURS</strong></td>
+                <td><strong>HEURES</strong></td>
+                <td><strong>MATIERES</strong></td>
+                <td><strong>ENSEIGNANTS</strong></td>
+            </tr>
+            {% for e in et %}
+                <tr>
+                    <td>
+                        {{e.jour.jours}}
+                    </td>
+                    <td>
+                        {{e.heure.heures}}
+                    </td>
+                    <td>
+                        {{e.ec.nom}}
+                    </td>
+                    <td>
+                        {{e.ec.enseignant.nom}}  {{e.ec.enseignant.prenom}}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+
+    {% block script_function %}
+        <script>
+            function test() {
+                var element = document.getElementById('content');
+                html2pdf().from(element).set({
+                    margin: 0.1,
+                    filename: 'test.pdf',
+                    html2canvas: {
+                        scale: 5
+                    },
+                    jsPDF: {
+                        orientation: 'portrait',
+                        unit: 'in',
+                        format: 'letter',
+                        compressPDF: false
+                    }
+                }).save();
+            }
+        </script>
+    {% endblock %}
+    
+    {% block footer_pdf %}
+    {% endblock %}
