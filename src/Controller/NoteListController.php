@@ -209,6 +209,8 @@ class NoteListController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
         $parcours = $typeParcoursRepository->find($type);
+        $nivOne = $niveauxRepository->find($niveaux);
+        $semOne = $semestreRepository->find($semestre);
 
         if(isset($note))
         {
@@ -262,6 +264,8 @@ class NoteListController extends AbstractController
             'matriceNote' => $matriceNote,
             'allAu' => $allAu,
             'auNow' => $auNow,
+            'nivOne'=> $nivOne,
+            'semOne'=>$semOne
         ]
         );
     }

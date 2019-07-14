@@ -37,7 +37,7 @@
 
     {% block body %}
         <h4 class="text-center">
-            <strong>RESULTAT DE L'EXAMEN POUR LE NIVEAU
+            <strong>RESULTAT DE L'EXAMEN POUR LE NIVEAU {{nivOne.niveau}} / SEMESTRE {{semOne.semestre}}
                 {# {{ niv_name.niveau }}</strong> #}
             </h4>
             <div>
@@ -71,7 +71,7 @@
                         {% set i = 0 %}
                     </tbody>
                 </table>
-            </div>
+            </div> 
         {% endblock %}
 
         {% block script_function %}
