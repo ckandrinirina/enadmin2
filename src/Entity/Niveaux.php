@@ -64,6 +64,11 @@ class Niveaux
      */
     private $noteUcs;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
 
     public function __construct()
     {
@@ -323,6 +328,18 @@ class Niveaux
                 $noteUc->setNiveaux(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

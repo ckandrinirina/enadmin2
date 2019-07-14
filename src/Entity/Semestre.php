@@ -59,6 +59,11 @@ class Semestre
      */
     private $emploiDuTemps;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
@@ -361,6 +366,18 @@ class Semestre
                 $emploiDuTemp->setSemstre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }
