@@ -132,4 +132,17 @@ class TypeParcoursController extends AbstractController
 
         return $this->render('type_parcours/noteResult.html.twig',['allTypeParcours' => $allTypeParcours,'au'=>$lastAu]);
     }
+
+    /**
+     * @Route("/repartition/uc/by/niveau", name="repartition_salle")
+     */
+    public function repartition_salle()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $typeParcoursRepository = $em->getRepository(TypeParcours::class);
+
+        $allTypeParcours = $typeParcoursRepository->findAll();
+
+        return $this->render('type_parcours/repartition_salle.html.twig',['allTypeParcours' => $allTypeParcours]);
+    }
 }

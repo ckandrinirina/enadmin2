@@ -33,10 +33,16 @@ class TypeParcours
      */
     private $etudiants;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="parcour")
+     */
+    private $salles;
+
     public function __construct()
     {
         $this->niveauxs = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
+        $this->salles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +118,55 @@ class TypeParcours
             // set the owning side to null (unless already changed)
             if ($etudiant->getParcour() === $this) {
                 $etudiant->setParcour(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSalle(): ?Salle
+    {
+        return $this->salle;
+    }
+
+    public function setSalle(?Salle $salle): self
+    {
+        $this->salle = $salle;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newParcour = $salle === null ? null : $this;
+        if ($newParcour !== $salle->getParcour()) {
+            $salle->setParcour($newParcour);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Salle[]
+     */
+    public function getSalles(): Collection
+    {
+        return $this->salles;
+    }
+
+    public function addSalle(Salle $salle): self
+    {
+        if (!$this->salles->contains($salle)) {
+            $this->salles[] = $salle;
+            $salle->setParcour($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalle(Salle $salle): self
+    {
+        if ($this->salles->contains($salle)) {
+            $this->salles->removeElement($salle);
+            // set the owning side to null (unless already changed)
+            if ($salle->getParcour() === $this) {
+                $salle->setParcour(null);
             }
         }
 

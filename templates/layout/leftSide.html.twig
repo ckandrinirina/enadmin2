@@ -125,6 +125,17 @@
                 </ul>
             </li>
 
+            <li class="treeview {% if status == "rep_sale" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Répartition des salles</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::repartition_salle')) }}
+                </ul>
+            </li>
+
             <li class="header">AJOUT ET MODIFICATION</li>
 
             <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté étudiant</span></a></li>

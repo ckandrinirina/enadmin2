@@ -29,7 +29,7 @@ class FicheIndividuelController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $semestre = $semestreRepository->findSemestreByNiveaux($niveaux);
         $etudiant = $etudiantRepository->find($etudiant);
-        $fiche = $ficheRepository->findByEtudiant($etudiant);
+        //$fiche = $ficheRepository->findByEtudiant($etudiant);
 
         return $this->render(
             'fiche_individuel/fiche.html.twig',

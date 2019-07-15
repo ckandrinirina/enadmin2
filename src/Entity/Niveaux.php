@@ -69,6 +69,11 @@ class Niveaux
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="niveau")
+     */
+    private $salles;
+
 
     public function __construct()
     {
@@ -79,6 +84,7 @@ class Niveaux
         $this->emploiDuTemps = new ArrayCollection();
         $this->uCs = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
+        $this->salles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -340,6 +346,55 @@ class Niveaux
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getSalle(): ?Salle
+    {
+        return $this->salle;
+    }
+
+    public function setSalle(?Salle $salle): self
+    {
+        $this->salle = $salle;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newNiveau = $salle === null ? null : $this;
+        if ($newNiveau !== $salle->getNiveau()) {
+            $salle->setNiveau($newNiveau);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Salle[]
+     */
+    public function getSalles(): Collection
+    {
+        return $this->salles;
+    }
+
+    public function addSalle(Salle $salle): self
+    {
+        if (!$this->salles->contains($salle)) {
+            $this->salles[] = $salle;
+            $salle->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalle(Salle $salle): self
+    {
+        if ($this->salles->contains($salle)) {
+            $this->salles->removeElement($salle);
+            // set the owning side to null (unless already changed)
+            if ($salle->getNiveau() === $this) {
+                $salle->setNiveau(null);
+            }
+        }
 
         return $this;
     }
