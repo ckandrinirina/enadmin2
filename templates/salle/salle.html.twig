@@ -1,0 +1,13 @@
+{% for salle in salles %}
+<div class="box-body col-xs-6">
+    <h3 class="text-muted text-center">{{salle.semestre.nom}}</h3>
+    <table class="table table-bordered table-striped" id="example1">
+        <thead>
+            <tr>
+                <th class="text-center">{{salle.nom}}</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+{% endfor %}

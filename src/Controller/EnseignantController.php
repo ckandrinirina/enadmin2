@@ -12,16 +12,21 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AnneUniversitaire;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EnseignantController extends AbstractController
 {
     /**
      * @Route("/enseignant/{type}", name="enseignant")
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function index($type)
     {
         $status = "listEns";
-        $t=$type;
+        $t = $type;
 
         $em = $this->getDoctrine()->getManager();
         $typeRepository = $em->getRepository(EnseignantType::class);
@@ -30,12 +35,14 @@ class EnseignantController extends AbstractController
         $type = $typeRepository->find($type);
         $enseignants = $enseignantRepository->findByType($type);
 
-        return $this->render('enseignant/list.html.twig',
+        return $this->render(
+            'enseignant/list.html.twig',
             [
-                'enseignants'=>$enseignants,
-                'status'=>$status,
-                'type'=>$t
-            ]);
+                'enseignants' => $enseignants,
+                'status' => $status,
+                'type' => $t
+            ]
+        );
     }
 
     /**
@@ -44,7 +51,7 @@ class EnseignantController extends AbstractController
     public function enseignant_pdf($type)
     {
         $status = "listEns";
-        $t=$type;
+        $t = $type;
 
         $em = $this->getDoctrine()->getManager();
         $typeRepository = $em->getRepository(EnseignantType::class);
@@ -55,22 +62,23 @@ class EnseignantController extends AbstractController
         $type = $typeRepository->find($type);
         $enseignants = $enseignantRepository->findByType($type);
 
-        return $this->render('enseignant/list_pdf.html.twig',
+        return $this->render(
+            'enseignant/list_pdf.html.twig',
             [
-                'enseignants'=>$enseignants,
-                'status'=>$status,
+                'enseignants' => $enseignants,
+                'status' => $status,
                 'annee' => $anne,
                 'type' => $t
-            ]);
+            ]
+        );
     }
 
     /**
      * @Route("enseignant-ajoute/{login}",name="enseignant_add",methods={"GET","POST"})
      */
-    public function addEnseignant(Request $request ,$login = NULL)
+    public function addEnseignant(Request $request, $login = NULL)
     {
-        if($login == NULL)
-        {
+        if ($login == NULL) {
             return $this->redirectToRoute('app_register');
         }
         $status = "addEns";
@@ -80,24 +88,21 @@ class EnseignantController extends AbstractController
 
         $ens = $enseignantRepository->findByLogin($login);
 
-        if($ens != NULL)
-        {
+        if ($ens != NULL) {
             return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($login);
-        if(!(isset($user)))
-        {
+        if (!(isset($user))) {
             return $this->redirectToRoute('app_register');
         }
 
         $enseignant = new Enseignant();
-        $form = $this->createForm(EnseignantAddType::class , $enseignant);
+        $form = $this->createForm(EnseignantAddType::class, $enseignant);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $enseignant->setLogin($user);
             $em->persist($enseignant);
@@ -106,7 +111,7 @@ class EnseignantController extends AbstractController
             return $this->redirectToRoute('enseignant');
         }
 
-        return $this->render('enseignant/ajoute.html.twig' , [
+        return $this->render('enseignant/ajoute.html.twig', [
             'form' => $form->createView(),
             'status' => $status
         ]);

@@ -136,10 +136,16 @@
                 </ul>
             </li>
 
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="header">AJOUT ET MODIFICATION</li>
+            {% endif %}
 
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté étudiant</span></a></li>
             <li class="{% if status == "addEns" %} {{ "active" }} {% endif %}"><a href="{{ path('enseignant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté enseignant</span></a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "noteAjoute" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Ajouté des notes</span>
                     <span class="pull-right-container">
@@ -150,8 +156,17 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::noteAjoute')) }}
                 </ul>
             </li>
-            <li class="{% if status == "add_ec" %} {{ "active" }} {% endif %}"><a href="{{ path('add_ec') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté un EC</span></a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="{% if status == "add_ec" %} {{ "active" }} {% endif %}"><a href="{{ path('add_ec') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté un EC</span></a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="{% if status == "addUc" %} {{ "active" }} {% endif %}"><a href="{{ path('add_u_c') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté un UE</span></a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Emploi du temps</span>
                     <span class="pull-right-container">
@@ -162,6 +177,7 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTempsEdit')) }}
                 </ul>
             </li>
+            {% endif %}
 
         </ul>
         <!-- /.sidebar-menu -->

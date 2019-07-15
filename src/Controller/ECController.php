@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\TypeParcours;
 use App\Entity\Niveaux;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ECController extends AbstractController
 {
@@ -79,9 +80,14 @@ class ECController extends AbstractController
     }
     /**
      * @Route("e/c/ajoute" , name="add_ec")
+     * 
+     *  Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
+     * 
      */
-    public function addEc(Request $request , FileUploader $fileUploader)
-    {
+    public function addEc(Request $request, FileUploader $fileUploader)
+    {        
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
         $ec = new EC();
@@ -104,36 +110,33 @@ class ECController extends AbstractController
             $all_ec = $uc->getECs();
 
             $nbr = 1;
-            foreach($all_ec as $ec_count)
-            {
-                $nbr = $nbr+1;
+            foreach ($all_ec as $ec_count) {
+                $nbr = $nbr + 1;
             }
-            $coeff = 1/$nbr;
+            $coeff = 1 / $nbr;
 
-            foreach($all_ec as $ec_count)
-            {
+            foreach ($all_ec as $ec_count) {
                 $ec_count->setCoefficient($coeff);
                 $em->persist($ec_count);
             }
 
             $ec->setCoefficient($coeff);
 
-            $i=0;
-            foreach($niveaux as $niveau)
-            {
+            $i = 0;
+            foreach ($niveaux as $niveau) {
                 $repEc[$i] = new RepartitionEC();
                 $repEc[$i]->setEc($ec);
                 $repEc[$i]->setNiveaux($niveau);
                 $repEc[$i]->setSemestre($semestres[$i]);
                 $em->persist($repEc[$i]);
-                $i = $i+1;
+                $i = $i + 1;
             }
 
 
             $em->persist($ec);
 
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+            return $this->redirectToRoute('repartition_uc_by_niveau', ['type' => $t, 'niveau' => $niveaux['0']->getId()]);
         }
         return $this->render(
             'ec/ajoute.html.twig',

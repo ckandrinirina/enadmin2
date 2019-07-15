@@ -16,7 +16,13 @@ use App\Service\NoteService;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\EC;
 use App\Entity\NoteUc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Require ROLE_ADMIN.
+ *
+ * @IsGranted("ROLE_ADMIN")
+ */
 class NoteAjouteController extends AbstractController
 {
     /**
@@ -148,13 +154,10 @@ class NoteAjouteController extends AbstractController
                 $note_uc_new->setValueCoeff(($note->getValueCoeff() * ($uc->getCoefficient())));
                 $note_uc_new->setIsRatarapage($ratrapage);
 
-                if ($note_uc_new->getValueCoeff() < 10)
-                {
+                if ($note_uc_new->getValueCoeff() < 10) {
                     $note_uc_new->setIsValide(false);
                     $note_uc_new->setCredit(0);
-                }
-                else
-                {
+                } else {
                     $note_uc_new->setIsValide(true);
                     $note_uc_new->setCredit($uc->getCredit());
                 }
@@ -164,13 +167,10 @@ class NoteAjouteController extends AbstractController
                 $last_value_coeff = $note_uc['0']->getValueCoeff();
                 $new_value_coeff = ($last_value_coeff) + ($note->getValueCoeff() * ($uc->getCoefficient()));
 
-                if ($new_value_coeff < 10)
-                {
+                if ($new_value_coeff < 10) {
                     $note_uc['0']->setIsValide(false);
                     $note_uc['0']->setCredit(0);
-                }
-                else
-                {
+                } else {
                     $note_uc['0']->setIsValide(true);
                     $note_uc['0']->setCredit($uc->getCredit());
                 }
@@ -232,26 +232,20 @@ class NoteAjouteController extends AbstractController
 
         $new_value_coeff = $last_value_coeff - $note_value_with_coeff;
 
-        if ($new_value_coeff < 10)
-        {
+        if ($new_value_coeff < 10) {
             $note_uc->setIsValide(false);
             $note_uc->setCredit(0);
-        }
-        else
-        {
+        } else {
             $note_uc->setIsValide(true);
             $note_uc->setCredit($note_uc->getUc()->getCoefficient());
         }
-        if($new_value_coeff == 0)
-        {
+        if ($new_value_coeff == 0) {
             $em->remove($note_uc);
-        }
-        else
-        {
+        } else {
             $note_uc->setValueCoeff($new_value_coeff);
             $em->persist($note_uc);
         }
-        
+
         $type = $note->getNiveaux()->getType()->getId();
         $em->remove($note);
         $em->flush();

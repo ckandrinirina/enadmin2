@@ -11,7 +11,7 @@ use App\Entity\Enseignant;
 class AccueilController extends AbstractController
 {
     /**
-     * @Route("/", name="accueil",options = { "expose" = true })
+     * @Route("/", name="accueil" ,options = { "expose" = true })
      */
     public function index()
     {

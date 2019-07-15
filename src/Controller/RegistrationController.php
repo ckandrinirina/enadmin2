@@ -11,11 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register/{test}", name="app_register")
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, $test = null): Response
     {

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EtudiantController extends AbstractController
 {
@@ -42,6 +43,10 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("etudiant-ajoute/{login}",name="etudiant_add",methods={"GET","POST"})
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function ajoute(Request $request ,$login = NULL ,FileUploader $fileUploader)
     {

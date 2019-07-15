@@ -10,11 +10,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\TypeParcours;
 use App\Entity\Niveaux;
 use App\Entity\Semestre;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UCController extends AbstractController
 {
     /**
      * @Route("/u/c/ajoute", name="add_u_c")
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request)
     {

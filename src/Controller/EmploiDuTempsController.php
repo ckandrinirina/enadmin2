@@ -15,6 +15,7 @@ use App\Entity\EmploiDuTemps;
 use App\Entity\EC;
 use App\Entity\RepartitionEC;
 use App\Entity\Semestre;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EmploiDuTempsController extends AbstractController
 {
@@ -100,6 +101,10 @@ class EmploiDuTempsController extends AbstractController
     }
     /**
      * @Route("/emploi/du/temps/add/{type}/{niveaux}/{semestre}", name="add_etemps",options = { "expose" = true })
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function add($type, $niveaux, $semestre, EtService $etService)
     {
