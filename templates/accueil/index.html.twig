@@ -24,7 +24,7 @@
             <li class="active">Tableaux de bord</li>
         </ol>
     </section>
-{% endblock %}
+{% endblock %} 
 
 {% block body %}
     <div class="callout callout-info"> 
@@ -41,7 +41,7 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a class="small-box-footer" href="#">Plus de détaille
+                <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['0'].id,'niveaux':allTypeParcours['0'].niveauxs['0'].id}) }}">Plus de détaille
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -56,7 +56,7 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a class="small-box-footer" href="#">Plus de détaille
+                <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['1'].id,'niveaux':allTypeParcours['0'].niveauxs['1'].id}) }}">Plus de détaille
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -65,13 +65,12 @@
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>{{ nbr_enseignant_vac }}</h3>
-
                     <p>Enséignants vacataire</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a class="small-box-footer" href="#">Plus de détaille
+                <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['1'].id}) }}">Plus de détaille
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -86,7 +85,7 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a class="small-box-footer" href="#">Plus de détaille
+                <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['0'].id}) }}">Plus de détaille
                     <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>

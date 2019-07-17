@@ -18,10 +18,6 @@ class EnseignantController extends AbstractController
 {
     /**
      * @Route("/enseignant/{type}", name="enseignant")
-     * 
-     * Require ROLE_ADMIN for only this controller method.
-     * 
-     *  @IsGranted("ROLE_ADMIN")
      */
     public function index($type)
     {
