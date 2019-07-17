@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche individuel
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Profile
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Profile</a>
+            </li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div
+            class="col-md-12">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive" src="{{ asset(etudiant.photo) }}" alt="User profile picture">
+                    <h3 class="profile-username text-center">{{ etudiant.nom}}
+                        {{ etudiant.prenom }}</h3>
+                    <p class="text-muted text-center">
+                        <button class="btn bg-purple margin" type="button">{{ etudiant.niveaux.niveau }}</button>
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Sexe :</b>
+                                    <p class="pull-right">{{ etudiant.sexe.sexe }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Date de Naissance :</b>
+                                    <p class="pull-right">{{ etudiant.dateNaissance | date('d/m/Y') }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Lieu de Naissance :</b>
+                                    <p class="pull-right">{{ etudiant.lieuxNaissance }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Parcour :</b>
+                                    <p class="pull-right">{{ etudiant.parcour.type }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Année d'entrée à l'ESPA :</b>
+                                    <p class="pull-right">{{ etudiant.anneEntre }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Code identificateur :</b>
+                                    <p class="pull-right">EN/{{ etudiant.parcour.type }}/{{ etudiant.niveaux.niveau }}/{{ etudiant.id }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Contact :</b>
+                                    <p class="pull-right">{{ etudiant.contact }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Adresse</b>
+                                    <p class="pull-right">{{ etudiant.adresse }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Nom du Père</b>
+                                    <p class="pull-right">{{ etudiant.pere }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Profession du Père</b>
+                                    <p class="pull-right">{{ etudiant.professionPere}}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Nom du Mère</b>
+                                    <p class="pull-right">{{ etudiant.mere }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Profession du Mère</b>
+                                    <p class="pull-right">{{ etudiant.professionMere }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
+        {% elseif app.user.etudiant.id == etudiant.id %}
+            <div class="col-md-2">
+                <a href="{{path('etudiant_edit',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                    <i class="fa fa-edit"></i>Modifier profile
+                </a>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
+            <div class="col-md-2">
+                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
+                    <i class="fa fa-sticky-note"></i>Scolarité
+                </a>
+            </div>
+        {% elseif app.user.etudiant.id == etudiant.id %}
+            <div class="col-md-2">
+                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
+                    <i class="fa fa-sticky-note"></i>Scolarité
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {#    <script>
+                    $(function () {
+                        $('#example1').DataTable()
+                    })
+                </script>#}
+{% endblock %}

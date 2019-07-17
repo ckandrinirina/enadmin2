@@ -15,10 +15,6 @@ class AccueilController extends AbstractController
      */
     public function index()
     {
-        // if($this->getUser() == NULL)
-        // {
-        //     return $this->redirectToRoute('app_login');
-        // }
         $status = "homme";
 
         $em = $this->getDoctrine()->getManager();

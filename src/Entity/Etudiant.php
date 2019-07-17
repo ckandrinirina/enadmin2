@@ -109,11 +109,6 @@ class Etudiant
     private $anneUniversitaire;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Scolarite", mappedBy="etudiant", cascade={"persist", "remove"})
-     */
-    private $scolarite;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
      */
     private $notes;
@@ -143,11 +138,17 @@ class Etudiant
      */
     private $noteUcs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
+     */
+    private $scolarites;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
         $this->ficheIndividuels = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
+        $this->scolarites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -335,23 +336,6 @@ class Etudiant
         return $this;
     }
 
-    public function getScolarite(): ?Scolarite
-    {
-        return $this->scolarite;
-    }
-
-    public function setScolarite(Scolarite $scolarite): self
-    {
-        $this->scolarite = $scolarite;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $scolarite->getEtudiant()) {
-            $scolarite->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|Note[]
      */
@@ -475,6 +459,37 @@ class Etudiant
             // set the owning side to null (unless already changed)
             if ($noteUc->getEtudiant() === $this) {
                 $noteUc->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Scolarite[]
+     */
+    public function getScolarites(): Collection
+    {
+        return $this->scolarites;
+    }
+
+    public function addScolarite(Scolarite $scolarite): self
+    {
+        if (!$this->scolarites->contains($scolarite)) {
+            $this->scolarites[] = $scolarite;
+            $scolarite->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolarite(Scolarite $scolarite): self
+    {
+        if ($this->scolarites->contains($scolarite)) {
+            $this->scolarites->removeElement($scolarite);
+            // set the owning side to null (unless already changed)
+            if ($scolarite->getEtudiant() === $this) {
+                $scolarite->setEtudiant(null);
             }
         }
 

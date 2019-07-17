@@ -50,6 +50,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         ));
         $role_etudiant[] = 'ROLE_USER';
         $user2->setRoles($role_etudiant);
+        $user2->setEtudiant($this->getReference('etudiant1'));
         $em->persist($user2);
 
         $em->flush();

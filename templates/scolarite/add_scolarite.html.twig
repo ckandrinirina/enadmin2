@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouté Scolarité{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Ajouté Scolarité
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Ajouté Scolarité</a></li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ajoutér preuve de scolarité</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            {{ form_start(form,{'attr':{'novalidate' : 'novalidate'}}) }}
+            <div class="box-body">
+                <div class="form-group">
+                    {{ form_row(form.numeroInscription) }}
+                    {{ form_row(form.dateInscription) }}
+                    {# {{ form_row(form.droit) }} #}
+                    {{ form_row(form.niveau) }}
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right">Valider</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{asset('assets/js/ma6.js')}}"></script>
+    <script>
+        $(function () {
+            SymfonyCollection.init({
+                selector: '#uc_niveaux',
+                label: 'niveau',
+                add: {
+                    content: 'Ajouter un niveau'
+                },
+                remove: {
+                    content: 'supprimer un niveau',
+                    attr: {
+                        class: 'btn btn-link btn-sm'
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

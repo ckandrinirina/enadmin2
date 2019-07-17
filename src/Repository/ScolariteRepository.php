@@ -19,6 +19,17 @@ class ScolariteRepository extends ServiceEntityRepository
         parent::__construct($registry, Scolarite::class);
     }
 
+    public function get_actual_scolarite($etudiant)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.etudiant','e','WITH','e.id = :val1')
+            ->innerJoin('s.niveau','n','WITH','n.id = :val2')
+            ->setParameter('val1',$etudiant->getId())
+            ->setParameter('val2',$etudiant->getNiveaux()->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Scolarite[] Returns an array of Scolarite objects
     //  */

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Doctrine\DBAL\Types\StringType;
 
 class EtudiantType extends AbstractType
 {
@@ -28,7 +29,10 @@ class EtudiantType extends AbstractType
             ->add('prenom',TextType::class,[
                 'label'=>'Prenom'
                 ])
-            ->add('photo',FileType::class, ['label' => 'Ajoute une image'])
+            ->add('photo',FileType::class, [
+                'label' => 'Ajoute une image',
+                'data_class' => null,
+                ])
             ->add('pere',TextType::class,[
                 'label'=>'Pere'
                 ])

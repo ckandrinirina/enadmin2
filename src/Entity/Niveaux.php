@@ -74,6 +74,11 @@ class Niveaux
      */
     private $salles;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Scolarite", mappedBy="niveau", cascade={"persist", "remove"})
+     */
+    private $scolarite;
+
 
     public function __construct()
     {
@@ -394,6 +399,24 @@ class Niveaux
             if ($salle->getNiveau() === $this) {
                 $salle->setNiveau(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getScolarite(): ?Scolarite
+    {
+        return $this->scolarite;
+    }
+
+    public function setScolarite(?Scolarite $scolarite): self
+    {
+        $this->scolarite = $scolarite;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newNiveau = $scolarite === null ? null : $this;
+        if ($newNiveau !== $scolarite->getNiveau()) {
+            $scolarite->setNiveau($newNiveau);
         }
 
         return $this;

@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class EtudiantController extends AbstractController
 {
@@ -44,9 +45,6 @@ class EtudiantController extends AbstractController
     /**
      * @Route("etudiant-ajoute/{login}",name="etudiant_add",methods={"GET","POST"})
      * 
-     * Require ROLE_ADMIN for only this controller method.
-     * 
-     *  @IsGranted("ROLE_ADMIN")
      */
     public function ajoute(Request $request ,$login = NULL ,FileUploader $fileUploader)
     {
@@ -127,5 +125,62 @@ class EtudiantController extends AbstractController
                 'niv_name' => $niv_name,
                 'type' => $type
             ]);
+    }
+
+    /**
+     * @Route("/etudiant-profile/{etudiant}", name="etudiant_profile")
+     */
+    public function etudiant_profile($etudiant)
+    {
+        $status = "listE";
+        $em = $this->getDoctrine()->getManager();
+
+        $etudiantRepository = $em->getRepository(Etudiant::class);
+
+        $etudiant = $etudiantRepository->find($etudiant);
+
+        return $this->render('etudiant/profile.html.twig',
+            [
+                'status' => $status,
+                'etudiant'=>$etudiant,
+            ]);
+    }
+
+    /**
+     * @Route("etudiant-edit/{id}/",name="etudiant_edit",methods={"GET","POST"})
+     * 
+     */
+    public function edit(Request $request ,Etudiant $etudiant ,FileUploader $fileUploader)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($etudiant == null)
+            return $this->redirectToRoute('accueil');
+            
+        if($etudiant->getLogin()->getId() != $this->getUser()->getId())
+            return $this->redirectToRoute('etudiant_profile',['etudiant' => $etudiant->getId()]);
+
+        $em = $this->getDoctrine()->getManager();
+        $status = 'addE';
+        $form = $this->createForm(EtudiantType::class , $etudiant);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $file = $etudiant->getPhoto();
+            $path = $fileUploader->upload($file);
+
+            $etudiant->setPhoto($path);
+
+            $em->persist($etudiant);
+            $em->flush();
+
+            return $this->redirectToRoute('etudiant_profile',['etudiant' => $etudiant->getId()]);
+        }
+
+        return $this->render('etudiant/ajoute.html.twig' , [
+            'form' => $form->createView(),
+            'status' => $status
+        ]);
     }
 }

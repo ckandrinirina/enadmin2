@@ -10,7 +10,7 @@
             {% if app.user.etudiant == NULL %}
                 <img src"image.jpg">
             {% else %}
-                <img src="{{ asset(app.user.etudiant.photo) }}" class="img-circle" alt="User Image">
+                <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image">
             {% endif %}
             {% elseif is_granted('ROLE_ADMIN')%}
                 <img src="{{ asset(app.user.enseignant.photo) }}" class="img-circle" alt="User Image">
@@ -102,7 +102,8 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTemps')) }}
                 </ul>
             </li>
-
+            
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "notelist" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Liste des notes</span>
                     <span class="pull-right-container">
@@ -113,6 +114,7 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::noteList')) }}
                 </ul>
             </li>
+            {% endif %}
 
             <li class="treeview {% if status == "noteresult" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Résultat de l'éxamen</span>
