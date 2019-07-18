@@ -8,15 +8,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Droit;
 use App\Entity\Niveaux;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ScolariteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $options['data'];
         $builder
             ->add('numeroInscription')
-            ->add('dateInscription')
+            ->add('dateInscription',DateType::class)
             // ->add('droit',EntityType::class,[
             //     'class' => Droit::class,
             //     'choice_label' => function(Droit $droit)
@@ -25,13 +27,16 @@ class ScolariteType extends AbstractType
             //     },
             //     'label'=>'Niveau'
             // ])
-            ->add('niveau',EntityType::class,[
-                'class' => Niveaux::class,
-                'choice_label' => function(Niveaux $niveaux)
+            ->add('niveau',ChoiceType::class,[
+                'choices'=> $data,
+                'choice_label' => function(Niveaux $niveaux, $key, $value)
                 {
                     return $niveaux->getNom();
                 },
-                'label'=>'Niveau'
+                'choice_attr' => function(Niveaux $niveaux, $key, $value) {
+                    return ['value' => $niveaux->getId()];
+                },
+                'label' => false
             ])
         ;
     }
@@ -39,7 +44,7 @@ class ScolariteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Scolarite::class,
+            'data_class' => null,
         ]);
     }
 }

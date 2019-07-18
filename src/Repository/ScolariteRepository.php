@@ -30,6 +30,17 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function find_if_exist($etudiant,$niveau)
+    {
+        return $this->createQueryBuilder('s')
+        ->innerJoin('s.etudiant','e','WITH','e.id = :val1')
+        ->innerJoin('s.niveau','n','WITH','n.id = :val2')
+        ->setParameter('val1',$etudiant)
+        ->setParameter('val2',$niveau)
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Scolarite[] Returns an array of Scolarite objects
     //  */

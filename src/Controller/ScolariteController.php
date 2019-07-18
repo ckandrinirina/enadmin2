@@ -16,7 +16,7 @@ class ScolariteController extends AbstractController
     /**
      * @Route("/scolarite/{id}", name="scolarite")
      */
-    public function index(Etudiant $etudiant)
+    public function index(Etudiant $etudiant,Request $request)
     {
         /* avadika service am manaraka */
         $role = $this->getUser()->getRoles();
@@ -42,7 +42,39 @@ class ScolariteController extends AbstractController
         $niveaux_repository = $em->getRepository(Niveaux::class);
         $scolarite_repository = $em->getRepository(Scolarite::class);
 
+        $scolarite_form = new Scolarite();
+
         $niv = $niveaux_repository->findByType($etudiant->getParcour()->getId());
+
+        $option['data'] = $niv;
+
+        $form = $this->createForm(ScolariteType::class, $scolarite_form,$option);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            
+            $scolarite_test = $scolarite_repository->find_if_exist($etudiant->getId(),$data['niveau']->getId()); 
+            if($scolarite_test != null)
+                {
+                    $this->addFlash(
+                        'erreur',
+                        'Le champ existe déja'
+                    );
+                    return $this->redirectToRoute('scolarite',['id'=>$etudiant->getId()]);
+                }
+
+            $scolarite_form->setEtudiant($etudiant);
+            $scolarite_form->setNiveau($data['niveau']);
+            $scolarite_form->setDateInscription($data['dateInscription']);
+            $scolarite_form->setNumeroInscription($data['numeroInscription']);
+            $em->persist($scolarite_form);
+            $em->flush();
+            $this->addFlash(
+                'succes',
+                'Référence insérer'
+            );
+            return $this->redirectToRoute('scolarite',['id'=>$etudiant->getId()]);
+        }
 
         $scolarite = $scolarite_repository->findByEtudiant($etudiant);
 
@@ -54,29 +86,44 @@ class ScolariteController extends AbstractController
             'niveaux' => $niv,
             'etudiant' => $etudiant,
             'scolarite' => $scolarite,
-            'scolarite_actuel' => $scolarite_actuel
+            'scolarite_actuel' => $scolarite_actuel,
+            'form' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route("/scolarite-add/{id}", name="scolarite_add")
-     */
-    public function add_file(Request $request, Etudiant $etudiant)
-    {
-        if ($etudiant->getId() != $this->getUser()->getEtudiant()->getId())
-            return $this->redirectToRoute('accueil');
-        $status = 'ok';
+    // /**
+    //  * @Route("/scolarite-add/{id}", name="scolarite_add")
+    //  */
+    // public function add_file(Request $request, Etudiant $etudiant)
+    // {
+    //     if ($etudiant->getId() != $this->getUser()->getEtudiant()->getId())
+    //         return $this->redirectToRoute('accueil');
+    //     $status = 'ok';
 
-        $scolarite = new Scolarite();
-        $form = $this->createForm(ScolariteType::class, $scolarite);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $scolarite->setEtudiant($etudiant);
-            dump($scolarite);
-        }
-        return $this->render('scolarite/add_scolarite.html.twig', [
-            'status' => $status,
-            'form' => $form->createView()
+    //     $scolarite = new Scolarite();
+    //     $form = $this->createForm(ScolariteType::class, $scolarite);
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $scolarite->setEtudiant($etudiant);
+    //         dump($scolarite);
+    //     }
+    //     return $this->render('scolarite/add_scolarite.html.twig', [
+    //         'status' => $status,
+    //         'form' => $form->createView()
+    //     ]);
+    // }
+
+    /**
+     * @Route("/scolarite-view/{id}", name="scolarite_view")
+     */
+    public function scolarite_niveau(Niveaux $niveau)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $scolarite_repository = $em->getRepository(Scolarite::class);
+        $scolarite = $scolarite_repository->findByNiveau($niveau);
+
+        return $this->render('scolarite/view_scolarite.html.twig',[
+            'scolarite'=>$scolarite
         ]);
     }
 }

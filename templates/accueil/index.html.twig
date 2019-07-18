@@ -24,10 +24,10 @@
             <li class="active">Tableaux de bord</li>
         </ol>
     </section>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
-    <div class="callout callout-info"> 
+    <div class="callout callout-info">
         <h4 class="text-center">Nombres des acteurs au seins du mention électronique</h4>
     </div>
     <div class="row">
@@ -95,7 +95,10 @@
         <h4 class="text-center">Calendrier des évenement et les articles</h4>
     </div>
     <div class="col-md-6" style="background-color:white ;">
-        <a href="{{ path('school_new') }}" class="btn btn-warning">Ajouter un évenement</a>
+            <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
+                <i class="fa fa-upload"></i>Ajouter un évenement
+            </a>
+        <br/>
         {% include '@Calendar/calendar.html' %}
     </div>
     <div class="col-md-6">
@@ -107,9 +110,7 @@
 
             </div>
             <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
-                <div
-                    class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
-                    <!-- chat item -->
+                <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
                     <div class="item">
                         <img alt="user image" class="online" src="dist/img/user4-128x128.jpg">
 
@@ -120,64 +121,15 @@
                                     2:15</small>
                                 Mike Doe
                             </a>
-                            I would like to meet you to discuss the latest news about
-                                                                          the arrival of the new theme. They say it is going to be one the
-                                                                          best themes on the market
-                        </p>
-                        <div class="attachment">
-                            <h4>Attachments:</h4>
-
-                            <p class="filename">
-                                Theme-thumbnail-image.jpg
-                            </p>
-
-                            <div class="pull-right">
-                                <button class="btn btn-primary btn-sm btn-flat" type="button">Open</button>
-                            </div>
-                        </div>
-                        <!-- /.attachment -->
-                    </div>
-                    <!-- /.item -->
-                    <!-- chat item -->
-                    <div class="item">
-                        <img alt="user image" class="offline" src="dist/img/user3-128x128.jpg">
-
-                        <p class="message">
-                            <a class="name" href="#">
-                                <small class="text-muted pull-right">
-                                    <i class="fa fa-clock-o"></i>
-                                    5:15</small>
-                                Alexander Pierce
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                                                                          the arrival of the new theme. They say it is going to be one the
-                                                                          best themes on the market
+                            I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the  best themes on the market
                         </p>
                     </div>
-                    <!-- /.item -->
-                    <!-- chat item -->
-                    <div class="item">
-                        <img alt="user image" class="offline" src="dist/img/user2-160x160.jpg">
-
-                        <p class="message">
-                            <a class="name" href="#">
-                                <small class="text-muted pull-right">
-                                    <i class="fa fa-clock-o"></i>
-                                    5:30</small>
-                                Susan Doe
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                                                                          the arrival of the new theme. They say it is going to be one the
-                                                                          best themes on the market
-                        </p>
-                    </div>
-                    <!-- /.item -->
                 </div>
                 <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>
                 <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
             </div>
             <!-- /.chat -->
-            <div class="box-footer">
+            {# <div class="box-footer">
                 <div class="input-group">
                     <input class="form-control" placeholder="Ajouter un événement...">
 
@@ -186,6 +138,23 @@
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
+                </div>
+            </div> #}
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Ajoutér un évenement</h4>
+                </div>
+                <div class="modal-body">
+                    {{ include('school/_form.html.twig') }}
                 </div>
             </div>
         </div>
@@ -198,6 +167,7 @@
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
     <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
     <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
     <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
@@ -207,7 +177,8 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 defaultView: 'dayGridMonth',
-                editable: true,
+                // editable: true,
+                locale: 'fr',
                 eventSources: [
                     {
                         url: "{{ path('fc_load_events') }}",

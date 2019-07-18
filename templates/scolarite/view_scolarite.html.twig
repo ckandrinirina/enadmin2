@@ -1,0 +1,43 @@
+<div class="box-body col-xs-6">
+    <table class="table table-bordered table-striped" id="example1">
+        <thead>
+            <tr>
+                <td>Numero d'inscription</td>
+                <td>Date d'inscription</td>
+                <td>Piece Jointe</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in scolarite %}
+                <tr>
+                    <td>{{s.numeroInscription}}</td>
+                    <td>{{s.dateInscription | date('d/m/Y')  }}</td>
+                    <td>
+                        <a class="btn btn-block btn-social btn-flickr" data-target="#modal-default" data-toggle="modal">
+                            <i class="fa fa-file-image-o"></i>
+                            Voir tous
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Default Modal</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default pull-right" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

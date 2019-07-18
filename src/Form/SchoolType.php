@@ -6,16 +6,26 @@ use App\Entity\School;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 class SchoolType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('beginAt')
-            ->add('endAt')
-            ->add('title')
-            ->add('content')
+            ->add('beginAt',DateTimeType::class,[
+                'label'=> 'Date de commencement'
+            ])
+            ->add('endAt',DateTimeType::class,[
+                'label' => 'Fin de l\'événement'
+            ])
+            ->add('title',TextType::class,[
+                'label'=>'Titre'
+            ])
+            ->add('content',TextareaType::class,[
+                'label'=>'Contenu'
+            ])
         ;
     }
 

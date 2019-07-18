@@ -29,12 +29,6 @@ class Scolarite
     private $dateInscription;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Droit", inversedBy="scolarites")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $droit;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Niveaux", inversedBy="scolarite", cascade={"persist", "remove"})
      */
     private $niveau;
@@ -79,18 +73,6 @@ class Scolarite
     public function setDateInscription(\DateTimeInterface $dateInscription): self
     {
         $this->dateInscription = $dateInscription;
-
-        return $this;
-    }
-
-    public function getDroit(): ?Droit
-    {
-        return $this->droit;
-    }
-
-    public function setDroit(?Droit $droit): self
-    {
-        $this->droit = $droit;
 
         return $this;
     }

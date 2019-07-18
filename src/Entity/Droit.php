@@ -23,10 +23,6 @@ class Droit
      */
     private $valeur;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="droit")
-     */
-    private $scolarites;
 
     public function __construct()
     {
@@ -46,37 +42,6 @@ class Droit
     public function setValeur(int $valeur): self
     {
         $this->valeur = $valeur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Scolarite[]
-     */
-    public function getScolarites(): Collection
-    {
-        return $this->scolarites;
-    }
-
-    public function addScolarite(Scolarite $scolarite): self
-    {
-        if (!$this->scolarites->contains($scolarite)) {
-            $this->scolarites[] = $scolarite;
-            $scolarite->setDroit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolarite(Scolarite $scolarite): self
-    {
-        if ($this->scolarites->contains($scolarite)) {
-            $this->scolarites->removeElement($scolarite);
-            // set the owning side to null (unless already changed)
-            if ($scolarite->getDroit() === $this) {
-                $scolarite->setDroit(null);
-            }
-        }
 
         return $this;
     }
