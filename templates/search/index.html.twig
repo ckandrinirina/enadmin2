@@ -1,20 +1,30 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello SearchController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Memoire M2/project/EnAdmin/src/Controller/SearchController.php'|file_link(0) }}">src/Controller/SearchController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Memoire M2/project/EnAdmin/templates/search/index.html.twig'|file_link(0) }}">templates/search/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+{# {{ form_start(form,{'attr':{'class' : 'sidebar-form'}}) }}
+    <div class="input-group">
+        {{ form_row(form.search,{'attr':{'class' : 'form-control' , 'placeholder':'Rechercher...'}}) }}
+        <span class="input-group-btn">
+            <button class="btn btn-flat" id="search-btn" name="search" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+{{ form_end(form) }} #}
+<form name="recherche" method="post" class="sidebar-form">
+    <div class="input-group">
+        <div class="form-group"><input type="search" id="recherche_search" name="recherche[search]" required="required" class="form-control form-control" placeholder="Rechercher..."></div>
+        <span class="input-group-btn">
+            <button class="btn btn-flat" id="search-btn" name="search" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</form>
+        <!-- search form (Optional) -->
+        {# <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+            </div>
+        </form> #}
