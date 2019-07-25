@@ -86,11 +86,79 @@ class ECController extends AbstractController
      *  @IsGranted("ROLE_ADMIN")
      * 
      */
-    public function addEc(Request $request, FileUploader $fileUploader)
+    public function addEc(Request $request)
     {        
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
         $ec = new EC();
+        // $repEc1 = new RepartitionEC();
+        // $repEc2 = new RepartitionEC();
+
+        $form = $this->createForm(EcType::class, $ec);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $typeRep = $em->getRepository(TypeParcours::class);
+            $type = $typeRep->findAll();
+
+            $t = $type['0']->getId();
+
+            $niveaux = $ec->getUC()->getNiveaux();
+            $semestres = $ec->getUC()->getSemestres();
+
+            $uc = $ec->getUC();
+            $all_ec = $uc->getECs();
+
+            $nbr = 1;
+            foreach ($all_ec as $ec_count) {
+                $nbr = $nbr + 1;
+            }
+            $coeff = 1 / $nbr;
+
+            foreach ($all_ec as $ec_count) {
+                $ec_count->setCoefficient($coeff);
+                $em->persist($ec_count);
+            }
+
+            $ec->setCoefficient($coeff);
+
+            $i = 0;
+            foreach ($niveaux as $niveau) {
+                $repEc[$i] = new RepartitionEC();
+                $repEc[$i]->setEc($ec);
+                $repEc[$i]->setNiveaux($niveau);
+                $repEc[$i]->setSemestre($semestres[$i]);
+                $em->persist($repEc[$i]);
+                $i = $i + 1;
+            }
+
+
+            $em->persist($ec);
+
+            $em->flush();
+            return $this->redirectToRoute('repartition_uc_by_niveau', ['type' => $t, 'niveau' => $niveaux['0']->getId()]);
+        }
+        return $this->render(
+            'ec/ajoute.html.twig',
+            [
+                'form' => $form->createView(),
+                'status' => $status
+            ]
+        );
+    }
+
+        /**
+     * @Route("e/c/ajoute/{id}" , name="ec_edit")
+     * 
+     *  Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
+     * 
+     */
+    public function editEc(Request $request,EC $ec)
+    {        
+        $status = "add_ec";
+        $em = $this->getDoctrine()->getManager();
         // $repEc1 = new RepartitionEC();
         // $repEc2 = new RepartitionEC();
 

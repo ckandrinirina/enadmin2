@@ -12,6 +12,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AnneUniversitaire;
+use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class EnseignantController extends AbstractController
@@ -72,12 +73,12 @@ class EnseignantController extends AbstractController
     /**
      * @Route("enseignant-ajoute/{login}",name="enseignant_add",methods={"GET","POST"})
      */
-    public function addEnseignant(Request $request, $login = NULL)
+    public function addEnseignant(Request $request, $login = NULL,FileUploader $fileUploader)
     {
         if ($login == NULL) {
             return $this->redirectToRoute('app_register');
         }
-        $status = "addEns";
+        $status = "listEns";
         $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository(User::class);
         $enseignantRepository = $em->getRepository(Enseignant::class);
@@ -101,13 +102,75 @@ class EnseignantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $enseignant->setLogin($user);
+
+            $file = $enseignant->getPhoto();
+            $path = $fileUploader->upload($file);
+
+            $enseignant->setPhoto($path);
             $em->persist($enseignant);
             $em->flush();
 
-            return $this->redirectToRoute('enseignant');
+            return $this->redirectToRoute('enseignant',[
+                'type'=>$enseignant->getType()->getId()
+            ]);
         }
 
         return $this->render('enseignant/ajoute.html.twig', [
+            'form' => $form->createView(),
+            'status' => $status
+        ]);
+    }
+    /**
+     * @Route("/enseignant-profile/{enseignant}", name="enseignant_profile")
+     */
+    public function enseignant_profile($enseignant)
+    {
+        $status = "listEns";
+        $em = $this->getDoctrine()->getManager();
+
+        $enseignantRepository = $em->getRepository(Enseignant::class);
+
+        $enseignant = $enseignantRepository->find($enseignant);
+
+        return $this->render('enseignant/profile.html.twig',
+            [
+                'status' => $status,
+                'enseignant'=>$enseignant,
+            ]);
+    }
+    /**
+     * @Route("enseignant-edit/{id}/",name="enseignant_edit",methods={"GET","POST"})
+     * 
+     */
+    public function edit(Request $request ,enseignant $enseignant ,FileUploader $fileUploader)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($enseignant == null)
+            return $this->redirectToRoute('accueil');
+            
+        if($enseignant->getLogin()->getId() != $this->getUser()->getId())
+            return $this->redirectToRoute('enseignant_profile',['enseignant' => $enseignant->getId()]);
+
+        $em = $this->getDoctrine()->getManager();
+        $status = 'listEns';
+        $form = $this->createForm(enseignantAddType::class , $enseignant);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $file = $enseignant->getPhoto();
+            $path = $fileUploader->upload($file);
+
+            $enseignant->setPhoto($path);
+
+            $em->persist($enseignant);
+            $em->flush();
+
+            return $this->redirectToRoute('enseignant_profile',['enseignant' => $enseignant->getId()]);
+        }
+
+        return $this->render('enseignant/ajoute.html.twig' , [
             'form' => $form->createView(),
             'status' => $status
         ]);

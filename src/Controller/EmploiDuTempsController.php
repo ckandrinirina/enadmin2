@@ -164,16 +164,20 @@ class EmploiDuTempsController extends AbstractController
         $heures = $heuresRepository->find($heure);
         $jours = $joursRepository->find($jour);
         $niveaux = $niveauxRepository->find($niveau);
-        $semestre = $semestreRepository->find($semestre);
+        $sem = $semestreRepository->find($semestre);
 
         $ec = $repartionRepository->findByNiveauxBySemestre($niveau, $semestre);
+        dump($ec);
         $i = 0;
+
         foreach ($ec as $e) {
             $ec_value[$i] = $ecRepository->find($e->getEc());
             $i = $i + 1;
         }
-
-        $option['data'] = $ec_value;
+        if(isset($ec_value))
+            $option['data'] = $ec_value;
+        else
+            $option['data'] = null;
         //atreto aloha
         $form = $this->createForm(EcChoiceType::class, $et, $option);
 
@@ -184,7 +188,7 @@ class EmploiDuTempsController extends AbstractController
             $et->setHeure($heures);
             $et->setJour($jours);
             $et->setNiveau($niveaux);
-            $et->setSemestre($semestre);
+            $et->setSemestre($sem);
             $et->setEc($data['ec']);
             $em->persist($et);
             $em->flush();

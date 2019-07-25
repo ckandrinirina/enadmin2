@@ -105,6 +105,19 @@ class TypeParcoursController extends AbstractController
     }
 
     /**
+     * @Route("/repartition/uc/by/niveau", name="repartition_uc_by_niveau_left_edit")
+     */
+    public function repartition_uc_by_niveau_edit()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $typeParcoursRepository = $em->getRepository(TypeParcours::class);
+
+        $allTypeParcours = $typeParcoursRepository->findAll();
+
+        return $this->render('type_parcours/repartition_uc_by_niveau_edit.html.twig',['allTypeParcours' => $allTypeParcours]);
+    }
+
+    /**
      * @Route("enseignant/type" ,name="enseignant_type")
      */
     public function enseignant_type()

@@ -6,26 +6,27 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-            {% if is_granted('ROLE_USER') %}
-            {% if app.user.etudiant == NULL %}
-                <img src"image.jpg">
-            {% else %}
-                <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image">
-            {% endif %}
-            {% elseif is_granted('ROLE_ADMIN')%}
-                <img src="{{ asset(app.user.enseignant.photo) }}" class="img-circle" alt="User Image">
-            {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.user.enseignant != NULL %}
+                        <img src="{{ asset(app.user.enseignant.photo) }}" class="" alt="User Image">
+                    {% endif %}
+                {% elseif is_granted('ROLE_USER') %}
+                    {% if app.user.etudiant != NULL %}
+                        <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image" style="width:auto;height:50%">
+                    {% endif %}
+                {% endif %}
             </div>
             <div class="pull-left info">
-                {% if is_granted('ROLE_USER') %}
-                {% if app.user.etudiant != NULL %}
-                    <p>{{ app.user.etudiant.nom }}{{ '  ' }}{{ app.user.etudiant.prenom }}</p>
-                {% endif %}
-                {% elseif is_granted('ROLE_ADMIN')%}
-                    <p>{{ app.user.enseignant.nom }}{{ '  ' }}{{ app.user.enseignant.prenom }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.user.enseignant != NULL %}
+                        {{ app.user.enseignant.nom }}{{ '  ' }}{{ app.user.enseignant.prenom }}
+                    {% endif %}
+                {% elseif is_granted('ROLE_USER') %}
+                    {% if app.user.etudiant != NULL %}
+                        {{ app.user.etudiant.nom }}{{ '  ' }}{{ app.user.etudiant.prenom }}
+                    {% endif %}
                 {% endif %}
                 <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Connecter</a>
             </div>
         </div>
 
@@ -177,6 +178,19 @@
                 </a>
                 <ul class="treeview-menu">
                     {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTempsEdit')) }}
+                </ul>
+            </li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="treeview {% if status == "r_u_b_n_edit" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Edition des UE et EC</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::repartition_uc_by_niveau_edit')) }}
                 </ul>
             </li>
             {% endif %}

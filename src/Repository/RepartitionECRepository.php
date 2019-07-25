@@ -22,9 +22,11 @@ class RepartitionECRepository extends ServiceEntityRepository
     public function findByNiveauxBySemestre($niveaux,$semestre)
     {
         return $this->createQueryBuilder('r')
-            ->where('r.niveaux = :val1')
+            ->innerJoin('r.niveaux','n','WITH','n.id = :val1')
+            //->where('r.niveaux = :val1')
             ->setParameter('val1',$niveaux)
-            ->andWhere('r.semestre = :val2')
+            ->innerJoin('r.semestre','s','WITH','s.id = :val2')
+            //->andWhere('r.semestre = :val2')
             ->setParameter('val2',$semestre)
             ->getQuery()
             ->getResult();

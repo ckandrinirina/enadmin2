@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class EnseignantAddType extends AbstractType
 {
@@ -21,7 +22,10 @@ class EnseignantAddType extends AbstractType
             ->add('adresse')
             ->add('dateNaissance',BirthdayType::class)
             ->add('lieuxNaissance')
-            ->add('photo')
+            ->add('photo',FileType::class, [
+                'label' => 'Ajoute une image',
+                'data_class' => null,
+                ])
             ->add('type',EntityType::class,[
                 'class'=>EnseignantType::class,
                 'choice_label'=>function(EnseignantType $enseignantType)

@@ -38,6 +38,7 @@
                             <th>Nom</th>
                             <th>Contact</th>
                             <th>Matières enseignées</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,7 @@
                                     {% set i = i + 1 %}
                                 {% endfor %}
                             </td>
+                            <td><span class="fa fa-newspaper-o"></span><a href="{{path('enseignant_profile',{'enseignant':enseignant.id})}}"> Profile</a></td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -62,6 +64,7 @@
                             <th>Nom</th>
                             <th>Contact</th>
                             <th>Type</th>
+                            <th>Action</th>
                         </tr>
                         </tfoot>
                     </table>

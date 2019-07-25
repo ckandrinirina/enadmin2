@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PROFILE ENSEIGNANT
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Profile
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Profile</a>
+            </li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div
+            class="col-md-12">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive" src="{{ asset(enseignant.photo) }}" alt="User profile picture">
+                    <h3 class="profile-username text-center">{{ enseignant.nom}}
+                        {{ enseignant.prenom }}</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Date de Naissance :</b>
+                                    <p class="pull-right">{{ enseignant.dateNaissance | date('d/m/Y') }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Lieu de Naissance :</b>
+                                    <p class="pull-right">{{ enseignant.lieuxNaissance }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Type :</b>
+                                    <p class="pull-right">{{ enseignant.type.type }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Contact :</b>
+                                    <p class="pull-right">{{ enseignant.contact }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Adresse</b>
+                                    <p class="pull-right">{{ enseignant.adresse }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% if app.user.enseignant == null  %}
+            {% elseif app.user.enseignant.id == enseignant.id %}
+                <div class="col-md-2">
+                    <a href="{{path('enseignant_edit',{'id':enseignant.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                        <i class="fa fa-edit"></i>Modifier profile
+                    </a>
+                </div>
+        {% endif %}
+        <div class="col-md-3">
+            <a class="btn btn-block btn-social btn-flickr" data-target="#modal-default" data-toggle="modal">
+                <i class="fa fa-file-image-o"></i>
+                Liste de matière enseigné
+            </a>
+        </div>
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Liste des matière enseigné</h4>
+                    </div>
+                    <div class="modal-body">
+                        {% set i = 0 %}
+                        {% set limit = enseignant.eCs | length %}
+                        {% for ec in enseignant.eCs %}
+                            {{ ec.nom | upper }}
+                            {% if i + 1 < limit  %}<br/>
+                            {% endif %}
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default pull-right" data-dismiss="modal" type="button">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {#    <script>
+                                $(function () {
+                                    $('#example1').DataTable()
+                                })
+                            </script>#}
+{% endblock %}

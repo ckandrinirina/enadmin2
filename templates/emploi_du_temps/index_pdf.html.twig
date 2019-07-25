@@ -2,7 +2,6 @@
 {% block config %}
     <div id="root" size="A4">
     {% endblock %}
-
     {% block return_top %}
         <a href="{{path('etemps',{'type':parcour.id,'niveaux':n,'semestre':s})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
@@ -33,7 +32,7 @@
 
     {% block body %}
         <h4 class="lead text-center">
-            <strong>EMPLOI DU TEMPS
+            <strong>EMPLOI DU TEMPS {% if et['0'] != null %}{{et['0']['0'].niveau.nom}}{% endif %}
             </strong>
         </h4>
         <table class="table table-bordered" id="custom_table">

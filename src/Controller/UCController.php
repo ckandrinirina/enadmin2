@@ -25,8 +25,8 @@ class UCController extends AbstractController
     {
         $status = 'addUc';
 
-        $UC = new UC();
-        $form = $this->createForm(UCType::class, $UC);
+        $uc = new UC();
+        $form = $this->createForm(UCType::class, $uc);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -34,25 +34,70 @@ class UCController extends AbstractController
             $type = $typeRep->findAll();
             $t = $type['0']->getId();
 
-            foreach($UC->getNiveaux() as $value)
+            foreach($uc->getNiveaux() as $value)
             {
                 $niveaux[]=$value['niveaux'];
                 $semestre[]=$value['semestre'];
             }
-            $UC2 = new UC();
+            $uc2 = new UC();
             foreach($niveaux as $niveau)
             {
-                $UC2->addNiveau($niveau);
+                $uc2->addNiveau($niveau);
             }
             foreach($semestre as $sem )
             {
-                $UC2->addSemestre($sem);
+                $uc2->addSemestre($sem);
             }
-            $UC2->setCoefficient($UC->getCoefficient());
-            $UC2->setCredit($UC->getCredit());
-            $UC2->setNom($UC->getNom());
+            $uc2->setCoefficient($uc->getCoefficient());
+            $uc2->setCredit($uc->getCredit());
+            $uc2->setNom($uc->getNom());
              
-            $em->persist($UC2);
+            $em->persist($uc2);
+            $em->flush();
+            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+        }
+
+        return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/u/c/edit/{id}", name="ue_edit")
+     * 
+     * Require ROLE_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_ADMIN")
+     */
+    public function edit_ue(Request $request,UC $uc)
+    {
+        $status = 'addUc';
+        $form = $this->createForm(UCType::class, $uc);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $typeRep = $em->getRepository(TypeParcours::class);
+            $type = $typeRep->findAll();
+            $t = $type['0']->getId();
+
+            foreach($uc->getNiveaux() as $value)
+            {
+                $niveaux[]=$value['niveaux'];
+                $semestre[]=$value['semestre'];
+            }
+            $uc2 = new UC();
+            foreach($niveaux as $niveau)
+            {
+                $uc2->addNiveau($niveau);
+            }
+            foreach($semestre as $sem )
+            {
+                $uc2->addSemestre($sem);
+            }
+            $uc2->setCoefficient($uc->getCoefficient());
+            $uc2->setCredit($uc->getCredit());
+            $uc2->setNom($uc->getNom());
+             
+            $em->persist($uc2);
             $em->flush();
             return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
         }
@@ -96,6 +141,31 @@ class UCController extends AbstractController
             'semestre' => $semestre
         ]);
     }
+
+    /**
+     * @Route("uc/rep/list-edit/{type}/{niveau}" , name="repartition_uc_by_niveau_edit")
+     */
+    public function repartition_uc_by_niveau_edit($type, $niveau)
+    {
+        $status = 'r_u_b_n';
+        $em = $this->getDoctrine()->getManager();
+        $typeParcoursRepository = $em->getRepository(TypeParcours::class);
+        $niveauxRepository = $em->getRepository(Niveaux::class);
+        $semestreRepository = $em->getRepository(Semestre::class);
+
+        $parcours = $typeParcoursRepository->find($type);
+        $niv = $niveauxRepository->findByType($type);
+        $semestre = $semestreRepository->findSemestreByNiveaux($niveau);
+        
+        return $this->render('uc/repartition_uc_by_niveau_edit.html.twig', [
+            'status' => $status,
+            'parcour' => $parcours,
+            'niveaux' => $niv,
+            'n' => $niveau,
+            'semestre' => $semestre
+        ]);
+    }
+
     /**
      * @Route("uc/rep/list/pdf/{type}/{niveau}" , name="repartition_uc_by_niveau_pdf")
      */

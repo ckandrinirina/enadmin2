@@ -27,7 +27,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('etemps',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id}) }}">{{ niveau.niveau }}</a>
+                            <a href="{{ path('etemps',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id}) }}">{{ niveau.nom }}</a>
                         </li>
                     {% endfor %}
                 </ul>

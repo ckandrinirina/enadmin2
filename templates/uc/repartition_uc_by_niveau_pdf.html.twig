@@ -32,7 +32,8 @@
     {% block body %}
         <h4 class="text-center">
             <strong>REPARTITIONS DES UE ET EC POUR LE NIVEAU
-                {{ niv_name.niveau }}</strong>
+                {{ niv_name.nom }}</strong>
+            <span>({{parcour.type}})</span>
         </h4>
         <div>
         {% for sem in semestre %}

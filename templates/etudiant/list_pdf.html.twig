@@ -1,4 +1,4 @@
-{% extends "base_pdf.html.twig" %}
+{% extends "base_pdf.html.twig" %} 
 {% block config %}
     <div id="root" size="A4">
     {% endblock %}
@@ -34,7 +34,8 @@
     {% block body %}
         <h4 class="lead text-center">
             <strong>LISTE DES ETUDIANTS
-                {{ niv_name.niveau }}</strong>
+                {{ niv_name.nom }}</strong>
+            <span>({{etudiants[0].parcour.type}})</span>
         </h4>
         <table class="table table-bordered" id="custom_table">
             {% for etudiant in etudiants %}
