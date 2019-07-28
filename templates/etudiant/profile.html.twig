@@ -102,6 +102,14 @@
             </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
+        {% elseif app.user.etudiant.id == etudiant.id %}
+            <div class="col-md-2">
+                <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                    <i class="fa fa-lock"></i>Modifier l'acces
+                </a>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
             <div class="col-md-2">
                 <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
                     <i class="fa fa-sticky-note"></i>Scolarité

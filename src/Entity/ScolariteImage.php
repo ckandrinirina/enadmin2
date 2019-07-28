@@ -31,12 +31,12 @@ class ScolariteImage
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getUrl()
     {
         return $this->url;
     }
 
-    public function setUrl(?string $url): self
+    public function setUrl($url)
     {
         $this->url = $url;
 

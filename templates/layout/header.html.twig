@@ -24,120 +24,125 @@
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
                 {# <li class="dropdown messages-menu">
-                                                    <!-- Menu toggle button -->
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                        <i class="fa fa-envelope-o"></i>
-                                                        <span class="label label-success">4</span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="header">You have 4 messages</li>
-                                                        <li>
-                                                            <!-- inner menu: contains the messages -->
-                                                            <ul class="menu">
-                                                                <li><!-- start message -->
-                                                                    <a href="#">
-                                                                        <div class="pull-left">
-                                                                            <!-- User Image -->
-                                                                            {% if is_granted('ROLE_USER') %}
-                                                                            {% if app.user.etudiant == NULL %}
-                                                                                <img src"image.jpg">
-                                                                            {% else %}
-                                                                                <img src="{{ asset(app.user.etudiant.photo) }}" class="img-circle" alt="User Image">
-                                                                            {% endif %}
-                                                                            {% elseif is_granted('ROLE_ADMIN')%}
-                                                                                <img src="{{ asset(app.user.enseignant.photo) }}" class="img-circle" alt="User Image">
-                                                                            {% endif %}
-                                                                        </div>
-                                                                        <!-- Message title and timestamp -->
-                                                                        <h4>
-                                                                            Support Team
-                                                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                                        </h4>
-                                                                        <!-- The message -->
-                                                                        <p>Why not buy a new awesome theme?</p>
-                                                                    </a>
-                                                                </li>
-                                                                <!-- end message -->
-                                                            </ul>
-                                                            <!-- /.menu -->
-                                                        </li>
-                                                        <li class="footer"><a href="#">See All Messages</a></li>
-                                                    </ul>
-                                                </li> #}
+                                                                                                                    <!-- Menu toggle button -->
+                                                                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                                                                        <i class="fa fa-envelope-o"></i>
+                                                                                                                        <span class="label label-success">4</span>
+                                                                                                                    </a>
+                                                                                                                    <ul class="dropdown-menu">
+                                                                                                                        <li class="header">You have 4 messages</li>
+                                                                                                                        <li>
+                                                                                                                            <!-- inner menu: contains the messages -->
+                                                                                                                            <ul class="menu">
+                                                                                                                                <li><!-- start message -->
+                                                                                                                                    <a href="#">
+                                                                                                                                        <div class="pull-left">
+                                                                                                                                            <!-- User Image -->
+                                                                                                                                            {% if is_granted('ROLE_USER') %}
+                                                                                                                                            {% if app.user.etudiant == NULL %}
+                                                                                                                                                <img src"image.jpg">
+                                                                                                                                            {% else %}
+                                                                                                                                                <img src="{{ asset(app.user.etudiant.photo) }}" class="img-circle" alt="User Image">
+                                                                                                                                            {% endif %}
+                                                                                                                                            {% elseif is_granted('ROLE_ADMIN')%}
+                                                                                                                                                <img src="{{ asset(app.user.enseignant.photo) }}" class="img-circle" alt="User Image">
+                                                                                                                                            {% endif %}
+                                                                                                                                        </div>
+                                                                                                                                        <!-- Message title and timestamp -->
+                                                                                                                                        <h4>
+                                                                                                                                            Support Team
+                                                                                                                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                                                                                                        </h4>
+                                                                                                                                        <!-- The message -->
+                                                                                                                                        <p>Why not buy a new awesome theme?</p>
+                                                                                                                                    </a>
+                                                                                                                                </li>
+                                                                                                                                <!-- end message -->
+                                                                                                                            </ul>
+                                                                                                                            <!-- /.menu -->
+                                                                                                                        </li>
+                                                                                                                        <li class="footer"><a href="#">See All Messages</a></li>
+                                                                                                                    </ul>
+                                                                                                                </li> #}
                 <!-- /.messages-menu -->
 
                 <!-- Notifications Menu -->
                 {# <li class="dropdown notifications-menu">
-                                                    <!-- Menu toggle button -->
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                        <i class="fa fa-bell-o"></i>
-                                                        <span class="label label-warning">10</span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="header">You have 10 notifications</li>
-                                                        <li>
-                                                            <!-- Inner Menu: contains the notifications -->
-                                                            <ul class="menu">
-                                                                <li><!-- start notification -->
-                                                                    <a href="#">
-                                                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                                                    </a>
-                                                                </li>
-                                                                <!-- end notification -->
-                                                            </ul>
-                                                        </li>
-                                                        <li class="footer"><a href="#">View all</a></li>
-                                                    </ul>
-                                                </li> #}
+                                                                                                                    <!-- Menu toggle button -->
+                                                                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                                                                        <i class="fa fa-bell-o"></i>
+                                                                                                                        <span class="label label-warning">10</span>
+                                                                                                                    </a>
+                                                                                                                    <ul class="dropdown-menu">
+                                                                                                                        <li class="header">You have 10 notifications</li>
+                                                                                                                        <li>
+                                                                                                                            <!-- Inner Menu: contains the notifications -->
+                                                                                                                            <ul class="menu">
+                                                                                                                                <li><!-- start notification -->
+                                                                                                                                    <a href="#">
+                                                                                                                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                                                                                                    </a>
+                                                                                                                                </li>
+                                                                                                                                <!-- end notification -->
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="footer"><a href="#">View all</a></li>
+                                                                                                                    </ul>
+                                                                                                                </li> #}
                 <!-- Tasks Menu -->
                 {# <li class="dropdown tasks-menu">
-                                                    <!-- Menu Toggle Button -->
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                        <i class="fa fa-flag-o"></i>
-                                                        <span class="label label-danger">9</span>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="header">You have 9 tasks</li>
-                                                        <li>
-                                                            <!-- Inner menu: contains the tasks -->
-                                                            <ul class="menu">
-                                                                <li><!-- Task item -->
-                                                                    <a href="#">
-                                                                        <!-- Task title and progress text -->
-                                                                        <h3>
-                                                                            Design some buttons
-                                                                            <small class="pull-right">20%</small>
-                                                                        </h3>
-                                                                        <!-- The progress bar -->
-                                                                        <div class="progress xs">
-                                                                            <!-- Change the css width attribute to simulate progress -->
-                                                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                                                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                                <span class="sr-only">20% Complete</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <!-- end task item -->
-                                                            </ul>
-                                                        </li>
-                                                        <li class="footer">
-                                                            <a href="#">View all tasks</a>
-                                                        </li>
-                                                    </ul>
-                                                </li> #}
+                                                                                                                    <!-- Menu Toggle Button -->
+                                                                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                                                                        <i class="fa fa-flag-o"></i>
+                                                                                                                        <span class="label label-danger">9</span>
+                                                                                                                    </a>
+                                                                                                                    <ul class="dropdown-menu">
+                                                                                                                        <li class="header">You have 9 tasks</li>
+                                                                                                                        <li>
+                                                                                                                            <!-- Inner menu: contains the tasks -->
+                                                                                                                            <ul class="menu">
+                                                                                                                                <li><!-- Task item -->
+                                                                                                                                    <a href="#">
+                                                                                                                                        <!-- Task title and progress text -->
+                                                                                                                                        <h3>
+                                                                                                                                            Design some buttons
+                                                                                                                                            <small class="pull-right">20%</small>
+                                                                                                                                        </h3>
+                                                                                                                                        <!-- The progress bar -->
+                                                                                                                                        <div class="progress xs">
+                                                                                                                                            <!-- Change the css width attribute to simulate progress -->
+                                                                                                                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                                                                                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                                                                                                <span class="sr-only">20% Complete</span>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </a>
+                                                                                                                                </li>
+                                                                                                                                <!-- end task item -->
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="footer">
+                                                                                                                            <a href="#">View all tasks</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li> #}
                 <!-- User Account Menu -->
                     <li
                     class="dropdown user user-menu"> <!-- Menu Toggle Button -->
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <!-- The user image in the navbar-->
-                        {# {% if is_granted('ROLE_USER') %}
-                                                                            <img src="images/{{ asset(app.user.etudiant.photo) }}" class="img-circle header_img" alt="User Image">
-                                                                        {% elseif is_granted('ROLE_ADMIN')%}
-                                                                            <img src="images/{{ asset(app.user.enseignant.photo) }}" class="img-circle header_img" alt="User Image">
-                                                                        {% endif %} #}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {% if app.user.enseignant != NULL %}
+                                <img src="{{ asset(app.user.enseignant.photo) }}" class="" alt="User Image" style="width:50px;height:auto">
+                            {% endif %}
+                        {% elseif is_granted('ROLE_USER') %}
+                            {% if app.user.etudiant != NULL %}
+                                <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image" style="width:50px;height:auto">
+                            {% endif %}
+                        {% endif %}
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs"> {% if is_granted('ROLE_ADMIN') %}
+                        <span class="hidden-xs">
+                            {% if is_granted('ROLE_ADMIN') %}
                                 {% if app.user.enseignant != NULL %}
                                     {{ app.user.enseignant.nom }}{{ '  ' }}{{ app.user.enseignant.prenom }}
                                 {% endif %}
@@ -173,33 +178,38 @@
                                     {% endif %}
                                 {% endif %}
                             </p>
+                            <small>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    {% if app.user.enseignant != NULL %}
+                                        enseignant
+                                        {{app.user.enseignant.type.type}}
+                                    {% endif %}
+                                {% elseif is_granted('ROLE_USER') %}
+                                    {% if app.user.etudiant != NULL %}
+                                        {{app.user.etudiant.parcour.type}}
+                                    {% endif %}
+                                {% endif %}
+                            </small>
                         </li>
                     </span>
                 </li>
             </span>
-            <small>
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% if app.user.enseignant != NULL %}
-                        enseignant
-                        {{app.user.enseignant.type.type}}
-                    {% endif %}
-                {% elseif is_granted('ROLE_USER') %}
-                    {% if app.user.etudiant != NULL %}
-                        {{app.user.enseignant.type.type}}
-                    {% endif %}
-                {% endif %}
-            </small>
         </p>
     </li>
     <!-- Menu Body -->
     <li class="user-body">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-4 text-center">
+            <div class="col-xs-4 col-xs-offset-4 text-center" style="border-radius:2px;background-color:blueSS">
                 <a href="#">
-                    {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if app.user.enseignant != NULL %}
+                            enseignant
+                            {{app.user.enseignant.type.type}}
+                        {% endif %}
+                    {% elseif is_granted('ROLE_USER') %}
                         {% if app.user.etudiant != NULL %}
-                            Parcour
-                            {{app.user.etudiant.niveaux.niveau}}
+                            {{app.user.etudiant.parcour.type}}
+                            {{ app.user.etudiant.niveaux.nom }}
                         {% endif %}
                     {% endif %}
                 </a>
@@ -211,19 +221,19 @@
     <li class="user-footer">
         <div class="pull-left">
             <a class="btn btn-default btn-flat" href="            {% if is_granted('ROLE_ADMIN') %}
-                                                                                    {% if app.user.enseignant != NULL %}
-                                                                                               {{path('enseignant_profile',{'enseignant':app.user.enseignant.id})}}
-                                                                                            {% endif %}
-                                                                                        {% elseif is_granted('ROLE_USER') %}
-                                                                                            {% if app.user.etudiant != NULL %}
-                                                                                                {{path('etudiant_profile',{'etudiant':app.user.etudiant.id})}}
-                                                                                            {% endif %}
-                                                                                        {% endif %} ">Profile</a>
+                                                                                                                                                    {% if app.user.enseignant != NULL %}
+                                                                                                                                                               {{path('enseignant_profile',{'enseignant':app.user.enseignant.id})}}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        {% elseif is_granted('ROLE_USER') %}
+                                                                                                                                                            {% if app.user.etudiant != NULL %}
+                                                                                                                                                                {{path('etudiant_profile',{'etudiant':app.user.etudiant.id})}}
+                                                                                                                                                            {% endif %}
+                                                                                                                                                        {% endif %} ">Profile</a>
         </div>
         <div class="pull-right">
             <a href="{{ path('app_logout') }}" class="btn btn-default btn-flat">Déconnecter</a>
         </div>
     </li>
 </ul></li>{# <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                        </li> #}</ul></div></nav></header>
+                                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                                        </li> #}</ul></div></nav></header>

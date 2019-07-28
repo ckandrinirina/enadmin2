@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Form\RegistrationEditType;
 
 class RegistrationController extends AbstractController
 {
@@ -66,6 +67,38 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
             'status' => $status,
             'test' => $test
+        ]);
+    }
+     /**
+     * @Route("/edit-acces/{id}", name="app_edit_acces")
+     */
+    public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator,User $user): Response
+    {
+        $status = "register";
+        $form = $this->createForm(RegistrationEditType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+        return $this->redirectToRoute('etudiant_profile',[
+            'etudiant'=> $this->getUser()->getEtudiant()->getId()
+        ]);
+        }
+
+        return $this->render('registration/register_edit.html.twig', [
+            'registrationForm' => $form->createView(),
+            'status' => $status,
         ]);
     }
 }
