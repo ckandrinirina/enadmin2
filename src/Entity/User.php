@@ -50,6 +50,11 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\Enseignant", mappedBy="login", cascade={"persist", "remove"})
      */
     private $enseignant;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
     
     public function getId(): ?int
     {
@@ -228,6 +233,18 @@ class User implements UserInterface
         if ($newLogin !== $enseignant->getLogin()) {
             $enseignant->setLogin($newLogin);
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

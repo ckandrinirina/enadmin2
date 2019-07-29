@@ -196,6 +196,21 @@
             </li>
             {% endif %}
 
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="treeview {% if status == "user" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Gestion des acces étudiant</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ path('user_etudiant') }}">Etudiant</a></li>
+                    <li><a href="{{ path('user_enseignant') }}">Enseignant</a></li>
+                    <li><a href="{{ path('user_admin') }}">Administrateur</a></li>
+                </ul>
+            </li>
+            {% endif %}
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

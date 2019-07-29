@@ -34,39 +34,32 @@
             <table class="table table-bordered table-striped" id="example1">
                 <thead>
                     <tr>
-                        <th>Pseudo</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Niveaux</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for et in etudiant %}
-                    <tr>
-                        {% if et.login != null %}
-                            <td>{{ et.login.username }}</td>
-                        {% else %}
-                            <td>Pas d'accès</td>
-                        {% endif %}
-                        <td>{{ et.nom }}</td>
-                        <td>{{ et.prenom }}</td>
-                        <td>{{ et.niveaux.nom }}</td>
-                        {% if et.login != null %}
-                            <td>{{et.login.isActive}}</td>
-                        {% else %}
-                            <td>Pas d'accès</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Pseudo</th>
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Parcours</th>
                         <th>Date d'entré</th>
+                        <th>Date de sortie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Trident</td>
+                        <td>Internet
+                                                Explorer 4.0
+                        </td>
+                        <td>Win 95+</td>
+                        <td>
+                            4</td>
+                        <td>X</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Parcours</th>
+                        <th>Date d'entré</th>
+                        <th>Date de sortie</th>
                     </tr>
                 </tfoot>
             </table>
@@ -79,7 +72,7 @@
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>

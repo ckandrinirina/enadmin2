@@ -11388,7 +11388,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": ">>",
 	
 	
 				/**
@@ -11411,7 +11411,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "<<"
 			},
 	
 			/**
@@ -11441,7 +11441,7 @@
 			 * This string gives information to the end user about the information
 			 * that is current on display on the page. The following tokens can be
 			 * used in the string and will be dynamically replaced as the table
-			 * display updates. This tokens can be placed anywhere in the string, or
+			 * display updates. This tokens can be placed anywhere in the string, 
 			 * removed as needed by the language requires:
 			 *
 			 * * `\_START\_` - Display index of the first record on the current page
@@ -11461,12 +11461,12 @@
 			 *    $(document).ready( function() {
 			 *      $('#example').dataTable( {
 			 *        "language": {
-			 *          "info": "Showing page _PAGE_ of _PAGES_"
+			 *          "info": "_PAGE_ pages sur _PAGES_"
 			 *        }
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "_START_ jusqu'a _END_ sur _TOTAL_",
 	
 	
 			/**
@@ -11627,7 +11627,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Nombre a afficher _MENU_",
 	
 	
 			/**
@@ -11646,7 +11646,7 @@
 			 *    $(document).ready( function() {
 			 *      $('#example').dataTable( {
 			 *        "language": {
-			 *          "loadingRecords": "Please wait - loading..."
+			 *          "loadingRecords": "Veillez attendre - loading..."
 			 *        }
 			 *      } );
 			 *    } );
@@ -11707,7 +11707,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Rechercher:",
 	
 	
 			/**
