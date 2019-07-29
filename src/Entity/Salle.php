@@ -36,6 +36,11 @@ class Salle
      */
     private $nom;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\SalleClass", inversedBy="salle", cascade={"persist", "remove"})
+     */
+    private $salle_class;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Salle
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getSalleClass(): ?SalleClass
+    {
+        return $this->salle_class;
+    }
+
+    public function setSalleClass(?SalleClass $salle_class): self
+    {
+        $this->salle_class = $salle_class;
 
         return $this;
     }

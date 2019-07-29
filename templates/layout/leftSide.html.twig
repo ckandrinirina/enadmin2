@@ -144,7 +144,7 @@
             <li class="header">AJOUT ET MODIFICATION</li>
             {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté étudiant</span></a></li>
             <li class="{% if status == "addEns" %} {{ "active" }} {% endif %}"><a href="{{ path('enseignant_add') }}"><i class="fa  fa-folder-open-o"></i> <span>Ajouté enseignant</span></a></li>
             {% endif %}
@@ -184,6 +184,19 @@
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
+            <li class="treeview {% if status == "rep_sale_edit" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Editions des salles</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::repartition_salle_2')) }}
+                </ul>
+            </li>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "r_u_b_n_edit" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Edition des UE et EC</span>
                     <span class="pull-right-container">
@@ -196,9 +209,9 @@
             </li>
             {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class="treeview {% if status == "user" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Gestion des acces étudiant</span>
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Gestion des acces</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -206,7 +219,6 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ path('user_etudiant') }}">Etudiant</a></li>
                     <li><a href="{{ path('user_enseignant') }}">Enseignant</a></li>
-                    <li><a href="{{ path('user_admin') }}">Administrateur</a></li>
                 </ul>
             </li>
             {% endif %}

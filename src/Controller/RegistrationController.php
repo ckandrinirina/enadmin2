@@ -19,9 +19,9 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register/{test}", name="app_register")
      * 
-     * Require ROLE_ADMIN for only this controller method.
+     * Require ROLE_SUPER_ADMIN for only this controller method.
      * 
-     *  @IsGranted("ROLE_ADMIN")
+     *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, $test = null): Response
     {
@@ -50,6 +50,8 @@ class RegistrationController extends AbstractController
                 $user->setRoles($roles);
             }
 
+            $user->setIsActive(true);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -59,8 +61,9 @@ class RegistrationController extends AbstractController
 
             if ($user->getType()->getType() == 'enseignant')
                 return $this->redirectToRoute('enseignant_add', ['login' => $user->getId()]);
+
             if ($user->getType()->getType() == 'administrateur')
-                return $this->redirectToRoute('accueil');
+                return $this->redirectToRoute('enseignant_add',['login' => $user->getId()]);
         }
 
         return $this->render('registration/register.html.twig', [
@@ -69,10 +72,15 @@ class RegistrationController extends AbstractController
             'test' => $test
         ]);
     }
-     /**
+
+    /**
      * @Route("/edit-acces/{id}", name="app_edit_acces")
+     * 
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator,User $user): Response
+    public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, User $user): Response
     {
         $status = "register";
         $form = $this->createForm(RegistrationEditType::class, $user);
@@ -91,9 +99,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-        return $this->redirectToRoute('etudiant_profile',[
-            'etudiant'=> $this->getUser()->getEtudiant()->getId()
-        ]);
+            return $this->redirectToRoute('etudiant_profile', [
+                'etudiant' => $this->getUser()->getEtudiant()->getId()
+            ]);
         }
 
         return $this->render('registration/register_edit.html.twig', [

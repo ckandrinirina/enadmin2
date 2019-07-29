@@ -1,0 +1,3 @@
+{% for type in allTypeParcours %}
+    <li><a href="{{ path('salle_edit',{'type':type.id}) }}">{{ type.type }}</a></li>
+{% endfor %}

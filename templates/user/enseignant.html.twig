@@ -43,28 +43,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for et in enseignant %}
-                    <tr>
-                        {% if et.login != null %}
-                            <td>{{ et.login.username }}</td>
-                        {% else %}
-                            <td>Pas d'accès</td>
-                        {% endif %}
-                        <td>{{ et.nom }}</td>
-                        <td>{{ et.prenom }}</td>
-                        <td>{{ et.type.type }}</td>
-                        {% if et.login != null %}
-                            <td>{{et.login.isActive}}</td>
-                        {% else %}
-                            <td>Pas d'accès</td>
-                        {% endif %}
-                        {% if et.login != null %}
-                            <td>{{et.login.roles}}</td>
-                        {% else %}
-                            <td>Pas d'accès</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
+                    {% for et in enseignant %}
+                        <tr>
+                            {% if et.login != null %}
+                                <td>{{ et.login.username }}</td>
+                            {% else %}
+                                <td>Pas d'accès</td>
+                            {% endif %}
+                            <td>{{ et.nom }}</td>
+                            <td>{{ et.prenom }}</td>
+                            <td>{{ et.type.type }}</td>
+                            {% if et.login != null %}
+                                <td>{{et.login.isActive}}</td>
+                            {% else %}
+                                <td>Pas d'accès</td>
+                            {% endif %}
+                            {% if et.login != null %}
+                                <td>
+                                    {% if et.login.roles['0'] == 'ROLE_ADMIN' %}
+                                        <a class="btn btn-block btn-social btn-dropbox" data-target="#modal-grant-role-{{et.id}}" data-toggle="modal">
+                                            <i class="fa fa-edit"></i>enseignant</a>
+                                    {% else %}
+                                        <a class="btn btn-block btn-social btn-dropbox" data-target="#modal-grant-role-{{et.id}}" data-toggle="modal">
+                                            <i class="fa fa-edit"></i>administrateur</a>
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td>Pas d'accès</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>
@@ -79,6 +87,36 @@
         </div>
         <!-- /.box-body -->
     </div>
+    {% set i = 0 %}
+    {% for et in enseignant %}
+        {% if et.login != null %}
+        <div class="modal fade" id="modal-grant-role-{{et.id}}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Changer de rôle</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(view_form[i],{'action': path('change_role',{'id':et.login.id}), 'method': 'POST'}) }}
+                        <div class="box-body">
+                            <div class="form-group">
+                                {{ form_row(view_form[i].roles) }}
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-primary pull-right" type="submit">Valider</button>
+                        </div>
+                        {{ form_end(view_form[i]) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% set i = i + 1 %}
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}
