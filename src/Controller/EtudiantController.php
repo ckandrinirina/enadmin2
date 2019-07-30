@@ -19,7 +19,7 @@ class EtudiantController extends AbstractController
     /**
      * @Route("/etudiant/{type}/{niveaux}", name="list")
      */
-    public function List($type ,$niveaux)
+    public function List($type, $niveaux)
     {
         $status = "listE";
         $em = $this->getDoctrine()->getManager();
@@ -32,24 +32,25 @@ class EtudiantController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $etudiants = $etudiantRepository->findByNiveaux($niveaux);
 
-        return $this->render('etudiant/list.html.twig',
+        return $this->render(
+            'etudiant/list.html.twig',
             [
-                'parcour'=> $parcours,
+                'parcour' => $parcours,
                 'niveaux' => $niv,
                 'status' => $status,
-                'n'=>$niveaux,
-                'etudiants'=>$etudiants
-            ]);
+                'n' => $niveaux,
+                'etudiants' => $etudiants,
+            ]
+        );
     }
 
     /**
      * @Route("etudiant-ajoute/{login}",name="etudiant_add",methods={"GET","POST"})
      * 
      */
-    public function ajoute(Request $request ,$login = NULL ,FileUploader $fileUploader)
+    public function ajoute(Request $request, $login = NULL, FileUploader $fileUploader)
     {
-        if($login == NULL)
-        {
+        if ($login == NULL) {
             return $this->redirectToRoute('app_register');
         }
 
@@ -63,22 +64,19 @@ class EtudiantController extends AbstractController
         $et = $etudiantRepository->findByLogin($login);
         $user = $userRepository->find($login);
 
-        if($et != NULL)
-        {
+        if ($et != NULL) {
             return $this->redirectToRoute('app_register');
         }
-        if(!(isset($user)))
-        {
+        if (!(isset($user))) {
             return $this->redirectToRoute('app_register');
         }
 
         $etudiant = new Etudiant();
-        $form = $this->createForm(EtudiantType::class , $etudiant);
+        $form = $this->createForm(EtudiantType::class, $etudiant);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $etudiant->setLogin($user);
 
             $file = $etudiant->getPhoto();
@@ -89,10 +87,10 @@ class EtudiantController extends AbstractController
             $em->persist($etudiant);
             $em->flush();
 
-            return $this->redirectToRoute('list',['type' => $etudiant->getParcour()->getId(),'niveaux'=>$etudiant->getNiveaux()->getId()]);
+            return $this->redirectToRoute('list', ['type' => $etudiant->getParcour()->getId(), 'niveaux' => $etudiant->getNiveaux()->getId()]);
         }
 
-        return $this->render('etudiant/ajoute.html.twig' , [
+        return $this->render('etudiant/ajoute.html.twig', [
             'form' => $form->createView(),
             'status' => $status
         ]);
@@ -101,7 +99,7 @@ class EtudiantController extends AbstractController
     /**
      * @Route("/etudiant/pdf/{type}/{niveaux}", name="list_pdf")
      */
-    public function list_pdf($type ,$niveaux)
+    public function list_pdf($type, $niveaux)
     {
         $status = "listE";
         $em = $this->getDoctrine()->getManager();
@@ -115,16 +113,18 @@ class EtudiantController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $etudiants = $etudiantRepository->findByNiveaux($niveaux);
 
-        return $this->render('etudiant/list_pdf.html.twig',
+        return $this->render(
+            'etudiant/list_pdf.html.twig',
             [
-                'parcour'=> $parcours,
+                'parcour' => $parcours,
                 'niveaux' => $niv,
                 'status' => $status,
                 'n' => $niveaux,
-                'etudiants'=>$etudiants,
+                'etudiants' => $etudiants,
                 'niv_name' => $niv_name,
                 'type' => $type
-            ]);
+            ]
+        );
     }
 
     /**
@@ -139,34 +139,35 @@ class EtudiantController extends AbstractController
 
         $etudiant = $etudiantRepository->find($etudiant);
 
-        return $this->render('etudiant/profile.html.twig',
+        return $this->render(
+            'etudiant/profile.html.twig',
             [
                 'status' => $status,
-                'etudiant'=>$etudiant,
-            ]);
+                'etudiant' => $etudiant,
+            ]
+        );
     }
 
     /**
      * @Route("etudiant-edit/{id}/",name="etudiant_edit",methods={"GET","POST"})
      * 
      */
-    public function edit(Request $request ,Etudiant $etudiant ,FileUploader $fileUploader)
+    public function edit(Request $request, Etudiant $etudiant, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if($etudiant == null)
+        if ($etudiant == null)
             return $this->redirectToRoute('accueil');
-            
-        if($etudiant->getLogin()->getId() != $this->getUser()->getId())
-            return $this->redirectToRoute('etudiant_profile',['etudiant' => $etudiant->getId()]);
+
+        if ($etudiant->getLogin()->getId() != $this->getUser()->getId())
+            return $this->redirectToRoute('etudiant_profile', ['etudiant' => $etudiant->getId()]);
 
         $em = $this->getDoctrine()->getManager();
         $status = 'addE';
-        $form = $this->createForm(EtudiantType::class , $etudiant);
+        $form = $this->createForm(EtudiantType::class, $etudiant);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $file = $etudiant->getPhoto();
             $path = $fileUploader->upload($file);
 
@@ -175,12 +176,29 @@ class EtudiantController extends AbstractController
             $em->persist($etudiant);
             $em->flush();
 
-            return $this->redirectToRoute('etudiant_profile',['etudiant' => $etudiant->getId()]);
+            return $this->redirectToRoute('etudiant_profile', ['etudiant' => $etudiant->getId()]);
         }
 
-        return $this->render('etudiant/ajoute.html.twig' , [
+        return $this->render('etudiant/ajoute.html.twig', [
             'form' => $form->createView(),
             'status' => $status
+        ]);
+    }
+
+    /**
+     * @Route("etudiant-archive",name="liste_archive")
+     * 
+     */
+    public function archive()
+    {
+        $status = 'archive';
+        $em = $this->getDoctrine()->getManager();
+        $niveauxRepository = $em->getRepository(Niveaux::class);
+        $etudiant_repository = $em->getRepository(Etudiant::class);
+        $archives = $etudiant_repository->findAll();
+        return $this->render('etudiant/archive.html.twig', [
+            'status' => $status,
+            'archives'=> $archives
         ]);
     }
 }

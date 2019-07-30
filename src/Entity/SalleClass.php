@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,9 +24,14 @@ class SalleClass
     private $nom;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Salle", mappedBy="salle_class", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="salleClass")
      */
-    private $salle;
+    private $salles;
+
+    public function __construct()
+    {
+        $this->salles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,19 +50,32 @@ class SalleClass
         return $this;
     }
 
-    public function getSalle(): ?Salle
+    /**
+     * @return Collection|Salle[]
+     */
+    public function getSalles(): Collection
     {
-        return $this->salle;
+        return $this->salles;
     }
 
-    public function setSalle(?Salle $salle): self
+    public function addSalle(Salle $salle): self
     {
-        $this->salle = $salle;
+        if (!$this->salles->contains($salle)) {
+            $this->salles[] = $salle;
+            $salle->setSalleClass($this);
+        }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newSalle_class = $salle === null ? null : $this;
-        if ($newSalle_class !== $salle->getSalleClass()) {
-            $salle->setSalleClass($newSalle_class);
+        return $this;
+    }
+
+    public function removeSalle(Salle $salle): self
+    {
+        if ($this->salles->contains($salle)) {
+            $this->salles->removeElement($salle);
+            // set the owning side to null (unless already changed)
+            if ($salle->getSalleClass() === $this) {
+                $salle->setSalleClass(null);
+            }
         }
 
         return $this;

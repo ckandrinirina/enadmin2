@@ -7,12 +7,12 @@
     <section class="content-header">
         <h1>
             Fiche de note
-            {# <small>{{ parcour.type }}</small> #}
+            <span type="button" class="btn btn-info">{{ auNow.anneUniversitaire }}</span>
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    <i class="fa fa-dashboard"></i>Fiche de note</a>
+                    <span type="button" class="btn btn-info">{{ auNow.anneUniversitaire }}</span>
             </li>
             {# <li class="active">{{ parcour.type }}</li> #}
         </ol>
@@ -30,10 +30,10 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {# // <script>
-            //     $(function () {
-            //         $('#example1').DataTable()
-            //     })
-            // </script> #}
+                //     $(function () {
+                //         $('#example1').DataTable()
+                //     })
+                // </script> #}
 {% endblock %}
 
 {% block body %}
@@ -43,7 +43,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'ratrapage':'1' })}}">{{ niveau.niveau }}</a>
+                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'au':auid,'semestre':niveau.semestres['0'].id,'ratrapage':'1' })}}">{{ niveau.niveau }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -56,7 +56,7 @@
                                 <ul class="nav nav-tabs pull-right">
                                     {% for semestre in semestres %}
                                         <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
-                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':semestre.id,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
+                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'au':auid,'semestre':semestre.id,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
                                         </li>
                                     {% endfor %}
                                     <li class="pull-left header">
@@ -70,7 +70,7 @@
                                                 <div class="box">
                                                     <div class="box-header">
                                                         <h3 class="box-title">Listes des notes par niveaux   :</h3>
-                                                        <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
+                                                        <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'au':auid,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                             Générer un PDF
                                                         </a>
@@ -88,10 +88,10 @@
                                                             </button>
                                                             <ul class="dropdown-menu" role="menu">
                                                                 <li>
-                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'0'}) }}">Premier session</a>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Premier session</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -185,19 +185,19 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div
-                            class="col-xs-12">{# <div class="box box-default">
-                                                                <div class="box-header with-border">
-                                                                    <h3 class="box-title">Historique par année universitaire</h3>
-                                                                </div>
-                                                                <div class="box-body">
-                                                                    {% for aun in allAu %}
-                                                                        <a type="button" class="btn btn-info" href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':rat}) }}">
-                                                                            {{ aun.anneUniversitaire }}
-                                                                        </a>
-                                                                    {% endfor %}
-                                                                </div>
-                                                            </div> #}
+                        <div class="col-xs-12">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Historique par année universitaire</h3>
+                                </div>
+                                <div class="box-body">
+                                    {% for aun in allAu %}
+                                        <a type="button" class="btn btn-info" href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':r}) }}">
+                                            {{ aun.anneUniversitaire }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

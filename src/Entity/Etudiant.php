@@ -143,12 +143,18 @@ class Etudiant
      */
     private $scolarites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Information", mappedBy="etudiant")
+     */
+    private $information;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
         $this->ficheIndividuels = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
+        $this->information = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -490,6 +496,37 @@ class Etudiant
             // set the owning side to null (unless already changed)
             if ($scolarite->getEtudiant() === $this) {
                 $scolarite->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Information[]
+     */
+    public function getInformation(): Collection
+    {
+        return $this->information;
+    }
+
+    public function addInformation(Information $information): self
+    {
+        if (!$this->information->contains($information)) {
+            $this->information[] = $information;
+            $information->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Information $information): self
+    {
+        if ($this->information->contains($information)) {
+            $this->information->removeElement($information);
+            // set the owning side to null (unless already changed)
+            if ($information->getEtudiant() === $this) {
+                $information->setEtudiant(null);
             }
         }
 

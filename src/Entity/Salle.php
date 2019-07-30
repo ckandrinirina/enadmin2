@@ -32,14 +32,9 @@ class Salle
     private $parcour;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\SalleClass", inversedBy="salles")
      */
-    private $nom;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\SalleClass", inversedBy="salle", cascade={"persist", "remove"})
-     */
-    private $salle_class;
+    private $salleClass;
 
     public function getId(): ?int
     {
@@ -82,28 +77,15 @@ class Salle
         return $this;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
     public function getSalleClass(): ?SalleClass
     {
-        return $this->salle_class;
+        return $this->salleClass;
     }
 
-    public function setSalleClass(?SalleClass $salle_class): self
+    public function setSalleClass(?SalleClass $salleClass): self
     {
-        $this->salle_class = $salle_class;
+        $this->salleClass = $salleClass;
 
         return $this;
     }
-
 }

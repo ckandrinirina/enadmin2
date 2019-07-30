@@ -1,13 +1,40 @@
 {% for salle in salles %}
-<div class="box-body col-xs-6">
-    <h3 class="text-muted text-center">{{salle.semestre.nom}}</h3>
-    <table class="table table-bordered table-striped" id="example1">
-        <thead>
-            <tr>
-                <th class="text-center">{{salle.nom}} </th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+    <div class="box-body col-xs-6">
+        <h3 class="text-muted text-center">{{salle.semestre.nom}}</h3>
+        <table class="table table-bordered table-striped" id="example1">
+            <thead>
+                <tr>
+                    <th class="text-center">{{salle.salleClass.nom}}
+                        <a class="btn btn-social-icon btn-facebook" data-target="#modal-salle-add-{{salle.id}}" data-toggle="modal">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="modal-salle-add-{{salle.id}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Image</h4>
+                </div>
+                {{ form_start(view_form[salle.id],{'action': path('change_salle',{'id':salle.id}), 'method': 'POST'}) }}
+                <div class="box-body">
+                    <div class="form-group">
+                        {{ form_row(view_form[salle.id].salleClass) }}
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary pull-right" type="submit">Valider</button>
+                </div>
+                {{ form_end(view_form[salle.id]) }}
+            </div>
+        </div>
+    </div>
 {% endfor %}

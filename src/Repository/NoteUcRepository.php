@@ -44,7 +44,7 @@ class NoteUcRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function fin_by_e_n_s_r($etudiant,$niveaux,$semestre,$ratrapage)
+    public function fin_by_e_n_s_r($etudiant,$niveaux,$semestre,$ratrapage,$au)
     {
         return $this->createQueryBuilder('n')
             ->innerJoin('n.etudiant','e','WITH','e.id = :val3')
@@ -56,6 +56,9 @@ class NoteUcRepository extends ServiceEntityRepository
             ->innerJoin('n.semestre','s','WITH','s.id = :val2')
             ->setParameter('val2',$semestre)
             ->addSelect('s')
+            ->innerJoin('n.anneUniversitaire','au','WITH','au.id = :val5')
+            ->setParameter('val5',$au)
+            ->addSelect('au')
             ->where('n.isRatarapage = :val4')
             ->setParameter('val4',$ratrapage)
             ->getQuery()

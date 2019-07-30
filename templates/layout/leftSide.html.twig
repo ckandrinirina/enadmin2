@@ -223,6 +223,19 @@
             </li>
             {% endif %}
 
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="treeview {% if status == "archive" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-caret-square-o-down"></i> <span>Consultation globale</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ path('liste_archive') }}">Liste</a></li>
+                </ul>
+            </li>
+            {% endif %}
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -9,6 +9,7 @@ use App\Entity\Semestre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\NoteUc;
+use App\Entity\AnneUniversitaire;
 
 class FicheIndividuelController extends AbstractController
 {
@@ -22,7 +23,6 @@ class FicheIndividuelController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $etudiantRepository = $em->getRepository(Etudiant::class);
-        $ficheRepository = $em->getRepository(Note::class);
         $semestreRepository = $em->getRepository(Semestre::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
 
@@ -97,9 +97,9 @@ class FicheIndividuelController extends AbstractController
     }
 
     /**
-     * @Route("/fiche/note/{etudiant}/{niveaux}/{semestre}/{ratrapage}", name="fiche_note")
+     * @Route("/fiche-note/{etudiant}/{niveaux}/{semestre}/{au}/{ratrapage}", name="fiche_note")
      */
-    public function fiche_de_note($etudiant, $niveaux, $semestre, $ratrapage)
+    public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage)
     {
         $em = $this->getDoctrine()->getManager();
         $status = 'fiche de note';
@@ -107,8 +107,11 @@ class FicheIndividuelController extends AbstractController
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $semestreRepository = $em->getRepository(Semestre::class);
         $note_ue_repository = $em->getRepository(NoteUc::class);
+        $auRepository = $em->getRepository(AnneUniversitaire::class);
 
-        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage);
+        $allAu = $auRepository->findAllByOrder();
+        $auNow = $auRepository->find($au);
+        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage ,$au);
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
@@ -140,15 +143,18 @@ class FicheIndividuelController extends AbstractController
                 'r' => $ratrapage,
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
-                'credit_aquis' => $credit_aquis
+                'credit_aquis' => $credit_aquis,
+                'allAu' => $allAu,
+                'auid' => $au,
+                'auNow' => $auNow,
             ]
         );
     }
 
     /**
-     * @Route("/fiche/note/pdf/{etudiant}/{niveaux}/{semestre}/{ratrapage}", name="fiche_note_pdf")
+     * @Route("/fiche-note-pdf/{etudiant}/{niveaux}/{semestre}/{au}{ratrapage}", name="fiche_note_pdf")
      */
-    public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage)
+    public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage,$au)
     {
         $em = $this->getDoctrine()->getManager();
         $status = 'fiche de note';
@@ -157,7 +163,7 @@ class FicheIndividuelController extends AbstractController
         $semestreRepository = $em->getRepository(Semestre::class);
         $note_ue_repository = $em->getRepository(NoteUc::class);
 
-        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage);
+        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage,$au);
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
@@ -189,7 +195,8 @@ class FicheIndividuelController extends AbstractController
                 'r' => $ratrapage,
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
-                'credit_aquis' => $credit_aquis
+                'credit_aquis' => $credit_aquis,
+                'au'=>$au
             ]
         );
     }

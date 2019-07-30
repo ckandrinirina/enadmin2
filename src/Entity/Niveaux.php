@@ -79,6 +79,11 @@ class Niveaux
      */
     private $scolarite;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Information", mappedBy="niveaux")
+     */
+    private $informations;
+
 
     public function __construct()
     {
@@ -90,6 +95,7 @@ class Niveaux
         $this->uCs = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
         $this->salles = new ArrayCollection();
+        $this->informations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -417,6 +423,34 @@ class Niveaux
         $newNiveau = $scolarite === null ? null : $this;
         if ($newNiveau !== $scolarite->getNiveau()) {
             $scolarite->setNiveau($newNiveau);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Information[]
+     */
+    public function getInformations(): Collection
+    {
+        return $this->informations;
+    }
+
+    public function addInformation(Information $information): self
+    {
+        if (!$this->informations->contains($information)) {
+            $this->informations[] = $information;
+            $information->addNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Information $information): self
+    {
+        if ($this->informations->contains($information)) {
+            $this->informations->removeElement($information);
+            $information->removeNiveau($this);
         }
 
         return $this;

@@ -4,13 +4,13 @@
     {% endblock %}
 
     {% block return_top %}
-        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'au':au,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
             Retourner à la liste</a>
     {% endblock %}
 
     {% block return_bottom %}
-        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'au':au,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
             Retourner à la liste</a>
     {% endblock %}

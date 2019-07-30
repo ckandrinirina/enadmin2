@@ -28,6 +28,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         ));
         $role_admin[] = 'ROLE_SUPER_ADMIN';
         $user->setRoles($role_admin);
+        $user->setIsActive(true);
         $em->persist($user);
 
         $user1 = new User();
@@ -39,6 +40,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         ));
         $role_enseignant[] = 'ROLE_ADMIN';
         $user1->setRoles($role_enseignant);
+        $user1->setIsActive(true);
         $em->persist($user1);
 
         $user2 = new User();
@@ -51,6 +53,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $role_etudiant[] = 'ROLE_USER';
         $user2->setRoles($role_etudiant);
         $user2->setEtudiant($this->getReference('etudiant1'));
+        $user2->setIsActive(true);
         $em->persist($user2);
 
         $em->flush();

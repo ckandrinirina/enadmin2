@@ -88,7 +88,7 @@
                                                     <td>{{ etudiant.sexe.sexe }}</td>
                                                     <td>
                                                         <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}"> fiche individuel</a>
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'ratrapage':'0' })}}"> fiche de note</a>
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}"> fiche de note</a>
                                                         <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}"> Profile</a>
                                                     </td> 
                                                 </tr>
