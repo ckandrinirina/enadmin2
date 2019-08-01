@@ -55,7 +55,7 @@ class Enseignant
     private $type;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="enseignant", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="enseignant", cascade={"persist","remove"})
      */
     private $login;
 

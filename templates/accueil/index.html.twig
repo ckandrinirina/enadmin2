@@ -52,7 +52,8 @@
                     <h3 class="text-center">{{ nbr_etudiant_pro }}</h3>
 
                     <p>Etudiant proféssionnel</p>
-                </div> 12
+                </div>
+                12
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
@@ -96,9 +97,9 @@
     </div>
     {# hide if admin #}
     <div class="col-md-6" style="background-color:white ;">
-            <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
-                <i class="fa fa-upload"></i>Ajouter un évènement
-            </a>
+        <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
+            <i class="fa fa-upload"></i>Ajouter un évènement
+        </a>
         <br/>
         {% include '@Calendar/calendar.html' %}
     </div>
@@ -107,40 +108,51 @@
             <div class="box-header ui-sortable-handle" style="cursor: move;">
                 <i class="fa fa-calendar-minus-o"></i>
 
-                <h3 class="box-title">Evènement</h3>
+                <h3 class="box-title">Information</h3>
 
             </div>
             <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
                 <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
-                    <div class="item">
-                        <img alt="user image" class="online" src="dist/img/user4-128x128.jpg">
-
-                        <p class="message">
-                            <a class="name" href="#">
-                                <small class="text-muted pull-right">
-                                    <i class="fa fa-clock-o"></i>
-                                    2:15</small>
-                                Mike Doe
-                            </a>
-                            I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the  best themes on the market
-                        </p>
-                    </div>
+                    {% if  last_information == null %}{{ 'Il n\'y a pas  de publication' }}{% endif %}
+                    {% for information in last_information %}
+                        <div class="item">
+                            <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ information.user.etudiant.photo }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                            <p class="message">
+                                <a class="name" href="#">
+                                    <small class="text-muted pull-right">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{ information.addAt | date('d/m H:m') }}</small>
+                                    {% if information.user.etudiant != null %}
+                                        {{ information.user.etudiant.nom }}
+                                        {{ information.user.etudiant.nom }}
+                                    {% endif %}
+                                    {% if information.user.enseignant != null  %}
+                                        {{ information.user.enseignant.nom }}
+                                        {{ information.user.enseignant.nom }}
+                                    {% endif %}
+                                </a>
+                                {{information.contenu}}
+                            </p>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>
                 <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
             </div>
             <!-- /.chat -->
-            {# <div class="box-footer">
+            <div class="box-footer">
+                {{ form_start(information_form_view,{'action': path('new-information'), 'method': 'POST'}) }}
                 <div class="input-group">
-                    <input class="form-control" placeholder="Ajouter un événement...">
-
+                    {{ form_row(information_form_view.contenu) }}
                     <div class="input-group-btn">
-                        <button class="btn btn-success" type="button">
+                        <button class="btn btn-success" style="position: relative;margin-bottom: -25px;" type="submit">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-            </div> #}
+                {{ form_row(information_form_view.niveaux) }}
+                {{ form_end(information_form_view) }}
+            </div>
         </div>
     </div>
 

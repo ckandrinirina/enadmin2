@@ -27,10 +27,19 @@ class AnneUniversitaireRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
     public function findAllByOrder()
     {
         return $this->createQueryBuilder('a')
             ->orderBy('a.anneUniversitaire','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findAllByOrderLimit()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.anneUniversitaire','DESC')
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }

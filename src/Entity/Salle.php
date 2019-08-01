@@ -32,7 +32,7 @@ class Salle
     private $parcour;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SalleClass", inversedBy="salles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SalleClass", inversedBy="salles",cascade={"persist"})
      */
     private $salleClass;
 

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,6 +57,16 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Information", mappedBy="user")
+     */
+    private $informations;
+
+    public function __construct()
+    {
+        $this->informations = new ArrayCollection();
+    }
     
     public function getId(): ?int
     {
@@ -245,6 +257,37 @@ class User implements UserInterface
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Information[]
+     */
+    public function getInformations(): Collection
+    {
+        return $this->informations;
+    }
+
+    public function addInformation(Information $information): self
+    {
+        if (!$this->informations->contains($information)) {
+            $this->informations[] = $information;
+            $information->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Information $information): self
+    {
+        if ($this->informations->contains($information)) {
+            $this->informations->removeElement($information);
+            // set the owning side to null (unless already changed)
+            if ($information->getUser() === $this) {
+                $information->setUser(null);
+            }
+        }
 
         return $this;
     }

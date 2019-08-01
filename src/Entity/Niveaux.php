@@ -75,7 +75,7 @@ class Niveaux
     private $salles;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Scolarite", mappedBy="niveau", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Scolarite", mappedBy="niveau", cascade={"persist"})
      */
     private $scolarite;
 

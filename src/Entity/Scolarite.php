@@ -29,7 +29,7 @@ class Scolarite
     private $dateInscription;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Niveaux", inversedBy="scolarite", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Niveaux", inversedBy="scolarite", cascade={"persist"})
      */
     private $niveau;
 

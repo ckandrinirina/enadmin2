@@ -23,13 +23,24 @@ class RepartitionECRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.niveaux','n','WITH','n.id = :val1')
-            //->where('r.niveaux = :val1')
             ->setParameter('val1',$niveaux)
             ->innerJoin('r.semestre','s','WITH','s.id = :val2')
-            //->andWhere('r.semestre = :val2')
             ->setParameter('val2',$semestre)
             ->getQuery()
             ->getResult();
+    }
+
+    public function find_by_s_n_ec($semestre,$niveau,$ec)
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.niveaux','n','WITH','n.id = :val1')
+            ->setParameter('val1',$niveau)
+            ->innerJoin('r.semestre','s','WITH','s.id = :val2')
+            ->setParameter('val2',$semestre)
+            ->innerJoin('r.ec','e','WITH','e.id = :val3')
+            ->setParameter('val3',$ec)
+            ->getQuery()
+            ->getResult();          
     }
 
     // /**

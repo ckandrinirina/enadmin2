@@ -15,17 +15,14 @@ class InformationType extends AbstractType
     {
         $builder
             ->add('contenu')
-            // ->add('addAt')
-            // ->add('etudiant')
             ->add('niveaux',EntityType::class,[
                 'class' => Niveaux::class,
                 'choice_label' => function(Niveaux $niveaux)
                 {
                     return $niveaux->getNom();
                 },
-                'label'=>'Type de parcour',
+                'label'=>'Destination',
                 'multiple'=>true,
-                'expanded'=>true,
             ])
         ;
     }
@@ -33,7 +30,7 @@ class InformationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Information::class,
+            'data_class' => null,
         ]);
     }
 }

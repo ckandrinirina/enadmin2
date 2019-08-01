@@ -1,38 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}School{% endblock %}
+{% block title %}Evenement
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Evenement
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>
+                    Evenement</a>
+            </li>
+        </ol>
+    </section>
+{% endblock %}
 
 {% block body %}
-    <h1>School</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ school.id }}</td>
-            </tr>
-            <tr>
-                <th>BeginAt</th>
-                <td>{{ school.beginAt ? school.beginAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EndAt</th>
-                <td>{{ school.endAt ? school.endAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ school.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ school.content }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('school_index') }}">back to list</a>
-
-    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
-
-    {{ include('school/_delete_form.html.twig') }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Evenement</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding" style="margin:5px">
+                    {{ school.content | raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
+    <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
 {% endblock %}

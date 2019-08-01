@@ -19,6 +19,15 @@ class InformationRepository extends ServiceEntityRepository
         parent::__construct($registry, Information::class);
     }
 
+    public function findLastInformation()
+    {
+        return $this->createQueryBuilder('i')
+            ->orderBy('i.addAt','DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Information[] Returns an array of Information objects
     //  */

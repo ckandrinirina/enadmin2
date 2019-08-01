@@ -24,11 +24,6 @@ class Information
     private $contenu;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="information")
-     */
-    private $etudiant;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Niveaux", inversedBy="informations")
      */
     private $niveaux;
@@ -37,6 +32,12 @@ class Information
      * @ORM\Column(type="datetime")
      */
     private $addAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="informations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -56,18 +57,6 @@ class Information
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    public function getEtudiant(): ?Etudiant
-    {
-        return $this->etudiant;
-    }
-
-    public function setEtudiant(?Etudiant $etudiant): self
-    {
-        $this->etudiant = $etudiant;
 
         return $this;
     }
@@ -106,6 +95,18 @@ class Information
     public function setAddAt(\DateTimeInterface $addAt): self
     {
         $this->addAt = $addAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

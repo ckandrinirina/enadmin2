@@ -119,7 +119,7 @@ class Etudiant
     private $ficheIndividuels;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="etudiant", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="etudiant", cascade={"persist","remove"})
      */
     private $login;
 
@@ -143,10 +143,6 @@ class Etudiant
      */
     private $scolarites;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Information", mappedBy="etudiant")
-     */
-    private $information;
 
     public function __construct()
     {
@@ -496,37 +492,6 @@ class Etudiant
             // set the owning side to null (unless already changed)
             if ($scolarite->getEtudiant() === $this) {
                 $scolarite->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Information[]
-     */
-    public function getInformation(): Collection
-    {
-        return $this->information;
-    }
-
-    public function addInformation(Information $information): self
-    {
-        if (!$this->information->contains($information)) {
-            $this->information[] = $information;
-            $information->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInformation(Information $information): self
-    {
-        if ($this->information->contains($information)) {
-            $this->information->removeElement($information);
-            // set the owning side to null (unless already changed)
-            if ($information->getEtudiant() === $this) {
-                $information->setEtudiant(null);
             }
         }
 

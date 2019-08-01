@@ -89,6 +89,11 @@ class NiveauxFixtures extends Fixture implements OrderedFixtureInterface
         $niveaux111->setNom('M2(EA)');
         $manager->persist($niveaux111);
 
+        $sortant = new Niveaux();
+        $sortant->setNiveau('sortant');
+        $sortant->setNom('sortant');
+        $manager->persist($sortant);
+
         $manager->flush();
 
         $this->addReference('L1',$niveaux1);

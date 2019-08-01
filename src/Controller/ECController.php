@@ -87,7 +87,7 @@ class ECController extends AbstractController
      * 
      */
     public function addEc(Request $request)
-    {        
+    {
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
         $ec = new EC();
@@ -106,21 +106,21 @@ class ECController extends AbstractController
             $niveaux = $ec->getUC()->getNiveaux();
             $semestres = $ec->getUC()->getSemestres();
 
-            $uc = $ec->getUC();
-            $all_ec = $uc->getECs();
+            // $uc = $ec->getUC();
+            // $all_ec = $uc->getECs();
 
-            $nbr = 1;
-            foreach ($all_ec as $ec_count) {
-                $nbr = $nbr + 1;
-            }
-            $coeff = 1 / $nbr;
+            // $nbr = 1;
+            // foreach ($all_ec as $ec_count) {
+            //     $nbr = $nbr + 1;
+            // }
+            // $coeff = 1 / $nbr;
 
-            foreach ($all_ec as $ec_count) {
-                $ec_count->setCoefficient($coeff);
-                $em->persist($ec_count);
-            }
+            // foreach ($all_ec as $ec_count) {
+            //     $ec_count->setCoefficient($coeff);
+            //     $em->persist($ec_count);
+            // }
 
-            $ec->setCoefficient($coeff);
+            // $ec->setCoefficient($coeff);
 
             $i = 0;
             foreach ($niveaux as $niveau) {
@@ -131,7 +131,6 @@ class ECController extends AbstractController
                 $em->persist($repEc[$i]);
                 $i = $i + 1;
             }
-
 
             $em->persist($ec);
 
@@ -147,7 +146,7 @@ class ECController extends AbstractController
         );
     }
 
-        /**
+    /**
      * @Route("e/c/ajoute/{id}" , name="ec_edit")
      * 
      *  Require ROLE_ADMIN for only this controller method.
@@ -155,10 +154,11 @@ class ECController extends AbstractController
      *  @IsGranted("ROLE_ADMIN")
      * 
      */
-    public function editEc(Request $request,EC $ec)
-    {        
+    public function editEc(Request $request, EC $ec)
+    {
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
+        $repartition_ec_repository = $em->getRepository(RepartitionEC::class);
         // $repEc1 = new RepartitionEC();
         // $repEc2 = new RepartitionEC();
 
@@ -174,25 +174,26 @@ class ECController extends AbstractController
             $niveaux = $ec->getUC()->getNiveaux();
             $semestres = $ec->getUC()->getSemestres();
 
-            $uc = $ec->getUC();
-            $all_ec = $uc->getECs();
+            // $uc = $ec->getUC();
+            // $all_ec = $uc->getECs();
 
-            $nbr = 1;
-            foreach ($all_ec as $ec_count) {
-                $nbr = $nbr + 1;
-            }
-            $coeff = 1 / $nbr;
+            // $nbr = 1;
+            // foreach ($all_ec as $ec_count) {
+            //     $nbr = $nbr + 1;
+            // }
+            // $coeff = 1 / $nbr;
 
-            foreach ($all_ec as $ec_count) {
-                $ec_count->setCoefficient($coeff);
-                $em->persist($ec_count);
-            }
+            // foreach ($all_ec as $ec_count) {
+            //     $ec_count->setCoefficient($coeff);
+            //     $em->persist($ec_count);
+            // }
 
-            $ec->setCoefficient($coeff);
+            // $ec->setCoefficient($coeff);
 
             $i = 0;
             foreach ($niveaux as $niveau) {
-                $repEc[$i] = new RepartitionEC();
+                $repEc[$i] = $repartition_ec_repository->find_by_s_n_ec($semestres[$i]->getId(), $niveau->getId(), $ec->getId());
+                $repEc[$i] = $repEc[$i][0];
                 $repEc[$i]->setEc($ec);
                 $repEc[$i]->setNiveaux($niveau);
                 $repEc[$i]->setSemestre($semestres[$i]);

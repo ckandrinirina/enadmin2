@@ -24,7 +24,7 @@ class SalleClass
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="salleClass")
+     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="salleClass",cascade={"remove"})
      */
     private $salles;
 
