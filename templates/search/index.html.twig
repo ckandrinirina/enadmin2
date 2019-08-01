@@ -1,30 +1,11 @@
-{# {{ form_start(form,{'attr':{'class' : 'sidebar-form'}}) }}
+{{ form_start(form,{'action': path('search_result'), 'method': 'POST','attr':{'class' : 'sidebar-form'}}) }}
     <div class="input-group">
         {{ form_row(form.search,{'attr':{'class' : 'form-control' , 'placeholder':'Rechercher...'}}) }}
         <span class="input-group-btn">
-            <button class="btn btn-flat" id="search-btn" name="search" type="submit">
+            <button class="btn btn-flat" id="search-btn" name="search" type="submit" style="position: relative;margin-bottom: 0px;">
                 <i class="fa fa-search"></i>
             </button>
         </span>
     </div>
-{{ form_end(form) }} #}
-<form name="recherche" method="post" class="sidebar-form">
-    <div class="input-group">
-        <div class="form-group"><input type="search" id="recherche_search" name="recherche[search]" required="required" class="form-control form-control" placeholder="Rechercher..."></div>
-        <span class="input-group-btn">
-            <button class="btn btn-flat" id="search-btn" name="search" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div>
-</form>
-        <!-- search form (Optional) -->
-        {# <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-            </div>
-        </form> #}
+{{ form_end(form) }}
+

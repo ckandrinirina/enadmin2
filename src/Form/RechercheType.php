@@ -13,7 +13,7 @@ class RechercheType extends AbstractType
     {
         $builder
             ->add('search',SearchType::class,[
-                'label' => null
+                'label' => false
             ])
         ;
     }
@@ -21,7 +21,7 @@ class RechercheType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => null,
         ]);
     }
 }

@@ -12,16 +12,28 @@ class SearchController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    public function index(Request $request)
+    public function index()
+    {
+        $form = $this->createForm(RechercheType::class);
+        return $this->render('search/index.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/search-result", name="search_result")
+     */
+    public function result(Request $request)
     {
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted())
-        {
-            dump($form->getData());
+        $result = $request->request->all();
+        $result = $result['recherche'];
+        if ($result['_token']) {
+            dump($result);
         }
-        return $this->render('search/index.html.twig',[
-            'form'=>$form->createView()
+        return $this->render('search/index.html.twig', [
+            'form' => 'ok'
         ]);
     }
 }
