@@ -75,6 +75,14 @@ class EnseignantRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function find_by_critere($search)
+    {
+        $entityManager = $this->getEntityManager();
+        $sql = "SELECT e FROM App\Entity\Enseignant e WHERE e.nom LIKE '%$search%' OR e.prenom LIKE '%$search%'";
+        $query = $entityManager->createQuery($sql);
+        return $query->execute();
+    }
+
     /*
     public function findOneBySomeField($value): ?Enseignant
     {

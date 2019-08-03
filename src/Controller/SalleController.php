@@ -90,6 +90,7 @@ class SalleController extends AbstractController
         $salleRepository = $em->getRepository(Salle::class);
 
         $salles = $salleRepository->find_salle_niveau($niveau);
+
         if($salles != null)
         {
             foreach ($salles as $s) {
@@ -101,6 +102,7 @@ class SalleController extends AbstractController
         {
             $view_form = null;
         }
+        
         return $this->render('salle/salle_2.html.twig', [
             'status' => $status,
             'salles' => $salles,

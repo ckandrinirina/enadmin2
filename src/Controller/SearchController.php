@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RechercheType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Etudiant;
+use Proxies\__CG__\App\Entity\Enseignant;
 
 class SearchController extends AbstractController
 {
@@ -24,11 +25,13 @@ class SearchController extends AbstractController
     /**
      * @Route("/search-result", name="search_result")
      */
-    public function result(Request $request)
+    public function result(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
         $etudiant_repository = $em->getRepository(Etudiant::class);
+        $enseignant_repository = $em->getRepository(Enseignant::class);
         $status ="search";
+
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
         $result = $request->request->all();
@@ -36,10 +39,12 @@ class SearchController extends AbstractController
         $search = $result['search'];
 
         $etudiants = $etudiant_repository->find_by_critere($search);
-        dump($etudiants);die();
+        $enseignants = $enseignant_repository->find_by_critere($search);
 
         return $this->render('search/result.html.twig', [
-            'status' => $status
+            'status' => $status,
+            'etudiants' => $etudiants,
+            'enseignants'=>$enseignants
         ]);
     }
 }

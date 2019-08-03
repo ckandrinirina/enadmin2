@@ -165,6 +165,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition_salle.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -181,5 +182,19 @@ class TypeParcoursController extends AbstractController
         unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition_salle_2.html.twig', ['allTypeParcours' => $allTypeParcours]);
+    }
+
+    /**
+     * @Route("/type/parcours", name="deliberation")
+     */
+    public function deliberation()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $typeParcoursRepository = $em->getRepository(TypeParcours::class);
+
+        $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
+
+        return $this->render('type_parcours/deliberation.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
 }

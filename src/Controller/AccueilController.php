@@ -15,13 +15,15 @@ use App\Form\SchoolType;
 use App\Form\InformationType;
 use App\Entity\Information;
 use App\Entity\Niveaux;
-
+use App\Service\EtService;
+use App\Entity\Heures;
+use App\Entity\Jours;
 class AccueilController extends AbstractController
 {
     /**
      * @Route("/", name="accueil" ,options = { "expose" = true })
      */
-    public function index(Request $request)
+    public function index(Request $request,EtService $etService)
     {
         $status = "homme";
 
@@ -31,7 +33,25 @@ class AccueilController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $enseignantTypeRepository = $em->getRepository(EnseignantType::class);
         $information_repository = $em->getRepository(Information::class);
+        $heuresRepository = $em->getRepository(Heures::class);
+        $joursRepository = $em->getRepository(Jours::class);
 
+        $heures = $heuresRepository->findAll();
+        $jours = $joursRepository->findAll();
+        if($this->getUser()->getEtudiant() != null)
+        {   
+            $niveaux_et = $this->getUser()->getEtudiant()->getNiveaux();
+            $semestres_et = $niveaux_et->getSemestres();
+
+            $matriceEt['0'] = $etService->generateMatriceEt($niveaux_et->getId(), $heures, $jours, $semestres_et['0']->getId());
+            $matriceEt['1'] = $etService->generateMatriceEt($niveaux_et->getId(), $heures, $jours, $semestres_et['1']->getId());
+        }
+        else
+        {
+            $semestres_et = null;
+            $niveaux_et = null;
+            $matriceEt = null;
+        }
         $last_information = $information_repository->findLastInformation();
 
         $information_form = $this->createForm(InformationType::class);
@@ -66,7 +86,11 @@ class AccueilController extends AbstractController
             'enseignant_type' => $enseignantType,
             'form' => $form->createView(),
             'information_form_view' => $information_form_view,
-            'last_information' =>$last_information
+            'last_information' =>$last_information,
+            'matriceEt' => $matriceEt,
+            'jours' => $jours,
+            'heures' => $heures,
+            'semestres_et' => $semestres_et
         ]);
     }
 

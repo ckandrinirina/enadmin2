@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %}Liste des etudiants {{ parcour.type }}{% endblock %} #}
+{% block title %}Resultat
+{% endblock %}
 {% block stylesheets %}
     <style>
         .color-palette {
@@ -42,7 +43,10 @@
             {# <small>{{ parcour.type }}</small> #}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Résultat de la recherche</a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Résultat de la recherche</a>
+            </li>
             {# <li class="active">{{ parcour.type }}</li> #}
         </ol>
     </section>
@@ -50,7 +54,8 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-6">
+        <div
+            class="col-md-6">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <div class="tab-content">
@@ -64,41 +69,45 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <table id="example1" class="table table-bordered table-striped">
+                                        <table class="table table-bordered table-striped" id="example1">
                                             <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
-                                                <th>Contact</th>
-                                                <th>Sexe</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Nom et Prenom</th>
+                                                    <th>Contact</th>
+                                                    <th>Sexe</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            {# {% for etudiant in etudiants %}
-                                                <tr>
-                                                    <td>{{ etudiant.nom }}</td>
-                                                    <td>{{ etudiant.prenom }}</td>
-                                                    <td>{{ etudiant.contact }}</td>
-                                                    <td>{{ etudiant.sexe.sexe }}</td>
-                                                    <td>
-                                                     {% if is_granted('ROLE_ADMIN') %}
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}"> fiche individuel</a>
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}"> fiche de note</a>
-                                                    {% endif %}
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}"> Profile</a>
-                                                    </td> 
-                                                </tr>
-                                            {% endfor %} #}
+                                                {% for etudiant in etudiants %}
+                                                    <tr>
+                                                        <td>{{ etudiant.nom }}
+                                                            {{ etudiant.prenom }}</td>
+                                                        <td>{{ etudiant.contact }}</td>
+                                                        <td>{{ etudiant.sexe.sexe }}</td>
+                                                        <td>
+                                                            {% if is_granted('ROLE_ADMIN') %}
+                                                                <span class="fa fa-newspaper-o"></span>
+                                                                <a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':etudiant.niveaux.id}) }}">
+                                                                    fiche individuel</a>
+                                                                <span class="fa fa-newspaper-o"></span>
+                                                                <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}">
+                                                                    fiche de note</a>
+                                                            {% endif %}
+                                                            <span class="fa fa-newspaper-o"></span>
+                                                            <a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}">
+                                                                Profile</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                             <tfoot>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
-                                                <th>Contact</th>
-                                                <th>Sexe</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Contact</th>
+                                                    <th>Sexe</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -114,7 +123,8 @@
         </div>
         <!-- /.col -->
 
-         <div class="col-md-6">
+        <div
+            class="col-md-6">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <div class="tab-content">
@@ -128,41 +138,45 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <table id="example1" class="table table-bordered table-striped">
+                                        <table class="table table-bordered table-striped" id="example1">
                                             <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
-                                                <th>Contact</th>
-                                                <th>Sexe</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Nom et Prenom</th>
+                                                    <th>Contact</th>
+                                                    <th>Matières enseignées</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            {# {% for etudiant in etudiants %}
-                                                <tr>
-                                                    <td>{{ etudiant.nom }}</td>
-                                                    <td>{{ etudiant.prenom }}</td>
-                                                    <td>{{ etudiant.contact }}</td>
-                                                    <td>{{ etudiant.sexe.sexe }}</td>
-                                                    <td>
-                                                     {% if is_granted('ROLE_ADMIN') %}
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}"> fiche individuel</a>
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}"> fiche de note</a>
-                                                    {% endif %}
-                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}"> Profile</a>
-                                                    </td> 
-                                                </tr>
-                                            {% endfor %} #}
+                                                {% for enseignant in enseignants %}
+                                                    <tr>
+                                                        <td>{{ enseignant.nom }}
+                                                            {{ enseignant.prenom }}</td>
+                                                        <td>{{ enseignant.contact }}</td>
+                                                        <td>
+                                                            {% set i = 0 %}
+                                                            {% set limit = enseignant.eCs | length %}
+                                                            {% for ec in enseignant.eCs %}
+                                                                {{ ec.nom }}
+                                                                {% if i + 1 < limit  %},
+                                                                {% endif %}
+                                                                {% set i = i + 1 %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+                                                            <span class="fa fa-newspaper-o"></span>
+                                                            <a href="{{path('enseignant_profile',{'enseignant':enseignant.id})}}">Profile</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                             </tbody>
                                             <tfoot>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
-                                                <th>Contact</th>
-                                                <th>Sexe</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Contact</th>
+                                                    <th>Type</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -191,8 +205,8 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {# // <script>
-    //     $(function () {
-    //         $('#example1').DataTable()
-    //     })
-    // </script> #}
+                //     $(function () {
+                //         $('#example1').DataTable()
+                //     })
+                // </script> #}
 {% endblock %}

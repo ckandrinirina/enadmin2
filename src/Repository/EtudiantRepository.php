@@ -50,18 +50,12 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
     public function find_by_critere($search)
     {
         $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT e
-            FROM App\Entity\Etudiant e
-            WHERE e.nom = :nom
-            '
-        )->setParameter('nom', $search);
-
-        // returns an array of Product objects
+        $sql = "SELECT e FROM App\Entity\Etudiant e WHERE e.nom LIKE '%$search%' OR e.prenom LIKE '%$search%'";
+        $query = $entityManager->createQuery($sql);
         return $query->execute();
     }
 

@@ -112,7 +112,8 @@
             </div>
             <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
                 <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
-                    {% if  last_information == null %}{{ 'Il n\'y a pas  de publication' }}{% endif %}
+                    {% if  last_information == null %}
+                        {{ 'Il n\'y a pas  de publication' }}{% endif %}
                     {% for information in last_information %}
                         {% if is_granted('ROLE_ADMIN') %}
                         <div class="item">
@@ -181,6 +182,127 @@
         </div>
     </div>
 
+	{% if matriceEt != null %}
+    	<div class="col-md-12">
+			<div class="callout callout-info">
+        		<h4 class="text-center">Emploi du temps</h4>
+    		</div>
+    	     <!-- Custom Tabs (Pulled to the right) -->
+    	    <div class="nav-tabs-custom">
+    	        <ul class="nav nav-tabs pull-right">
+    	          	<li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">{{ semestres_et['1'].nom }}</a></li>
+    	          	<li class="active"><a href="#tab_3-2" data-toggle="tab" aria-expanded="true"> {{ semestres_et['0'].nom }}</a></li>
+    	          	<li class="pull-left header"><i class="fa fa-th"></i> Emplois du temps</li>
+    	        </ul>
+    	        <div class="tab-content">
+    	          		<!-- /.tab-pane -->
+    	          	<div class="tab-pane" id="tab_2-2">
+    	          	  	<table class="table table-bordered table-striped" id="example1">
+                            <thead>
+                                <tr>
+                                    <th>JOURS/HEURES</th>
+                                    {% for jour in jours %}
+                                        <th>{{ jour.jours }}
+                                        {% endfor %}
+                                    </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set i = 0 %}
+                                {% if i == 2 %}
+                                    <td>PAUSE PAUSE PAUSE PAUSE PAUSE</td>
+                                {% endif %}
+                                {% set countadd = 0 %}
+                                {% for heure in heures %}
+                                    {% if i == 2 %}
+                                        <tr>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>{{ heure.heures }}</td>
+                                        {% set j = 0 %}
+                                        {% for ec in matriceEt['1'][i] %}
+                                            <td>
+                                                <p class="center" id="eEt{{i}}{{j}}">{{ ec }}
+                                                    {% if ec == null %}
+                                                        {% set countadd = countadd + 1 %}
+                                                    {% endif %}
+                                                </p>
+                                            </td>
+                                            {% set j = j + 1 %}
+                                        {% endfor %}
+                                    </tr>
+                                    {% set i = i + 1 %}
+                                {% endfor %}
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+    	          	</div>
+    	          <!-- /.tab-pane -->
+    	          	<div class="tab-pane active" id="tab_3-2">
+    	          	  	<table class="table table-bordered table-striped" id="example1">
+                            <thead>
+                                <tr>
+                                    <th>JOURS/HEURES</th>
+                                    {% for jour in jours %}
+                                        <th>{{ jour.jours }}
+                                        {% endfor %}
+                                    </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set i = 0 %}
+                                {% if i == 2 %}
+                                    <td>PAUSE PAUSE PAUSE PAUSE PAUSE</td>
+                                {% endif %}
+                                {% set countadd = 0 %}
+                                {% for heure in heures %}
+                                    {% if i == 2 %}
+                                        <tr>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                            <td>PAUSE</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>{{ heure.heures }}</td>
+                                        {% set j = 0 %}
+                                        {% for ec in matriceEt['0'][i] %}
+                                            <td>
+                                                <p class="center" id="eEt{{i}}{{j}}">{{ ec }}
+                                                    {% if ec == null %}
+                                                        {% set countadd = countadd + 1 %}
+                                                    {% endif %}
+                                                </p>
+                                            </td>
+                                            {% set j = j + 1 %}
+                                        {% endfor %}
+                                    </tr>
+                                    {% set i = i + 1 %}
+                                {% endfor %}
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+    	          	</div>
+    	          <!-- /.tab-pane -->
+    	        </div>
+    	        <!-- /.tab-content -->
+    	    </div>
+    	      <!-- nav-tabs-custom -->
+    	</div>
+	{% endif %}
+
 
     <div class="modal fade" id="modal-form">
         <div class="modal-dialog">
@@ -193,52 +315,52 @@
                 </div>
                 <div class="modal-body">
                     {{ include('school/_form.html.twig') }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-{% endblock %}
+    {% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
-    <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
-    <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
-    <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
-    <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            var calendarEl = document.getElementById('calendar-holder');
+    {% block javascripts %}
+        <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+        <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
+        <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
+        <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
+        <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
+        <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                var calendarEl = document.getElementById('calendar-holder');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                defaultView: 'dayGridMonth',
-                // editable: true,
-                locale: 'fr',
-                eventSources: [
-                    {
-                        url: "{{ path('fc_load_events') }}",
-                        method: "POST",
-                        extraParams: {
-                            filters: JSON.stringify({})
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    defaultView: 'dayGridMonth',
+                    // editable: true,
+                    locale: 'fr',
+                    eventSources: [
+                        {
+                            url: "{{ path('fc_load_events') }}",
+                            method: "POST",
+                            extraParams: {
+                                filters: JSON.stringify({})
+                            },
+                            failure: () => { // alert("There was an error while fetching FullCalendar!");
+                            }
                         },
-                        failure: () => { // alert("There was an error while fetching FullCalendar!");
-                        }
+                    ],
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                plugins: [
-                    'interaction', 'dayGrid', 'timeGrid'
-                ], // https://fullcalendar.io/docs/plugin-index
-                timeZone: 'UTC'
+                    plugins: [
+                        'interaction', 'dayGrid', 'timeGrid'
+                    ], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC'
+                });
+                calendar.render();
             });
-            calendar.render();
-        });
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}

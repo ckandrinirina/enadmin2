@@ -46,7 +46,9 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">LISTE ET REPARTITION</li>
+
             <li class="{% if status == "homme" %} {{ "active" }} {% endif %}"><a href="{{ path('accueil') }}"><i class="fa fa-dashboard"></i> <span>Tableau de bord</span></a></li>
+
             <li class="treeview {% if status == "listE" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-group"></i> <span>Liste des étudiants</span>
                     <span class="pull-right-container">
@@ -205,6 +207,19 @@
                 </a>
                 <ul class="treeview-menu">
                     {{ render(controller('App\\Controller\\TypeParcoursController::repartition_uc_by_niveau_edit')) }}
+                </ul>
+            </li>
+            {% endif %}
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="treeview {% if status == "deliberation" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-graduation-cap"></i> <span>Délibération</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::deliberation')) }}
                 </ul>
             </li>
             {% endif %}
