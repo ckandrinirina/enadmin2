@@ -53,7 +53,6 @@
 
                     <p>Etudiant proféssionnel</p>
                 </div>
-                12
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
@@ -96,14 +95,14 @@
         <h4 class="text-center">Calendrier des évènement</h4>
     </div>
     {# hide if admin #}
-    <div class="col-md-6" style="background-color:white ;">
+    <div class="col-lg-6 col-md-12" style="background-color:white;margin-bottom:10px;">
         <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
             <i class="fa fa-upload"></i>Ajouter un évènement
         </a>
         <br/>
         {% include '@Calendar/calendar.html' %}
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6 col-md-12">
         <div class="box box-success">
             <div class="box-header ui-sortable-handle" style="cursor: move;">
                 <i class="fa fa-calendar-minus-o"></i>
@@ -115,6 +114,7 @@
                 <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
                     {% if  last_information == null %}{{ 'Il n\'y a pas  de publication' }}{% endif %}
                     {% for information in last_information %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <div class="item">
                             <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ information.user.etudiant.photo }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
                             <p class="message">
@@ -124,16 +124,41 @@
                                         {{ information.addAt | date('d/m H:m') }}</small>
                                     {% if information.user.etudiant != null %} 
                                         {{ information.user.etudiant.nom }}
-                                        {{ information.user.etudiant.nom }}
+                                        {{ information.user.etudiant.prenom }}
                                     {% endif %}
                                     {% if information.user.enseignant != null  %}
                                         {{ information.user.enseignant.nom }}
-                                        {{ information.user.enseignant.nom }}
+                                        {{ information.user.enseignant.prenom }}
                                     {% endif %}
                                 </a>
                                 {{information.contenu}}
                             </p>
                         </div>
+                        {% else %}
+                            {% for niveau in information.niveaux %}
+                                {% if app.user.etudiant.niveaux.id == niveau.id %}
+                                    <div class="item">
+                                        <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ information.user.etudiant.photo }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                                        <p class="message">
+                                            <a class="name" href="#">
+                                                <small class="text-muted pull-right">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ information.addAt | date('d/m H:m') }}</small>
+                                                {% if information.user.etudiant != null %} 
+                                                    {{ information.user.etudiant.nom }}
+                                                    {{ information.user.etudiant.prenom }}
+                                                {% endif %}
+                                                {% if information.user.enseignant != null  %}
+                                                    {{ information.user.enseignant.nom }}
+                                                    {{ information.user.enseignant.prenom }}
+                                                {% endif %}
+                                            </a>
+                                            {{information.contenu}}
+                                        </p>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>

@@ -19,6 +19,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/listAll.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -32,6 +33,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -47,6 +49,7 @@ class TypeParcoursController extends AbstractController
 
         $lastAu = $auRepository->findLatestAu();
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/notelist.html.twig', ['allTypeParcours' => $allTypeParcours, 'au' => $lastAu]);
     }
@@ -62,6 +65,7 @@ class TypeParcoursController extends AbstractController
 
         $lastAu = $auRepository->findLatestAu();
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/noteAjoute.html.twig', ['allTypeParcours' => $allTypeParcours, 'au' => $lastAu]);
     }
@@ -75,6 +79,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/emploiDuTemps.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -87,6 +92,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/emploiDuTempsEdit.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -100,6 +106,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition_uc_by_niveau.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -113,6 +120,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition_uc_by_niveau_edit.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }
@@ -143,6 +151,7 @@ class TypeParcoursController extends AbstractController
 
         $lastAu = $auRepository->findLatestAu();
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/noteResult.html.twig', ['allTypeParcours' => $allTypeParcours, 'au' => $lastAu]);
     }
@@ -169,6 +178,7 @@ class TypeParcoursController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
 
         $allTypeParcours = $typeParcoursRepository->findAll();
+        unset($allTypeParcours['2']);
 
         return $this->render('type_parcours/repartition_salle_2.html.twig', ['allTypeParcours' => $allTypeParcours]);
     }

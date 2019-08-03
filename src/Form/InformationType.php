@@ -19,7 +19,7 @@ class InformationType extends AbstractType
                 'class' => Niveaux::class,
                 'choice_label' => function(Niveaux $niveaux)
                 {
-                    return $niveaux->getNom();
+                    return $niveaux->getNiveau();
                 },
                 'label'=>'Destination',
                 'multiple'=>true,

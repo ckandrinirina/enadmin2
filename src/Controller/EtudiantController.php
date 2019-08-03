@@ -7,6 +7,7 @@ use App\Entity\Niveaux;
 use App\Entity\TypeParcours;
 use App\Entity\User;
 use App\Form\EtudiantType;
+use App\Form\EtudiantEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -163,7 +164,7 @@ class EtudiantController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $status = 'addE';
-        $form = $this->createForm(EtudiantType::class, $etudiant);
+        $form = $this->createForm(EtudiantEditType::class, $etudiant);
 
         $form->handleRequest($request);
 
@@ -179,7 +180,7 @@ class EtudiantController extends AbstractController
             return $this->redirectToRoute('etudiant_profile', ['etudiant' => $etudiant->getId()]);
         }
 
-        return $this->render('etudiant/ajoute.html.twig', [
+        return $this->render('etudiant/edit.html.twig', [
             'form' => $form->createView(),
             'status' => $status
         ]);

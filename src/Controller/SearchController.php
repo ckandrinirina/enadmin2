@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RechercheType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Etudiant;
 
 class SearchController extends AbstractController
 {
@@ -25,15 +26,20 @@ class SearchController extends AbstractController
      */
     public function result(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $etudiant_repository = $em->getRepository(Etudiant::class);
+        $status ="search";
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
         $result = $request->request->all();
         $result = $result['recherche'];
-        if ($result['_token']) {
-            dump($result);
-        }
-        return $this->render('search/index.html.twig', [
-            'form' => 'ok'
+        $search = $result['search'];
+
+        $etudiants = $etudiant_repository->find_by_critere($search);
+        dump($etudiants);die();
+
+        return $this->render('search/result.html.twig', [
+            'status' => $status
         ]);
     }
 }

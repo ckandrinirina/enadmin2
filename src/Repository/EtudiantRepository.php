@@ -23,8 +23,8 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->where('e.niveaux = :val')
-            ->setParameter('val',$niveaux)
-            ->orderBy('e.nom','ASC')
+            ->setParameter('val', $niveaux)
+            ->orderBy('e.nom', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -33,9 +33,9 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('count(e.id)')
-            ->innerJoin('e.parcour','p')
+            ->innerJoin('e.parcour', 'p')
             ->where('p.type = :val')
-            ->setParameter('val','académique')
+            ->setParameter('val', 'académique')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -44,11 +44,25 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('count(e.id)')
-            ->innerJoin('e.parcour','p')
+            ->innerJoin('e.parcour', 'p')
             ->where('p.type = :val')
-            ->setParameter('val','professionnel')
+            ->setParameter('val', 'professionnel')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+    public function find_by_critere($search)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Etudiant e
+            WHERE e.nom = :nom
+            '
+        )->setParameter('nom', $search);
+
+        // returns an array of Product objects
+        return $query->execute();
     }
 
     // /**

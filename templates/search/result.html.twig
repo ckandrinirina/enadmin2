@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des etudiants {{ parcour.type }}{% endblock %}
+{# {% block title %}Liste des etudiants {{ parcour.type }}{% endblock %} #}
 {% block stylesheets %}
     <style>
         .color-palette {
@@ -38,34 +38,29 @@
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Liste des étudiants
-            <small>{{ parcour.type }}</small>
+            Résultat de la recherche
+            {# <small>{{ parcour.type }}</small> #}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Liste des étudiants</a></li>
-            <li class="active">{{ parcour.type }}</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Résultat de la recherche</a></li>
+            {# <li class="active">{{ parcour.type }}</li> #}
         </ol>
     </section>
 {% endblock %}
 
 {% block body %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    {% for niveau in niveaux %}
-                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}"><a href="{{ path('list',{'type':parcour.id,'niveaux':niveau.id}) }}">{{ niveau.nom }}</a></li>
-                    {% endfor %}
-                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="box">
                                     <div class="box-header">
-                                        <h3 class="box-title col-md-4">Liste des etudiants</h3>
-                                        <a href="{{path('list_pdf',{'type':parcour.id,'niveaux':n})}}" class="pull-right btn  btn-social btn-flickr"><i class="fa fa-file-pdf-o"></i> Générer un PDF </a>
+                                        <h3 class="box-title col-md-12">Liste des etudiants</h3>
+                                        {# <a href="{{path('list_pdf',{'type':parcour.id,'niveaux':n})}}" class="pull-right btn  btn-social btn-flickr"><i class="fa fa-file-pdf-o"></i> Générer un PDF </a> #}
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
@@ -80,7 +75,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for etudiant in etudiants %}
+                                            {# {% for etudiant in etudiants %}
                                                 <tr>
                                                     <td>{{ etudiant.nom }}</td>
                                                     <td>{{ etudiant.prenom }}</td>
@@ -94,7 +89,71 @@
                                                         <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}"> Profile</a>
                                                     </td> 
                                                 </tr>
-                                            {% endfor %}
+                                            {% endfor %} #}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Contact</th>
+                                                <th>Sexe</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+
+         <div class="col-md-6">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title col-md-12">Liste des enseignant</h3>
+                                        {# <a href="{{path('list_pdf',{'type':parcour.id,'niveaux':n})}}" class="pull-right btn  btn-social btn-flickr"><i class="fa fa-file-pdf-o"></i> Générer un PDF </a> #}
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Contact</th>
+                                                <th>Sexe</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {# {% for etudiant in etudiants %}
+                                                <tr>
+                                                    <td>{{ etudiant.nom }}</td>
+                                                    <td>{{ etudiant.prenom }}</td>
+                                                    <td>{{ etudiant.contact }}</td>
+                                                    <td>{{ etudiant.sexe.sexe }}</td>
+                                                    <td>
+                                                     {% if is_granted('ROLE_ADMIN') %}
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}"> fiche individuel</a>
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}"> fiche de note</a>
+                                                    {% endif %}
+                                                        <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}"> Profile</a>
+                                                    </td> 
+                                                </tr>
+                                            {% endfor %} #}
                                             </tbody>
                                             <tfoot>
                                             <tr>

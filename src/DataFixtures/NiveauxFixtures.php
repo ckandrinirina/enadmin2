@@ -91,6 +91,7 @@ class NiveauxFixtures extends Fixture implements OrderedFixtureInterface
 
         $sortant = new Niveaux();
         $sortant->setNiveau('sortant');
+        $sortant->setType($this->getReference('sortant'));
         $sortant->setNom('sortant');
         $manager->persist($sortant);
 
@@ -109,6 +110,7 @@ class NiveauxFixtures extends Fixture implements OrderedFixtureInterface
         $this->addReference('MP1',$niveaux10);
         $this->addReference('MP2IA',$niveaux11);
         $this->addReference('MP2EA',$niveaux111);
+        $this->addReference('sortantNiv',$sortant);
     }
     public function getOrder()
     {

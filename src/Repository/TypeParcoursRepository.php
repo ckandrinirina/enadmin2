@@ -19,6 +19,17 @@ class TypeParcoursRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeParcours::class);
     }
 
+    public function findAllActive()
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.type = :val1')
+            ->setParameter('val1','académique')
+            ->orWhere('t.type = :val2')
+            ->setParameter('val2','professionnel')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return TypeParcours[] Returns an array of TypeParcours objects
     //  */

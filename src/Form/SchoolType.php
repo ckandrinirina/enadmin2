@@ -26,7 +26,17 @@ class SchoolType extends AbstractType
             ])
             ->add('content',CKEditorType::class,[
                 'label'=>'contenu',
-                'config' => array('toolbar' => 'full'),
+                'config' => array(
+                    'toolbar' => 'full',
+                    array(
+                        'name' => 'links',
+                        'items' => array('Link','Unlink'),
+                    ),
+                    array(
+                        'name' => 'insert',
+                        'items' => array('Image'),
+                    ),
+                ),
             ])
         ;
     }
