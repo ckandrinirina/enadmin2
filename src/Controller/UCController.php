@@ -33,7 +33,6 @@ class UCController extends AbstractController
             $typeRep = $em->getRepository(TypeParcours::class);
             $type = $typeRep->findAll();
             $t = $type['0']->getId();
-
             foreach($uc->getNiveaux() as $value)
             {
                 $niveaux[]=$value['niveaux'];

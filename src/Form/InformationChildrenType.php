@@ -10,24 +10,14 @@ use App\Entity\Niveaux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class InformationType extends AbstractType
+class InformationChildrenType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenu',TextType::class,[
-                'label'=>'Contenu'
-                ])
-            ->add('niveaux',EntityType::class,[
-                'class' => Niveaux::class,
-                'choice_label' => function(Niveaux $niveaux)
-                {
-                    return $niveaux->getNiveau();
-                },
-                'label'=>'Destination',
-                'multiple'=>true,
-            ])
-        ;
+            ->add('contenu', TextType::class, [
+                'label' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -46,11 +46,11 @@
                                     <p class="pull-right">{{ etudiant.lieuxNaissance }}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Parcour :</b>
+                                    <b>Parcours :</b>
                                     <p class="pull-right">{{ etudiant.parcour.type }}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Année d'entrée à l'ESPA :</b>
+                                    <b>Année entrée à l'ESPA :</b>
                                     <p class="pull-right">{{ etudiant.anneEntre }}</p>
                                 </li>
                                 <li class="list-group-item">
@@ -105,7 +105,7 @@
         {% elseif app.user.etudiant.id == etudiant.id %}
             <div class="col-md-2">
                 <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
-                    <i class="fa fa-lock"></i>Modifier l'acces
+                    <i class="fa fa-lock"></i>Modifier l'accès
                 </a>
             </div>
         {% endif %}

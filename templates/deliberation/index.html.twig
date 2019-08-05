@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Déliberation
+{% block title %}Délibérations
     {{ parcour.type }}
 {% endblock %}
 {% block stylesheets %}
@@ -40,13 +40,13 @@
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Déliberation
+            Délibérations
             <small>{{ parcour.type }}</small>
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    <i class="fa fa-dashboard"></i>Déliberation</a>
+                    <i class="fa fa-dashboard"></i>Délibérations</a>
             </li>
             <li class="active">{{ parcour.type }}</li>
         </ol>
@@ -72,15 +72,14 @@
                             <div class="col-xs-12">
                                 <div class="box">
                                     <div class="box-header">
-                                        <h3 class="box-title col-md-4">Liste des etudiants</h3>
+                                        <h3 class="box-title col-md-4">Liste des étudiants</h3>
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
                                         <table class="table table-bordered table-striped" id="example1">
                                             <thead>
                                                 <tr>
-                                                    <th>Nom</th>
-                                                    <th>Prenom</th>
+                                                    <th>Nom et Prénom(s)</th>
                                                     <th>Niveau</th>
                                                     <th>Admis en</th>
                                                 </tr>
@@ -88,8 +87,7 @@
                                             <tbody>
                                                 {% for etudiant in etudiants %}
                                                     <tr>
-                                                        <td>{{ etudiant.nom }}</td>
-                                                        <td>{{ etudiant.prenom }}</td>
+                                                        <td>{{ etudiant.nom }} {{ etudiant.prenom }}</td>
                                                         <td>{{ etudiant.niveaux.nom }}</td>
                                                         <td>
                                                             {{ form_start(view_form[etudiant.id],{'action': path('admis',{'id':etudiant.id}), 'method': 'POST'}) }}
@@ -106,10 +104,9 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Nom</th>
-                                                    <th>Prenom</th>
-                                                    <th>Sexe</th>
-                                                    <th>Action</th>
+                                                    <th>Nom et Prénom(s)</th>
+                                                    <th>Niveau</th>
+                                                    <th>Admis en</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

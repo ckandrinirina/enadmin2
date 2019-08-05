@@ -17,7 +17,9 @@ class ScolariteType extends AbstractType
     {
         $data = $options['data'];
         $builder
-            ->add('numeroInscription')
+            ->add('numeroInscription',TextType::class,[
+                'label'=>'Numéro d\'inscription'
+                ])
             ->add('dateInscription',DateType::class)
             // ->add('droit',EntityType::class,[
             //     'class' => Droit::class,

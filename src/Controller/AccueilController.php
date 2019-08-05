@@ -18,6 +18,9 @@ use App\Entity\Niveaux;
 use App\Service\EtService;
 use App\Entity\Heures;
 use App\Entity\Jours;
+use App\Form\InformationChildrenType;
+use App\Entity\InformationChild;
+
 class AccueilController extends AbstractController
 {
     /**
@@ -57,6 +60,9 @@ class AccueilController extends AbstractController
         $information_form = $this->createForm(InformationType::class);
         $information_form_view = $information_form->createView();
 
+        $informationChildren_form = $this->createForm(InformationChildrenType::class);
+        $informationChildren_form_view = $informationChildren_form->createView();
+
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
@@ -86,6 +92,7 @@ class AccueilController extends AbstractController
             'enseignant_type' => $enseignantType,
             'form' => $form->createView(),
             'information_form_view' => $information_form_view,
+            'informationChildren_form_view' => $informationChildren_form_view,
             'last_information' =>$last_information,
             'matriceEt' => $matriceEt,
             'jours' => $jours,
@@ -95,7 +102,7 @@ class AccueilController extends AbstractController
     }
 
     /**
-     * @Route("/new-salle", name="new-information")
+     * @Route("/new-information", name="new-information")
      * 
      */
     public function new_information(Request $request)
@@ -115,6 +122,30 @@ class AccueilController extends AbstractController
                 $niv_entity = $niveaux_repository->find($niv);
                 $info->addNiveau($niv_entity);
             }
+            $em->persist($info);
+            $em->flush();
+            return $this->redirectToRoute('accueil');
+        }
+    }
+
+    
+    /**
+     * @Route("/new-information-children/{id}", name="new-information-children")
+     * 
+     */
+    public function new_information_children(Information $information ,Request $request)
+    {
+        $info = new InformationChild();
+        $em = $this->getDoctrine()->getManager();
+        $result = $request->request->all();
+        $result = $result['information_children'];
+        if ($result['_token']) {
+            $em = $this->getDoctrine()->getManager();
+            $info->setUser($this->getUser());
+            $info->setContenu($result['contenu']);
+            $info->setAddAt(new \Datetime());
+            $information->addInformationChild($info);
+            $em->persist($information);
             $em->persist($info);
             $em->flush();
             return $this->redirectToRoute('accueil');

@@ -16,6 +16,7 @@ use App\Entity\EC;
 use App\Entity\RepartitionEC;
 use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Parametrage;
 
 class EmploiDuTempsController extends AbstractController
 {
@@ -31,7 +32,6 @@ class EmploiDuTempsController extends AbstractController
         $semestreRepository = $em->getRepository(Semestre::class);
         $heuresRepository = $em->getRepository(Heures::class);
         $joursRepository = $em->getRepository(Jours::class);
-
         $heures = $heuresRepository->findAll();
         $jours = $joursRepository->findAll();
 
@@ -70,6 +70,9 @@ class EmploiDuTempsController extends AbstractController
         $heuresRepository = $em->getRepository(Heures::class);
         $joursRepository = $em->getRepository(Jours::class);
         $etRepository = $em->getRepository(EmploiDuTemps::class);
+        $chef_mention_repository = $em->getRepository(Parametrage::class);
+
+        $chef_mention = $chef_mention_repository->find('1');
 
         $heures = $heuresRepository->findAll();
         $jours = $joursRepository->findAll();
@@ -95,7 +98,8 @@ class EmploiDuTempsController extends AbstractController
                 'semestre' => $semestre,
                 'semestres' => $sem,
                 's' => $semestre,
-                'et' => $et
+                'et' => $et,
+                'chef_mention' => $chef_mention
             ]
         );
     }

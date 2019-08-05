@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AnneUniversitaire;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Parametrage;
 
 class EnseignantController extends AbstractController
 {
@@ -54,6 +55,8 @@ class EnseignantController extends AbstractController
         $typeRepository = $em->getRepository(EnseignantType::class);
         $enseignantRepository = $em->getRepository(Enseignant::class);
         $anneUnRep = $em->getRepository(AnneUniversitaire::class);
+        $chef_mention_repository = $em->getRepository(Parametrage::class);
+        $chef_mention = $chef_mention_repository->find('1');
         $anneU = $anneUnRep->findLatestAu();
         $anne = $anneU['0']->getAnneUniversitaire();
         $type = $typeRepository->find($type);
@@ -65,7 +68,8 @@ class EnseignantController extends AbstractController
                 'enseignants' => $enseignants,
                 'status' => $status,
                 'annee' => $anne,
-                'type' => $t
+                'type' => $t,
+                'chef_mention' => $chef_mention
             ]
         );
     }

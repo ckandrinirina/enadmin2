@@ -16,12 +16,20 @@ class EnseignantAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('contact')
-            ->add('adresse')
+            ->add('nom',TextType::class,[
+                'label'=>'Nom'
+                ])
+            ->add('prenom',TextType::class,[
+                'label'=>'Prénom(s)'
+                ])
+            ->add('contact',TelType::class)
+            ->add('adresse',TextType::class,[
+                'label'=>'Adresse'
+                ])
             ->add('dateNaissance',BirthdayType::class)
-            ->add('lieuxNaissance')
+            ->add('lieuxNaissance',TextType::class,[
+                'label'=>'Lieux de naissance'
+                ])
             ->add('photo',FileType::class, [
                 'label' => 'Ajoute une image',
                 'data_class' => null,

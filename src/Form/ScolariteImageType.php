@@ -25,7 +25,7 @@ class ScolariteImageType extends AbstractType
             {
                 return $scolarite->getNiveau()->getNom();
             },
-            'label'=>'Niveaux'
+            'label'=>'Niveau'
         ])
         ;
     }

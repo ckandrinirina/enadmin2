@@ -73,6 +73,11 @@ class Enseignant
      */
     private $eCs;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Parametrage", mappedBy="chefmention", cascade={"persist", "remove"})
+     */
+    private $parametrage;
+
     public function __construct()
     {
         $this->eCs = new ArrayCollection();
@@ -218,6 +223,24 @@ class Enseignant
     public function setLogin(?User $login): self
     {
         $this->login = $login;
+
+        return $this;
+    }
+
+    public function getParametrage(): ?Parametrage
+    {
+        return $this->parametrage;
+    }
+
+    public function setParametrage(?Parametrage $parametrage): self
+    {
+        $this->parametrage = $parametrage;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newChefmention = $parametrage === null ? null : $this;
+        if ($newChefmention !== $parametrage->getChefmention()) {
+            $parametrage->setChefmention($newChefmention);
+        }
 
         return $this;
     }

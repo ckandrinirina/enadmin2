@@ -20,7 +20,7 @@ class NiveauxType extends AbstractType
                 {
                     return $niveaux->getNiveau();
                 },
-                'label'=>'Niveaux'
+                'label'=>'Niveau'
             ])
             ->add('semestre',EntityType::class,[
                 'class' => Semestre::class,

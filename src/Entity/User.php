@@ -63,9 +63,15 @@ class User implements UserInterface
      */
     private $informations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\InformationChild", mappedBy="user")
+     */
+    private $informationChildren;
+
     public function __construct()
     {
         $this->informations = new ArrayCollection();
+        $this->informationChildren = new ArrayCollection();
     }
     
     public function getId(): ?int
@@ -286,6 +292,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($information->getUser() === $this) {
                 $information->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InformationChild[]
+     */
+    public function getInformationChildren(): Collection
+    {
+        return $this->informationChildren;
+    }
+
+    public function addInformationChild(InformationChild $informationChild): self
+    {
+        if (!$this->informationChildren->contains($informationChild)) {
+            $this->informationChildren[] = $informationChild;
+            $informationChild->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformationChild(InformationChild $informationChild): self
+    {
+        if ($this->informationChildren->contains($informationChild)) {
+            $this->informationChildren->removeElement($informationChild);
+            // set the owning side to null (unless already changed)
+            if ($informationChild->getUser() === $this) {
+                $informationChild->setUser(null);
             }
         }
 

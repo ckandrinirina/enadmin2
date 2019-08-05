@@ -27,7 +27,7 @@ class EtudiantEditType extends AbstractType
                 'label'=>'Nom'
                 ])
             ->add('prenom',TextType::class,[
-                'label'=>'Prenom'
+                'label'=>'Prénom(s)'
                 ])
             ->add('photo',FileType::class, [
                 'label' => 'Ajoute une image',
@@ -80,13 +80,13 @@ class EtudiantEditType extends AbstractType
             //     },
             //     'label'=>'niveaux'
             // ])
-            ->add('anneUniversitaire',EntityType::class , [
-                'class'=>AnneUniversitaire::class,
-                'choice_label' => function (AnneUniversitaire $au){
-                    return $au->getAnneUniversitaire();
-                },
-                'label'=>'année universitaire'
-            ])
+            // ->add('anneUniversitaire',EntityType::class , [
+            //     'class'=>AnneUniversitaire::class,
+            //     'choice_label' => function (AnneUniversitaire $au){
+            //         return $au->getAnneUniversitaire();
+            //     },
+            //     'label'=>'année universitaire'
+            // ])
             /*->add('scolarite')
             ->add('user')*/
         ;

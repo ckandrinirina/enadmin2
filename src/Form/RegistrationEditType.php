@@ -24,14 +24,14 @@ class RegistrationEditType extends AbstractType
             ->add('username')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les deux mot de passe doit être égale.',
+                'invalid_message' => 'Mot de passe different',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'mapped' => false,
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veillez insérer un mot de passe',
+                        'message' => 'Insérer les mots de passes',
                     ]),
                     new Length([
                         'min' => 6,

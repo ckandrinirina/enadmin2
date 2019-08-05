@@ -82,5 +82,18 @@
         </script>
     {% endblock %}
     
-    {% block footer_pdf %}
+        {% block footer_pdf %}
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    La responsable de la mention Electronique
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                <p>Antananarivo le
+                    {{ "now"|date("d/m/Y") }}
+                </p>
+            </div>
+        </div>
+        <p class="margin-bottom-2">{{chef_mention.chefmention.nom}}  {{chef_mention.chefmention.prenom}}</p>
     {% endblock %}

@@ -2,30 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Information;
+use App\Entity\Parametrage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Niveaux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\Enseignant;
 
-class InformationType extends AbstractType
+class ParametrageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenu',TextType::class,[
-                'label'=>'Contenu'
-                ])
-            ->add('niveaux',EntityType::class,[
-                'class' => Niveaux::class,
-                'choice_label' => function(Niveaux $niveaux)
+            ->add('chefmention',EntityType::class,[
+                'class' => Enseignant::class,
+                'choice_label' => function(Enseignant $enseignant)
                 {
-                    return $niveaux->getNiveau();
+                    return ($enseignant->getNom().' '.$enseignant->getNom());
                 },
-                'label'=>'Destination',
-                'multiple'=>true,
+                'label'=>false
             ])
         ;
     }

@@ -27,7 +27,7 @@ class EtudiantType extends AbstractType
                 'label'=>'Nom'
                 ])
             ->add('prenom',TextType::class,[
-                'label'=>'Prenom'
+                'label'=>'Prenom(s)'
                 ])
             ->add('photo',FileType::class, [
                 'label' => 'Ajoute une image',

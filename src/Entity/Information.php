@@ -39,9 +39,15 @@ class Information
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\InformationChild", mappedBy="information")
+     */
+    private $informationChildren;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
+        $this->informationChildren = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,6 +113,37 @@ class Information
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InformationChild[]
+     */
+    public function getInformationChildren(): Collection
+    {
+        return $this->informationChildren;
+    }
+
+    public function addInformationChild(InformationChild $informationChild): self
+    {
+        if (!$this->informationChildren->contains($informationChild)) {
+            $this->informationChildren[] = $informationChild;
+            $informationChild->setInformation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformationChild(InformationChild $informationChild): self
+    {
+        if ($this->informationChildren->contains($informationChild)) {
+            $this->informationChildren->removeElement($informationChild);
+            // set the owning side to null (unless already changed)
+            if ($informationChild->getInformation() === $this) {
+                $informationChild->setInformation(null);
+            }
+        }
 
         return $this;
     }

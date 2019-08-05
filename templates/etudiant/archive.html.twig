@@ -41,18 +41,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for et in archives %}
-                    <tr>
-                        <td>{{ et.nom }}</td>
-                        <td>{{ et.prenom }}</td>
-                        <td>{{ et.anneEntre }}</td>
-                        <td>
-                            <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_individuel',{'etudiant':et.id,'type':et.parcour.id,'niveaux':et.parcour.niveauxs['0'].id}) }}"> fiche individuel</a>
-                            <span class="fa fa-newspaper-o"></span><a href="{{ path('fiche_note',{'etudiant':et.id ,'niveaux':et.parcour.niveauxs['0'].id,'semestre':et.parcour.niveauxs['0'].semestres['0'].id,'au':et.anneUniversitaire.id,'ratrapage':'0' })}}"> fiche de note</a>
-                            <span class="fa fa-newspaper-o"></span><a href="{{ path('etudiant_profile',{'etudiant':et.id})}}"> Profile</a>
-                        </td>
-                    </tr>
-                {% endfor %}
+                    {% for et in archives %}
+                        <tr>
+                            <td>{{ et.nom }}</td>
+                            <td>{{ et.prenom }}</td>
+                            <td>{{ et.anneEntre }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-info" type="button">Action</button>
+                                    <button aria-expanded="false" class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li>
+                                                <a href="{{ path('fiche_individuel',{'etudiant':et.id,'type':et.parcour.id,'niveaux':et.parcour.niveauxs['0'].id}) }}">fiche individuel</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('fiche_note',{'etudiant':et.id ,'niveaux':et.parcour.niveauxs['0'].id,'semestre':et.parcour.niveauxs['0'].semestres['0'].id,'au':et.anneUniversitaire.id,'ratrapage':'0' })}}">fiche de note</a>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{{ path('etudiant_profile',{'etudiant':et.id})}}">Profile</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>

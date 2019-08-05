@@ -53,13 +53,13 @@
                                                                     <div class="box">
 
                                                                         {% for sem in semestre %}
-                                                                            <div class="box-body col-xs-6">
+                                                                            <div class="box-body col-md-6 col-xs-12">
                                                                                 <h3 class="text-muted text-center">{{ sem.semestre }}</h3>
                                                                                 <table class="table table-bordered table-striped" id="example1">
                                                                                     {% for ue in sem.uEs %}
-                                                                                        <thead class="col-sm-offset-8">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <th>{{ue.nom}}   <span class="fa fa-newspaper-o"></span><a href="{{path('ue_edit',{'id':ue.id})}}"> Edit</a></th>
+                                                                                                <th>{{ue.nom}}  <a class="btn btn-block btn-primary btn-sm pull-right" href="{{path('ue_edit',{'id':ue.id})}}"><i class="fa fa-edit"></i></a></th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
@@ -69,7 +69,7 @@
                                                                                                     <td>{{ ec.code }}</td>
                                                                                                     <td>{{ ec.credit }}
                                                                                                         crédits</td>
-                                                                                                    <td><span class="fa fa-newspaper-o"></span><a href="{{path('ec_edit',{'id':ec.id})}}"> Edit</a></td>
+                                                                                                    <td> <a class="btn btn-block btn-primary btn-sm" href="{{path('ec_edit',{'id':ec.id})}}"><i class="fa fa-edit"></i></a></td>
                                                                                                 </tr>
                                                                                             {% endfor %}
                                                                                         </tbody>

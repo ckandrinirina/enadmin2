@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\Parametrage;
 
 class EtudiantController extends AbstractController
 {
@@ -100,7 +101,7 @@ class EtudiantController extends AbstractController
     /**
      * @Route("/etudiant/pdf/{type}/{niveaux}", name="list_pdf")
      */
-    public function list_pdf($type, $niveaux)
+    public function list_pdf($type, $niveaux) 
     {
         $status = "listE";
         $em = $this->getDoctrine()->getManager();
@@ -114,6 +115,9 @@ class EtudiantController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $etudiants = $etudiantRepository->findByNiveaux($niveaux);
 
+        $chef_mention_repository = $em->getRepository(Parametrage::class);
+        $chef_mention = $chef_mention_repository->find('1');
+
         return $this->render(
             'etudiant/list_pdf.html.twig',
             [
@@ -123,7 +127,8 @@ class EtudiantController extends AbstractController
                 'n' => $niveaux,
                 'etudiants' => $etudiants,
                 'niv_name' => $niv_name,
-                'type' => $type
+                'type' => $type,
+                'chef_mention' => $chef_mention
             ]
         );
     }

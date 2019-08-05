@@ -73,7 +73,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nom et Prenom</th>
-                                                    <th>Contact</th>
+                                                    <th>Niveau</th>
                                                     <th>Sexe</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -83,20 +83,29 @@
                                                     <tr>
                                                         <td>{{ etudiant.nom }}
                                                             {{ etudiant.prenom }}</td>
-                                                        <td>{{ etudiant.contact }}</td>
+                                                        <td>{{ etudiant.niveaux.niveau }}</td>
                                                         <td>{{ etudiant.sexe.sexe }}</td>
                                                         <td>
-                                                            {% if is_granted('ROLE_ADMIN') %}
-                                                                <span class="fa fa-newspaper-o"></span>
-                                                                <a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':etudiant.niveaux.id}) }}">
-                                                                    fiche individuel</a>
-                                                                <span class="fa fa-newspaper-o"></span>
-                                                                <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}">
-                                                                    fiche de note</a>
-                                                            {% endif %}
-                                                            <span class="fa fa-newspaper-o"></span>
-                                                            <a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}">
-                                                                Profile</a>
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-info" type="button">Action</button>
+                                                                <button aria-expanded="false" class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                                                    <span class="caret"></span>
+                                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                                        <li>
+                                                                            <a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':etudiant.niveaux.id}) }}">fiche individuel</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}">fiche de note</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    <li>
+                                                                        <a href="{{ path('etudiant_profile',{'etudiant':etudiant.id})}}">Profile</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -104,7 +113,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>Nom</th>
-                                                    <th>Contact</th>
+                                                    <th>Niveau</th>
                                                     <th>Sexe</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -164,8 +173,7 @@
                                                             {% endfor %}
                                                         </td>
                                                         <td>
-                                                            <span class="fa fa-newspaper-o"></span>
-                                                            <a href="{{path('enseignant_profile',{'enseignant':enseignant.id})}}">Profile</a>
+                                                            <a href="{{path('enseignant_profile',{'enseignant':enseignant.id})}}" class="btn btn-social-icon btn-dropbox"><i class="fa fa-user"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -205,8 +213,8 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {# // <script>
-                //     $(function () {
-                //         $('#example1').DataTable()
-                //     })
-                // </script> #}
+                    //     $(function () {
+                    //         $('#example1').DataTable()
+                    //     })
+                    // </script> #}
 {% endblock %}

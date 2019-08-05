@@ -27,93 +27,93 @@
 {% endblock %}
 
 {% block body %}
-    <div class="callout callout-info">
-        <h4 class="text-center">Nombres des acteurs au seins du mention électronique</h4>
-    </div>
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-yellow">
-                <div class="inner">
-                    <h3 class="text-center">{{ nbr_etudiant_ac }}</h3>
+<div class="callout callout-info">
+    <h4 class="text-center">Nombres des arecteurs au seins de la mention électronique</h4>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3 class="text-center">{{ nbr_etudiant_ac }}</h3>
 
-                    <p>Etudiant académique</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['0'].id,'niveaux':allTypeParcours['0'].niveauxs['0'].id}) }}">Plus de détails
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
+                <p>Etudiant académique</p>
             </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-yellow">
-                <div class="inner">
-                    <h3 class="text-center">{{ nbr_etudiant_pro }}</h3>
-
-                    <p>Etudiant proféssionnel</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['1'].id,'niveaux':allTypeParcours['0'].niveauxs['1'].id}) }}">Plus de détails
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
             </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>{{ nbr_enseignant_vac }}</h3>
-                    <p>Enseignants vacataire</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['1'].id}) }}">Plus de détails
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>{{ nbr_enseignant_per }}</h3>
-
-                    <p>Enseignants permanent</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['0'].id}) }}">Plus de détails
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
+            <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['0'].id,'niveaux':allTypeParcours['0'].niveauxs['0'].id}) }}">Plus de détails
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
         </div>
     </div>
-    <div class="callout callout-info">
-        <h4 class="text-center">Calendrier des évènement</h4>
-    </div>
-    {# hide if admin #}
-    <div class="col-lg-6 col-md-12" style="background-color:white;margin-bottom:10px;">
-        <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
-            <i class="fa fa-upload"></i>Ajouter un évènement
-        </a>
-        <br/>
-        {% include '@Calendar/calendar.html' %}
-    </div>
-    <div class="col-lg-6 col-md-12">
-        <div class="box box-success">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
-                <i class="fa fa-calendar-minus-o"></i>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3 class="text-center">{{ nbr_etudiant_pro }}</h3>
 
-                <h3 class="box-title">Information</h3>
-
+                <p>Etudiant professionnel</p>
             </div>
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
-                <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
-                    {% if  last_information == null %}
-                        {{ 'Il n\'y a pas  de publication' }}{% endif %}
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a class="small-box-footer" href="{{ path('list',{'type':allTypeParcours['1'].id,'niveaux':allTypeParcours['0'].niveauxs['1'].id}) }}">Plus de détails
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>{{ nbr_enseignant_vac }}</h3>
+                <p>Enseignants vacataires</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['1'].id}) }}">Plus de détails
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>{{ nbr_enseignant_per }}</h3>
+
+                <p>Enseignants permanents</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a class="small-box-footer" href="{{ path('enseignant',{'type':enseignant_type['0'].id}) }}">Plus de détails
+                <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="callout callout-info">
+    <h4 class="text-center">Calendrier des évènements</h4>
+</div>
+{# hide if admin #}
+<div class="col-lg-6 col-md-12" style="background-color:white;margin-bottom:10px;">
+    <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
+        <i class="fa fa-upload"></i>Ajouter un évènement
+    </a>
+    <br/>
+    {% include '@Calendar/calendar.html' %}
+</div>
+<div class="col-lg-6 col-md-12">
+    <div class="box box-success">
+        <div class="box-header ui-sortable-handle" style="cursor: move;">
+            <i class="fa fa-calendar-minus-o"></i>
+
+            <h3 class="box-title">Information</h3>
+
+        </div>
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
+            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
+                {% if  last_information == null %}
+                    {{ 'Il n\'y a pas  de publication' }}{% endif %}
                     {% for information in last_information %}
                         {% if is_granted('ROLE_ADMIN') %}
                         <div class="item">
@@ -134,6 +134,9 @@
                                 </a>
                                 {{information.contenu}}
                             </p>
+                            <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
+                                Répondre
+                            </button>
                         </div>
                         {% else %}
                             {% for niveau in information.niveaux %}
@@ -156,10 +159,61 @@
                                             </a>
                                             {{information.contenu}}
                                         </p>
+                                        <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
+                                            Répondre
+                                        </button>
                                     </div>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
+                        <div class="modal modal-default fade" id="modal-success-{{ information.id }}" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">Success Modal</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    {% for information2 in information.informationChildren %}
+                                    <div class="item-2">
+                                        <p class="message">
+                                            <a class="name" href="#">
+                                                <small class="text-muted pull-right">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ information2.addAt | date('d/m H:m') }}</small>
+                                                {% if information2.user.etudiant != null %} 
+                                                    {{ information2.user.etudiant.nom }}
+                                                    {{ information2.user.etudiant.prenom }}
+                                                {% endif %}
+                                                {% if information2.user.enseignant != null  %}
+                                                    {{ information2.user.enseignant.nom }}
+                                                    {{ information2.user.enseignant.prenom }}
+                                                {% endif %}
+                                            </a>
+                                            <br/>
+                                            {{information2.contenu}}
+                                        </p>
+                                    </div>
+                                    {% endfor %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{ form_start(informationChildren_form_view,{'action': path('new-information-children',{'id':information.id}), 'method': 'POST'}) }}
+                                            <div class="input-group">
+                                                {{ form_row(informationChildren_form_view.contenu) }}
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-success" type="submit">
+                                                        <i class="fa fa-send"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        {{ form_end(informationChildren_form_view) }}
+                                    </div>
+                                </div>
+                              <!-- /.modal-content -->
+                            </div>
+                          <!-- /.modal-dialog -->
+                        </div>
                     {% endfor %}
                 </div>
                 <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>
@@ -172,7 +226,7 @@
                     {{ form_row(information_form_view.contenu) }}
                     <div class="input-group-btn">
                         <button class="btn btn-success" style="position: relative;margin-bottom: -25px;" type="submit">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-send"></i>
                         </button>
                     </div>
                 </div>
@@ -192,7 +246,7 @@
     	        <ul class="nav nav-tabs pull-right">
     	          	<li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">{{ semestres_et['1'].nom }}</a></li>
     	          	<li class="active"><a href="#tab_3-2" data-toggle="tab" aria-expanded="true"> {{ semestres_et['0'].nom }}</a></li>
-    	          	<li class="pull-left header"><i class="fa fa-th"></i> Emplois du temps</li>
+    	          	<li class="pull-left header"><i class="fa fa-th"></i> Emploi du temps</li>
     	        </ul>
     	        <div class="tab-content">
     	          		<!-- /.tab-pane -->
