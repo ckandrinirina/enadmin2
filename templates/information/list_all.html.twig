@@ -42,7 +42,7 @@
                     {% for information in last_information %}
                         {% if is_granted('ROLE_ADMIN') %}
                         <div class="item">
-                            <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ information.user.etudiant.photo }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                            <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ asset(information.user.etudiant.photo) }}{% endif %} {% if information.user.enseignant != null %} {{ asset(information.user.enseignant.photo) }} {% endif %}" style="width:50px;height:50px">
                             <p class="message">
                                 <a class="name" href="#">
                                     <small class="text-muted pull-right">
@@ -67,7 +67,7 @@
                             {% for niveau in information.niveaux %}
                                 {% if app.user.etudiant.niveaux.id == niveau.id %}
                                     <div class="item">
-                                        <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ asset(information.user.etudiant.photo) }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                                        <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ asset(information.user.etudiant.photo) }}{% endif %} {% if information.user.enseignant != null %} {{ asset(information.user.enseignant.photo) }} {% endif %}" style="width:50px;height:50px">
                                         <p class="message">
                                             <a class="name" href="#">
                                                 <small class="text-muted pull-right">
