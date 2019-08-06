@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\InformationChildrenType;
+use App\Entity\InformationChild;
 
 /**
  * @Route("/information")
@@ -93,12 +95,51 @@ class InformationController extends AbstractController
      */
     public function delete(Request $request, Information $information): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$information->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $information->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($information);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('information_index');
+    }
+
+    /**
+     * @Route("/information-list/{pagination}",name="list_all_info")
+     */
+    public function information_list_all($pagination)
+    {
+        $status = 'information_list';
+        $em = $this->getDoctrine()->getManager();
+        $information_repository = $em->getRepository(Information::class);
+
+        if ($this->getUser()->getEtudiant() == null)
+            $last_information = $information_repository->findLastInformationWithPagination($pagination);
+        else
+            $last_information = $information_repository->findLastInformationByNiveauxWithPagination($this->getUser()->getEtudiant()->getNiveaux()->getId(), $pagination);
+
+        $information_form = $this->createForm(InformationType::class);
+        $information_form_view = $information_form->createView();
+
+        $count = count($information_repository->findAll());
+        $count = (int)($count/5);
+
+        if ($last_information != null) {
+            foreach ($last_information as $l) {
+                $form_child[$l->getId()] = $this->createForm(InformationChildrenType::class);
+                $informationChildren_form_view[$l->getId()] = $form_child[$l->getId()]->createView();
+            }
+        } else {
+            $informationChildren_form_view = null;
+        }
+
+        return $this->render('information/list_all.html.twig', [
+            'status' => $status,
+            'last_information' => $last_information,
+            'information_form_view' => $information_form_view,
+            'informationChildren_form_view' => $informationChildren_form_view,
+            'count' => $count,
+            'pagination' => $pagination
+        ]);
     }
 }

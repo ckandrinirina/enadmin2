@@ -51,6 +51,7 @@ class ParametrageController extends AbstractController
         } else {
             $view_form = null;
         }
+        
         if ($heures != null) {
             foreach ($heures as $h) {
                 $formH[$h->getId()] = $this->createForm(HeuresType::class);

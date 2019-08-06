@@ -26,7 +26,7 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil" ,options = { "expose" = true })
      */
-    public function index(Request $request,EtService $etService)
+    public function index(Request $request, EtService $etService)
     {
         $status = "homme";
 
@@ -41,21 +41,18 @@ class AccueilController extends AbstractController
 
         $heures = $heuresRepository->findAll();
         $jours = $joursRepository->findAll();
-        if($this->getUser()->getEtudiant() != null)
-        {   
+        if ($this->getUser()->getEtudiant() != null) {
             $niveaux_et = $this->getUser()->getEtudiant()->getNiveaux();
             $semestres_et = $niveaux_et->getSemestres();
 
             $matriceEt['0'] = $etService->generateMatriceEt($niveaux_et->getId(), $heures, $jours, $semestres_et['0']->getId());
             $matriceEt['1'] = $etService->generateMatriceEt($niveaux_et->getId(), $heures, $jours, $semestres_et['1']->getId());
-        }
-        else
-        {
+        } else {
             $semestres_et = null;
             $niveaux_et = null;
             $matriceEt = null;
         }
-        if($this->getUser()->getEtudiant() == null)
+        if ($this->getUser()->getEtudiant() == null)
             $last_information = $information_repository->findLastInformation();
         else
             $last_information = $information_repository->findLastInformationByNiveaux($this->getUser()->getEtudiant()->getNiveaux()->getId());
@@ -63,8 +60,17 @@ class AccueilController extends AbstractController
         $information_form = $this->createForm(InformationType::class);
         $information_form_view = $information_form->createView();
 
-        $informationChildren_form = $this->createForm(InformationChildrenType::class);
-        $informationChildren_form_view = $informationChildren_form->createView();
+        if ($last_information != null) {
+            foreach ($last_information as $l) {
+                $form_child[$l->getId()] = $this->createForm(InformationChildrenType::class);
+                $informationChildren_form_view[$l->getId()] = $form_child[$l->getId()]->createView();
+            }
+        } else {
+            $informationChildren_form_view = null;
+        }
+
+        // $informationChildren_form = $this->createForm(InformationChildrenType::class);
+        // $informationChildren_form_view = $informationChildren_form->createView();
 
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
@@ -96,7 +102,7 @@ class AccueilController extends AbstractController
             'form' => $form->createView(),
             'information_form_view' => $information_form_view,
             'informationChildren_form_view' => $informationChildren_form_view,
-            'last_information' =>$last_information,
+            'last_information' => $last_information,
             'matriceEt' => $matriceEt,
             'jours' => $jours,
             'heures' => $heures,
@@ -105,10 +111,10 @@ class AccueilController extends AbstractController
     }
 
     /**
-     * @Route("/new-information", name="new-information")
+     * @Route("/new-information/{route}", name="new-information")
      * 
      */
-    public function new_information(Request $request)
+    public function new_information(Request $request, $route = 0)
     {
         $info = new Information();
         $em = $this->getDoctrine()->getManager();
@@ -120,23 +126,25 @@ class AccueilController extends AbstractController
             $info->setUser($this->getUser());
             $info->setContenu($result['contenu']);
             $info->setAddAt(new \Datetime());
-            foreach($result['niveaux'] as $niv)
-            {
+            foreach ($result['niveaux'] as $niv) {
                 $niv_entity = $niveaux_repository->find($niv);
                 $info->addNiveau($niv_entity);
             }
             $em->persist($info);
             $em->flush();
-            return $this->redirectToRoute('accueil');
+            if ($route == 0)
+                return $this->redirectToRoute('accueil');
+            else
+                return $this->redirectToRoute('list_all_info');
         }
     }
 
-    
+
     /**
-     * @Route("/new-information-children/{id}", name="new-information-children")
+     * @Route("/new-information-children/{id}/{route}", name="new-information-children")
      * 
      */
-    public function new_information_children(Information $information ,Request $request)
+    public function new_information_children(Information $information, Request $request, $route = 0)
     {
         $info = new InformationChild();
         $em = $this->getDoctrine()->getManager();
@@ -151,7 +159,10 @@ class AccueilController extends AbstractController
             $em->persist($information);
             $em->persist($info);
             $em->flush();
-            return $this->redirectToRoute('accueil');
+            if ($route == 0)
+                return $this->redirectToRoute('accueil');
+            else
+                return $this->redirectToRoute('list_all_info');
         }
     }
 }

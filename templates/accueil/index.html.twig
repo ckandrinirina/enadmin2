@@ -110,8 +110,8 @@
             <h3 class="box-title">Information</h3>
 
         </div>
-        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
-            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 300px;">
+            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 300px;">
                 {% if  last_information == null %}
                     {{ 'Il n\'y a pas  de publication' }}{% endif %}
                     {% for information in last_information %}
@@ -198,16 +198,16 @@
                                     {% endfor %}
                                     </div>
                                     <div class="modal-footer">
-                                        {{ form_start(informationChildren_form_view,{'action': path('new-information-children',{'id':information.id}), 'method': 'POST'}) }}
+                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id}), 'method': 'POST'}) }}
                                             <div class="input-group">
-                                                {{ form_row(informationChildren_form_view.contenu) }}
+                                                {{ form_row( informationChildren_form_view[information.id].contenu ) }}
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-success" type="submit">
                                                         <i class="fa fa-send"></i>
                                                     </button>
                                                 </div>
                                             </div>
-                                        {{ form_end(informationChildren_form_view) }}
+                                        {{ form_end(informationChildren_form_view[information.id]) }}
                                     </div>
                                 </div>
                               <!-- /.modal-content -->
@@ -220,6 +220,7 @@
                 <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
             </div>
             <!-- /.chat -->
+            <a href="{{path('list_all_info',{'pagination':'0'})}}" class="btn btn-block btn-info btn-xs">Afficher toute les informations</a>
             <div class="box-footer">
                 {{ form_start(information_form_view,{'action': path('new-information'), 'method': 'POST'}) }}
                 <div class="input-group">

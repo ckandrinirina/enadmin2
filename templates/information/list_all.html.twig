@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/daygrid/main.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.min.css')}}">
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Information all
+            <small>Information all</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>
+                    Information all</a>
+            </li>
+            <li class="active">Information all</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+<div class="col-lg-12 col-md-12">
+    <div class="box box-success">
+        <div class="box-header ui-sortable-handle" style="cursor: move;">
+            <i class="fa fa-calendar-minus-o"></i>
+
+            <h3 class="box-title">Information</h3>
+
+        </div>
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 470px;">
+            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 470px;">
+                {% if  last_information == null %}
+                    {{ 'Il n\'y a pas  de publication' }}{% endif %}
+                    {% for information in last_information %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <div class="item">
+                            <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ information.user.etudiant.photo }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                            <p class="message">
+                                <a class="name" href="#">
+                                    <small class="text-muted pull-right">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{ information.addAt | date('d/m H:m') }}</small>
+                                    {% if information.user.etudiant != null %} 
+                                        {{ information.user.etudiant.nom }}
+                                        {{ information.user.etudiant.prenom }}
+                                    {% endif %}
+                                    {% if information.user.enseignant != null  %}
+                                        {{ information.user.enseignant.nom }}
+                                        {{ information.user.enseignant.prenom }}
+                                    {% endif %}
+                                </a>
+                                {{information.contenu}}
+                            </p>
+                            <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
+                                Répondre  <span class="pull-right">(Reponses {{ information.informationChildren|length }})</span>
+                            </button>
+                        </div>
+                        {% else %}
+                            {% for niveau in information.niveaux %}
+                                {% if app.user.etudiant.niveaux.id == niveau.id %}
+                                    <div class="item">
+                                        <img alt="user image" class="online" src="{% if information.user.etudiant != null %} {{ asset(information.user.etudiant.photo) }}{% endif %} {% if information.user.enseignant != null %} {{ information.user.enseignant.photo }} {% endif %}" style="width:50px;height:50px">
+                                        <p class="message">
+                                            <a class="name" href="#">
+                                                <small class="text-muted pull-right">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ information.addAt | date('d/m H:m') }}</small>
+                                                {% if information.user.etudiant != null %} 
+                                                    {{ information.user.etudiant.nom }}
+                                                    {{ information.user.etudiant.prenom }}
+                                                {% endif %}
+                                                {% if information.user.enseignant != null  %}
+                                                    {{ information.user.enseignant.nom }}
+                                                    {{ information.user.enseignant.prenom }}
+                                                {% endif %}
+                                            </a>
+                                            {{information.contenu}}
+                                        </p>
+                                        <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
+                                            Répondre (Reponses {{ information.informationChildren|length }})
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="modal modal-default fade" id="modal-success-{{ information.id }}" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">Réponse ({{ information.informationChildren|length }})</span></button>
+                                        <h4 class="modal-title"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    {% for information2 in information.informationChildren %}
+                                    <div class="item-2">
+                                        <p class="message">
+                                            <a class="name" href="#">
+                                                <small class="text-muted pull-right">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ information2.addAt | date('d/m H:m') }}</small>
+                                                {% if information2.user.etudiant != null %} 
+                                                    {{ information2.user.etudiant.nom }}
+                                                    {{ information2.user.etudiant.prenom }}
+                                                {% endif %}
+                                                {% if information2.user.enseignant != null  %}
+                                                    {{ information2.user.enseignant.nom }}
+                                                    {{ information2.user.enseignant.prenom }}
+                                                {% endif %}
+                                            </a>
+                                            <br/>
+                                            {{information2.contenu}}
+                                        </p>
+                                    </div>
+                                    {% endfor %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id,'route':'1'}), 'method': 'POST'}) }}
+                                            <div class="input-group">
+                                                {{ form_row(informationChildren_form_view[information.id].contenu) }}
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-success" type="submit">
+                                                        <i class="fa fa-send"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        {{ form_end(informationChildren_form_view[information.id]) }}
+                                    </div>
+                                </div>
+                              <!-- /.modal-content -->
+                            </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>
+                <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+            </div>
+            <!-- /.chat --> 
+            <nav aria-label="..." style="margin-left:10px">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1"><<</a>
+                    </li>
+                    {% for i in 0..count %}
+                        {% set j = i + 1 %}
+                        <li class="page-item  {% if i == pagination %}active{% endif %}"><a class="page-link" href="{{path('list_all_info',{'pagination':i})}}">{{j}}</a></li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="#">>></a>
+                    </li>
+                </ul>
+                        {# <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li> #}
+
+            </nav>
+            <br/>
+            <br/>
+            <div class="box-footer">
+                {{ form_start(information_form_view,{'action': path('new-information',{'route':'1'}), 'method': 'POST'}) }}
+                <div class="input-group">
+                    {{ form_row(information_form_view.contenu) }}
+                    <div class="input-group-btn">
+                        <button class="btn btn-success" style="position: relative;margin-bottom: -25px;" type="submit">
+                            <i class="fa fa-send"></i>
+                        </button>
+                    </div>
+                </div>
+                {{ form_row(information_form_view.niveaux) }}
+                {{ form_end(information_form_view) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
+    <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
+{% endblock %}

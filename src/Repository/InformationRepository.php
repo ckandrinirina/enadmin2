@@ -23,7 +23,8 @@ class InformationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->orderBy('i.addAt','DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(3)
+            ->orderBy('i.addAt DESC')
             ->getQuery()
             ->getResult();
     }
@@ -33,7 +34,32 @@ class InformationRepository extends ServiceEntityRepository
         $result = $this->createQueryBuilder('i')
             ->innerJoin('i.niveaux','n','WITH','n.id = :niveau')
             ->setParameter('niveau',$id_niveau)
+            ->orderBy('i.addAt','DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+
+    public function findLastInformationWithPagination($offset)
+    {
+        return $this->createQueryBuilder('i')
+            ->orderBy('i.addAt','DESC')
             ->setMaxResults(5)
+            ->setFirstResult($offset*5)
+            ->orderBy('i.addAt','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLastInformationByNiveauxWithPagination($id_niveau,$offset)
+    {
+        $result = $this->createQueryBuilder('i')
+            ->innerJoin('i.niveaux','n','WITH','n.id = :niveau')
+            ->setParameter('niveau',$id_niveau)
+            ->setMaxResults(5)
+            ->setFirstResult($offset*5)
+            ->orderBy('i.addAt','DESC')
             ->getQuery()
             ->getResult();
         return $result;
