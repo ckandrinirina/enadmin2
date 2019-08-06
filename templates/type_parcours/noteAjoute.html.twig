@@ -1,6 +1,14 @@
 {% for type in allTypeParcours %}
-    {% set niveaux = type.niveauxs['0'].id %}
-    {% set semestre = type.niveauxs['0'].semestres['0'].id %}
-    {% set ratrapage = 0 %}
-    <li><a href="{{ path('note_ajoute',{'type':type.id , 'niveaux':niveaux ,'semestre':semestre,'au':au['0'].id,'ratrapage':ratrapage}) }}">{{ type.type }}</a></li>
+	{% if type.niveauxs|length > 0 %}
+		{% if type.niveauxs['0'].semestres|length > 0 %}
+		    {% set niveaux = type.niveauxs['0'].id %}
+		    {% set semestre = type.niveauxs['0'].semestres['0'].id %}
+		    {% set ratrapage = 0 %}
+		    <li>
+		    	<a href="{{ path('note_ajoute',{'type':type.id , 'niveaux':niveaux ,'semestre':semestre,'au':au['0'].id,'ratrapage':ratrapage}) }}">
+		    		{{ type.type }}
+		    	</a>
+		    </li>
+		{% endif %}
+	{% endif %}
 {% endfor %}
