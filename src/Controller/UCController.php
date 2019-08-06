@@ -11,6 +11,7 @@ use App\Entity\TypeParcours;
 use App\Entity\Niveaux;
 use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UCController extends AbstractController
 {
@@ -21,39 +22,26 @@ class UCController extends AbstractController
      * 
      *  @IsGranted("ROLE_ADMIN")
      */
-    public function index(Request $request)
+    public function index(Request $request, EntityManagerInterface $em)
     {
         $status = 'addUc';
 
         $uc = new UC();
         $form = $this->createForm(UCType::class, $uc);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $typeRep = $em->getRepository(TypeParcours::class);
             $type = $typeRep->findAll();
-            $t = $type['0']->getId();
-            foreach($uc->getNiveaux() as $value)
-            {
-                $niveaux[]=$value['niveaux'];
-                $semestre[]=$value['semestre'];
-            }
-            $uc2 = new UC();
-            foreach($niveaux as $niveau)
-            {
-                $uc2->addNiveau($niveau);
-            }
-            foreach($semestre as $sem )
-            {
-                $uc2->addSemestre($sem);
-            }
-            $uc2->setCoefficient($uc->getCoefficient());
-            $uc2->setCredit($uc->getCredit());
-            $uc2->setNom($uc->getNom());
-             
-            $em->persist($uc2);
+            $t = $type['0']->getId(); 
+
+            $em->persist($uc);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+
+            return $this->redirectToRoute('repartition_uc_by_niveau',[
+                'type' => $t,
+                'niveau' => $uc->getNiveaux()['0']->getId()
+            ]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);
@@ -66,39 +54,23 @@ class UCController extends AbstractController
      * 
      *  @IsGranted("ROLE_ADMIN")
      */
-    public function edit_ue(Request $request,UC $uc)
+    public function edit_ue(Request $request, UC $uc, EntityManagerInterface $em)
     {
         $status = 'addUc';
         $form = $this->createForm(UCType::class, $uc);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $typeRep = $em->getRepository(TypeParcours::class);
             $type = $typeRep->findAll();
             $t = $type['0']->getId();
 
-            foreach($uc->getNiveaux() as $value)
-            {
-                $niveaux[]=$value['niveaux'];
-                $semestre[]=$value['semestre'];
-            }
-            $uc2 = new UC();
-            foreach($niveaux as $niveau)
-            {
-                $uc2->addNiveau($niveau);
-            }
-            foreach($semestre as $sem )
-            {
-                $uc2->addSemestre($sem);
-            }
-            $uc2->setCoefficient($uc->getCoefficient());
-            $uc2->setCredit($uc->getCredit());
-            $uc2->setNom($uc->getNom());
-             
-            $em->persist($uc2);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+
+            return $this->redirectToRoute('repartition_uc_by_niveau',[
+                'type' => $t,
+                'niveau' => $uc->getNiveaux()['0']->getId()
+            ]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);
