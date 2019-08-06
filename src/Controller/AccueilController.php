@@ -55,7 +55,10 @@ class AccueilController extends AbstractController
             $niveaux_et = null;
             $matriceEt = null;
         }
-        $last_information = $information_repository->findLastInformation();
+        if($this->getUser()->getEtudiant() == null)
+            $last_information = $information_repository->findLastInformation();
+        else
+            $last_information = $information_repository->findLastInformationByNiveaux($this->getUser()->getEtudiant()->getNiveaux()->getId());
 
         $information_form = $this->createForm(InformationType::class);
         $information_form_view = $information_form->createView();

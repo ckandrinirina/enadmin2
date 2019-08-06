@@ -135,7 +135,7 @@
                                 {{information.contenu}}
                             </p>
                             <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
-                                Répondre
+                                Répondre  <span class="pull-right">(Reponses {{ information.informationChildren|length }})</span>
                             </button>
                         </div>
                         {% else %}
@@ -160,7 +160,7 @@
                                             {{information.contenu}}
                                         </p>
                                         <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
-                                            Répondre
+                                            Répondre (Reponses {{ information.informationChildren|length }})
                                         </button>
                                     </div>
                                 {% endif %}
@@ -171,8 +171,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                        <h4 class="modal-title">Success Modal</h4>
+                                            <span aria-hidden="true">Réponse ({{ information.informationChildren|length }})</span></button>
+                                        <h4 class="modal-title"></h4>
                                     </div>
                                     <div class="modal-body">
                                     {% for information2 in information.informationChildren %}

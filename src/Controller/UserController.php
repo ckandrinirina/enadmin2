@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Form\RoleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AbstractController
 {
@@ -92,5 +93,25 @@ class UserController extends AbstractController
         return $this->render('user/admin.html.twig', [
             'status' => $status
         ]);
+    }
+
+    /**
+     * @Route("/ajax-change-role/{id}", name="ajax_change_role" , options = { "expose" = true })
+     * 
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function ajax_change_role(User $user ,Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($user->getIsActive() == 1)
+            $user->setIsActive(false);
+        else
+            $user->setIsActive(true);
+        $em->persist($user);
+        $em->flush();
+        $response = new JsonResponse();
+        return $response;
     }
 }

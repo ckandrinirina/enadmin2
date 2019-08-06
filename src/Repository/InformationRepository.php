@@ -28,6 +28,17 @@ class InformationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLastInformationByNiveaux($id_niveau)
+    {
+        $result = $this->createQueryBuilder('i')
+            ->innerJoin('i.niveaux','n','WITH','n.id = :niveau')
+            ->setParameter('niveau',$id_niveau)
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+
     // /**
     //  * @return Information[] Returns an array of Information objects
     //  */
