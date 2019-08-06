@@ -198,7 +198,7 @@
                                     {% endfor %}
                                     </div>
                                     <div class="modal-footer">
-                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id}), 'method': 'POST'}) }}
+                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id,'pagination':'0'}), 'method': 'POST'}) }}
                                             <div class="input-group">
                                                 {{ form_row( informationChildren_form_view[information.id].contenu ) }}
                                                 <div class="input-group-btn">

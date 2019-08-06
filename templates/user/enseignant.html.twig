@@ -4,6 +4,52 @@
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <style>
+        .material-switch > input[type="checkbox"] {
+            display: none;
+        }
+
+        .material-switch > label {
+            cursor: pointer;
+            height: 0;
+            position: relative;
+            width: 40px;
+        }
+
+        .material-switch > label::before {
+            background: rgb(0, 0, 0);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            content: '';
+            height: 16px;
+            margin-top: -8px;
+            position: absolute;
+            opacity: 0.3;
+            transition: all 0.4s ease-in-out;
+            width: 40px;
+        }
+        .material-switch > label::after {
+            background: rgb(255, 255, 255);
+            border-radius: 16px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            content: '';
+            height: 24px;
+            left: -4px;
+            margin-top: -8px;
+            position: absolute;
+            top: -4px;
+            transition: all 0.3s ease-in-out;
+            width: 24px;
+        }
+        .material-switch > input[type="checkbox"]:checked + label::before {
+            background: inherit;
+            opacity: 0.5;
+        }
+        .material-switch > input[type="checkbox"]:checked + label::after {
+            background: inherit;
+            left: 20px;
+        }
+    </style>
 {% endblock %}
 
 
@@ -54,7 +100,19 @@
                             <td>{{ et.prenom }}</td>
                             <td>{{ et.type.type }}</td>
                             {% if et.login != null %}
-                                <td>{{et.login.isActive}}</td>
+                                <td>
+                                    {% if et.login.isActive == 1 %}
+                                        <div class="material-switch">
+                                            <input checked class="btn-switch-{{et.id}}" id="someSwitchOptionSuccess-{{et.id}}" name="someSwitchOption001" type="checkbox"/>
+                                            <label class="label-success" for="someSwitchOptionSuccess-{{et.id}}"></label>
+                                        </div>
+                                    {% else %}
+                                        <div class="material-switch">
+                                            <input class="btn-switch-{{et.id}}" id="someSwitchOptionSuccess-{{et.id}}" name="someSwitchOption001" type="checkbox"/>
+                                            <label class="label-success" for="someSwitchOptionSuccess-{{et.id}}"></label>
+                                        </div>
+                                    {% endif %}
+                                </td>
                             {% else %}
                                 <td>Pas d'accès</td>
                             {% endif %}
@@ -72,6 +130,24 @@
                                 <td>Pas d'accès</td>
                             {% endif %}
                         </tr>
+                        <script>
+                            $(function () {
+                                id = '{{ et.id }}';
+                                button = '.btn-switch-' + id;{% if et.login != null %}send = {{ et.login.id }};
+                                {% else %}
+                                    send = 3;{% endif %}$(button).click(function () {
+                                    $.ajax({
+                                        type: 'POST',
+                                        dataType: 'JSON',
+                                        url: Routing.generate('ajax_change_role', {'id': send}),
+                                        data: 'mode=',
+                                        success: function (data) {
+                                            alert('Statut changer');
+                                        }
+                                    });
+                                });
+                            })
+                        </script>
                     {% endfor %}
                 </tbody>
                 <tfoot>
@@ -90,30 +166,30 @@
     {% set i = 0 %}
     {% for et in enseignant %}
         {% if et.login != null %}
-        <div class="modal fade" id="modal-grant-role-{{et.id}}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title">Changer de rôle</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{ form_start(view_form[i],{'action': path('change_role',{'id':et.login.id}), 'method': 'POST'}) }}
-                        <div class="box-body">
-                            <div class="form-group">
-                                {{ form_row(view_form[i].roles) }}
+            <div class="modal fade" id="modal-grant-role-{{et.id}}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">Changer de rôle</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ form_start(view_form[i],{'action': path('change_role',{'id':et.login.id}), 'method': 'POST'}) }}
+                            <div class="box-body">
+                                <div class="form-group">
+                                    {{ form_row(view_form[i].roles) }}
+                                </div>
                             </div>
+                            <div class="box-footer">
+                                <button class="btn btn-primary pull-right" type="submit">Valider</button>
+                            </div>
+                            {{ form_end(view_form[i]) }}
                         </div>
-                        <div class="box-footer">
-                            <button class="btn btn-primary pull-right" type="submit">Valider</button>
-                        </div>
-                        {{ form_end(view_form[i]) }}
                     </div>
                 </div>
             </div>
-        </div>
         {% endif %}
         {% set i = i + 1 %}
     {% endfor %}
@@ -127,6 +203,8 @@
     <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
         $('#example1').DataTable()
     </script>

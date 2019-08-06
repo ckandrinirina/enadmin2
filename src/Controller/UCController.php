@@ -33,27 +33,28 @@ class UCController extends AbstractController
             $typeRep = $em->getRepository(TypeParcours::class);
             $type = $typeRep->findAll();
             $t = $type['0']->getId();
-            foreach($uc->getNiveaux() as $value)
-            {
-                $niveaux[]=$value['niveaux'];
-                $semestre[]=$value['semestre'];
-            }
             $uc2 = new UC();
-            foreach($niveaux as $niveau)
+            // foreach($uc->getNiveaux() as $value)
+            // {
+            //     $niveaux[]=$value['niveaux'];
+            //     $semestre[]=$value['semestre'];
+            // }
+            // $uc2 = new UC();
+            foreach($uc->getNiveaux() as $niveau)
             {
                 $uc2->addNiveau($niveau);
             }
-            foreach($semestre as $sem )
+            foreach($uc->getSemestres() as $sem )
             {
                 $uc2->addSemestre($sem);
             }
             $uc2->setCoefficient($uc->getCoefficient());
             $uc2->setCredit($uc->getCredit());
             $uc2->setNom($uc->getNom());
-             
+            // dump($uc2);die();
             $em->persist($uc2);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$uc->getNiveaux()['0']->getId()]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);
@@ -78,27 +79,27 @@ class UCController extends AbstractController
             $type = $typeRep->findAll();
             $t = $type['0']->getId();
 
-            foreach($uc->getNiveaux() as $value)
-            {
-                $niveaux[]=$value['niveaux'];
-                $semestre[]=$value['semestre'];
-            }
-            $uc2 = new UC();
-            foreach($niveaux as $niveau)
-            {
-                $uc2->addNiveau($niveau);
-            }
-            foreach($semestre as $sem )
-            {
-                $uc2->addSemestre($sem);
-            }
-            $uc2->setCoefficient($uc->getCoefficient());
-            $uc2->setCredit($uc->getCredit());
-            $uc2->setNom($uc->getNom());
+            // foreach($uc->getNiveaux() as $value)
+            // {
+            //     $niveaux[]=$value['niveaux'];
+            //     $semestre[]=$value['semestre'];
+            // }
+            // $uc2 = new UC();
+            // foreach($niveaux as $niveau)
+            // {
+            //     $uc2->addNiveau($niveau);
+            // }
+            // foreach($semestre as $sem )
+            // {
+            //     $uc2->addSemestre($sem);
+            // }
+            // $uc2->setCoefficient($uc->getCoefficient());
+            // $uc2->setCredit($uc->getCredit());
+            // $uc2->setNom($uc->getNom());
              
-            $em->persist($uc2);
+            $em->persist($uc);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$uc->getNiveaux()['0']->getId()]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);

@@ -141,10 +141,10 @@ class AccueilController extends AbstractController
 
 
     /**
-     * @Route("/new-information-children/{id}/{route}", name="new-information-children")
+     * @Route("/new-information-children/{id}/{route}/{pagination}", name="new-information-children")
      * 
      */
-    public function new_information_children(Information $information, Request $request, $route = 0)
+    public function new_information_children(Information $information, Request $request, $route = 0,$pagination)
     {
         $info = new InformationChild();
         $em = $this->getDoctrine()->getManager();
@@ -162,7 +162,9 @@ class AccueilController extends AbstractController
             if ($route == 0)
                 return $this->redirectToRoute('accueil');
             else
-                return $this->redirectToRoute('list_all_info');
+                return $this->redirectToRoute('list_all_info',[
+                    'pagination' => $pagination
+                ]);
         }
     }
 }

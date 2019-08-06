@@ -76,9 +76,6 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/edit-acces/{id}", name="app_edit_acces")
      * 
-     * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
-     *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, User $user): Response
     {

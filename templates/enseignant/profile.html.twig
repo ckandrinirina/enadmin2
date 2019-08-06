@@ -70,6 +70,14 @@
                     </a>
                 </div>
         {% endif %}
+        {% if app.user.enseignant == null %}
+        {% elseif app.user.enseignant.id == enseignant.id %}
+                <div class="col-md-2">
+                    <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                        <i class="fa fa-lock"></i>Modifier l'accès
+                    </a>
+                </div>
+        {% endif %}
         <div class="col-md-3">
             <a class="btn btn-block btn-social btn-flickr" data-target="#modal-default" data-toggle="modal">
                 <i class="fa fa-file-image-o"></i>
@@ -115,8 +123,8 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {#    <script>
-                                $(function () {
-                                    $('#example1').DataTable()
-                                })
-                            </script>#}
+                                    $(function () {
+                                        $('#example1').DataTable()
+                                    })
+                                </script>#}
 {% endblock %}

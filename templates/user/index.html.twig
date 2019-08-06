@@ -102,13 +102,13 @@
                                 <td>
                                     {% if et.login.isActive == 1 %}
                                         <div class="material-switch">
-                                            <input checked id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox" class="btn-switch-{{et.id}}"/>
-                                            <label class="label-success" for="someSwitchOptionSuccess"></label>
+                                            <input checked class="btn-switch-{{et.id}}" id="someSwitchOptionSuccess-{{et.id}}" name="someSwitchOption001" type="checkbox"/>
+                                            <label class="label-success" for="someSwitchOptionSuccess-{{et.id}}"></label>
                                         </div>
                                     {% else %}
                                         <div class="material-switch">
-                                            <input id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox" class="btn-switch-{{et.id}}"/>
-                                            <label class="label-success" for="someSwitchOptionSuccess"></label>
+                                            <input class="btn-switch-{{et.id}}" id="someSwitchOptionSuccess-{{et.id}}" name="someSwitchOption001" type="checkbox"/>
+                                            <label class="label-success" for="someSwitchOptionSuccess-{{et.id}}"></label>
                                         </div>
                                     {% endif %}
                                 </td>
@@ -116,6 +116,26 @@
                                 <td>Pas d'accès</td>
                             {% endif %}
                         </tr>
+                        <script>
+                            $(function () {
+                                id = '{{ et.id }}';
+                                button = '.btn-switch-'+id;{% if et.login != null %}
+                                    send = {{ et.login.id }};
+                                {% else %}
+                                    send = 3;{% endif %}
+                                $(button).click(function () {
+                                    $.ajax({
+                                        type: 'POST',
+                                        dataType: 'JSON',
+                                        url: Routing.generate('ajax_change_role', {'id': send}),
+                                        data: 'mode=',
+                                        success: function (data) {
+                                            alert('Statut changer');
+                                        }
+                                    });
+                                });
+                            })
+                        </script>
                     {% endfor %}
                 </tbody>
                 <tfoot>
@@ -146,29 +166,4 @@
     <script>
         $('#example1').DataTable()
     </script>
-{% for et in etudiant %}
-    <script>
-        $(function () {
-            id = '{{ et.id }}';
-            button = '.btn-switch-'+id;
-            {% if et.login != null %}
-                send = {{ et.login.id }};
-            {% else %}
-                send = 3;
-            {% endif %}
-            console.log(Routing.generate('ajax_change_role',{'id':send}));
-            $(button).click(function () {
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'JSON',
-                    url: Routing.generate('ajax_change_role',{'id':send}),
-                    data: 'mode=',
-                    success: function (data) {
-                        alert('Statut changer');
-                    }
-                });
-            });
-        })
-    </script>
-{% endfor %}
 {% endblock %}
