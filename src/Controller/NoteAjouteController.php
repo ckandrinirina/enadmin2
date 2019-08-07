@@ -41,6 +41,7 @@ class NoteAjouteController extends AbstractController
         $RepEcRepository = $em->getRepository(RepartitionEC::class);
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $etudiantRepository = $em->getRepository(Etudiant::class);
+        $ecRepository = $em->getRepository(EC::class);
 
         $ecParNiveauxParSemestre = $RepEcRepository->findByNiveauxBySemestre($niveaux, $semestre);
         $auNow = $auRepository->find($au);
@@ -75,6 +76,7 @@ class NoteAjouteController extends AbstractController
         }
 
         $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+        $ec = $ecRepository->findEcByEnseignant($this->getUser()->getEnseignant()->getId());
 
         return $this->render(
             'note_ajoute/ajoute.html.twig',
@@ -95,7 +97,8 @@ class NoteAjouteController extends AbstractController
                 'idEtOrd' => $idEtOrd,
                 'nbrEc' => $nbrEc,
                 'nbrEt' => $nbrEt,
-                'matriceNote' => $matriceNote
+                'matriceNote' => $matriceNote,
+                'ec' => $ec
             ]
         );
     }
@@ -193,7 +196,7 @@ class NoteAjouteController extends AbstractController
     }
 
     /**
-     * @Route("/confirmeSupression/{etudiant}/{ec}/{semestre}/{niveau}/{au}/{ratrapage}/{valeur}" , name="confirmeSupression",options = { "expose" = true })
+     * @Route("/confirmeSupressionNote/{etudiant}/{ec}/{semestre}/{niveau}/{au}/{ratrapage}/{valeur}" , name="confirmeSupressionNote",options = { "expose" = true })
      */
     public function confirmeSupression($etudiant, $ec, $semestre, $niveau, $au, $ratrapage, $valeur)
     {

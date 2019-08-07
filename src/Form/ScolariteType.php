@@ -10,6 +10,7 @@ use App\Entity\Droit;
 use App\Entity\Niveaux;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ScolariteType extends AbstractType
 {

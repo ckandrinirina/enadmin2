@@ -172,7 +172,7 @@ class ECController extends AbstractController
             $t = $type['0']->getId();
 
             $niveaux = $ec->getUC()->getNiveaux();
-            $semestres = $ec->getUC()->getSemestres();
+            // $semestres = $ec->getUC()->getSemestres();
 
             // $uc = $ec->getUC();
             // $all_ec = $uc->getECs();
@@ -190,16 +190,16 @@ class ECController extends AbstractController
 
             // $ec->setCoefficient($coeff);
 
-            $i = 0;
-            foreach ($niveaux as $niveau) {
-                $repEc[$i] = $repartition_ec_repository->find_by_s_n_ec($semestres[$i]->getId(), $niveau->getId(), $ec->getId());
-                $repEc[$i] = $repEc[$i][0];
-                $repEc[$i]->setEc($ec);
-                $repEc[$i]->setNiveaux($niveau);
-                $repEc[$i]->setSemestre($semestres[$i]);
-                $em->persist($repEc[$i]);
-                $i = $i + 1;
-            }
+            // $i = 0;
+            // foreach ($niveaux as $niveau) {
+            //     $repEc[$i] = $repartition_ec_repository->find_by_s_n_ec($semestres[$i]->getId(), $niveau->getId(), $ec->getId());
+            //     $repEc[$i] = $repEc[$i][0];
+            //     $repEc[$i]->setEc($ec);
+            //     $repEc[$i]->setNiveaux($niveau);
+            //     $repEc[$i]->setSemestre($semestres[$i]);
+            //     $em->persist($repEc[$i]);
+            //     $i = $i + 1;
+            // }
 
 
             $em->persist($ec);

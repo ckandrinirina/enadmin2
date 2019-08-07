@@ -222,7 +222,7 @@ class EmploiDuTempsController extends AbstractController
         ]);
     }
     /**
-     * @Route("note/delete/{niveau}/{jour}/{heure}/{semestre}/{etId}", name="deletEt",options = { "expose" = true })
+     * @Route("emploi-du-temps/delete/{niveau}/{jour}/{heure}/{semestre}/{etId}", name="deletEt",options = { "expose" = true })
      */
     public function delete($niveau, $jour, $heure, $semestre, $etId)
     {

@@ -100,7 +100,10 @@ class ScolariteController extends AbstractController
         $scolarite = $scolarite_repository->findByEtudiant($etudiant);
 
         $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant);
-        $scolarite_actuel = $scolarite_actuel['0'];
+        if($scolarite_actuel != null )
+            $scolarite_actuel = $scolarite_actuel['0'];
+        else 
+            $scolarite_actuel = null;
 
         return $this->render('scolarite/index.html.twig', [
             'status' => $status,

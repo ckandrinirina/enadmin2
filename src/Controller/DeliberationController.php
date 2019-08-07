@@ -57,7 +57,7 @@ class DeliberationController extends AbstractController
 
 
     /**
-     * @Route("/change-salle/{id}", name="admis")
+     * @Route("/change_admis/{id}", name="admis")
      * 
      */
     public function change_niveaux(Etudiant $etudiant, Request $request)

@@ -109,30 +109,42 @@
                                                                                     {% elseif value == 'pas de note' %}
                                                                                         {% set countAdd = countAdd + 1 %}
                                                                                         <p class="text-red" id="note{{i}}{{j}}">{{ value }}
-                                                                                            <button class="btn btn-social-icon btn-dropbox pull-right" href="{{ path('note_ajoute_formulaire',{ 'etudiant':idEtOrd[i], 'ec':idEcOrd[j], 'semestre':s, 'niveau':n, 'au':auid, 'ratrapage':rat}) }}" class="pull-right noteAdd" id="a{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-i="{{i}}" data-j="{{j}}">
-                                                                                                <span class="fa fa-plus"></span>
-                                                                                            </button>
+                                                                                            {% for e in ec %}
+                                                                                                {% if e.id == idEcOrd[j] %}
+                                                                                                    <button class="btn btn-social-icon btn-dropbox pull-right" href="{{ path('note_ajoute_formulaire',{ 'etudiant':idEtOrd[i], 'ec':idEcOrd[j], 'semestre':s, 'niveau':n, 'au':auid, 'ratrapage':rat}) }}" class="pull-right noteAdd" id="a{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-i="{{i}}" data-j="{{j}}">
+                                                                                                        <span class="fa fa-plus"></span>
+                                                                                                    </button>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
                                                                                         </p>
                                                                                     {% elseif value < 10 %}
                                                                                         {% set countDel = countDel + 1 %}
                                                                                         <p class="text-red" id="note{{i}}{{j}}">{{ value }}
-                                                                                            <button href="#" class="pull-right noteDel btn btn-social-icon btn-google" id="d{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
-                                                                                                <span class="fa fa-remove"></span>
-                                                                                            </button>
+                                                                                            {% for e in ec %}
+                                                                                                {% if e.id == idEcOrd[j] %}
+                                                                                                    <button href="#" class="pull-right noteDel btn btn-social-icon btn-google" id="d{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
+                                                                                                        <span class="fa fa-remove"></span>
+                                                                                                    </button>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
                                                                                             {# <button href="#" class="pull-right noteEdit" id="e{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
-                                                                                                <span class="fa fa-pencil"></span>
-                                                                                            </button> #}
+                                                                                                                                                                                                                                                                                        <span class="fa fa-pencil"></span>
+                                                                                                                                                                                                                                                                                    </button> #}
 
                                                                                         </p>
                                                                                     {% else %}
                                                                                         {% set countDel = countDel + 1 %}
                                                                                         <p id="note{{i}}{{j}}">{{ value }}
-                                                                                            <button href="#" class="pull-right noteDel btn btn-social-icon btn-google" id="d{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
-                                                                                                <span class="fa fa-remove"></span>
-                                                                                            </button>
+                                                                                            {% for e in ec %}
+                                                                                                {% if e.id == idEcOrd[j] %}
+                                                                                                    <button href="#" class="pull-right noteDel btn btn-social-icon btn-google" id="d{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
+                                                                                                        <span class="fa fa-remove"></span>
+                                                                                                    </button>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
                                                                                             {# <button href="#" class="pull-right noteEdit" id="e{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
-                                                                                                <span class="fa fa-pencil"></span>
-                                                                                            </button> #}
+                                                                                                                                                                                                                                                                                        <span class="fa fa-pencil"></span>
+                                                                                                                                                                                                                                                                                    </button> #}
 
                                                                                         </p>
                                                                                     {% endif %}
@@ -141,7 +153,7 @@
                                                                                     $(function () {
                                                                                         let i = {{ i }}
                                                                                         let j = {{ j }}
-                                                                                        $('#a' + i + j).on('click', function (event) {
+                                                                                        $('#a'+i+j).on('click', function (event) {
                                                                                             let id = document.getElementById($(this).attr('id'))
                                                                                             event.preventDefault()
                                                                                             idA = '#' + id.dataset.id
@@ -165,7 +177,7 @@
                                                                                             }))
                                                                                         })
 
-                                                                                        $('#d' + i + j).on('click', function (event) {
+                                                                                        $('#d'+i+j).on('click', function (event) {
                                                                                             let id = document.getElementById($(this).attr('id'))
                                                                                             event.preventDefault()
                                                                                             idA = '#' + id.dataset.id
@@ -180,7 +192,7 @@
                                                                                             type = id.dataset.type
                                                                                             valeur = id.dataset.valeur
 
-                                                                                            $(idA).load(Routing.generate('confirmeSupression', {
+                                                                                            $(idA).load(Routing.generate('confirmeSupressionNote', {
                                                                                                 etudiant: etudiant,
                                                                                                 ec: ec,
                                                                                                 semestre: semestre,
@@ -258,6 +270,6 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {#<script src="{{asset('assets/js/noteAdd.js')}}"></script>
-                                <script src="{{asset('assets/js/noteDel.js')}}"></script>
-                                <script src="{{asset('assets/js/noteEdit.js')}}"></script>#}
+                                        <script src="{{asset('assets/js/noteDel.js')}}"></script>
+                                        <script src="{{asset('assets/js/noteEdit.js')}}"></script>#}
 {% endblock %}

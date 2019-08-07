@@ -27,7 +27,14 @@ class ECRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-
+    public function findEcByEnseignant($id_enseignant)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.enseignant','ens','WITH','ens.id = :id_enseignant')
+            ->setParameter('id_enseignant',$id_enseignant)
+            ->getQuery()
+            ->getResult();
+    }
 
 
 /*    public function findByPag()
