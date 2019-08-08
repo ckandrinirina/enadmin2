@@ -29,10 +29,10 @@ class EnseignantAddType extends AbstractType
                 ])
             ->add('dateNaissance',BirthdayType::class)
             ->add('lieuxNaissance',TextType::class,[
-                'label'=>'Lieux de naissance'
+                'label'=>'Lieu de naissance'
                 ])
             ->add('photo',FileType::class, [
-                'label' => 'Ajoute une image',
+                'label' => 'Ajouter une image',
                 'data_class' => null,
                 ])
             ->add('type',EntityType::class,[

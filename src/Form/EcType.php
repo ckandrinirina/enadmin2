@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 class EcType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -27,11 +27,18 @@ class EcType extends AbstractType
                 'class' => UC::class,
                 'choice_label' => function (UC $UC) {
                     return $UC->getNom();
-                }
+                },
+                'label' => 'UE'
             ])
-            ->add('coefficient')
-            ->add('code')
-            ->add('credit')
+            ->add('coefficient',TextType::class,[
+                'label' => 'coefficient'
+            ])
+            ->add('code',TextType::class,[
+                'label' => 'code matière'
+            ])
+            ->add('credit',TextType::class,[
+                'label' => 'crédit'
+            ])
             // ->add('repartitionECs', CollectionType::class, [
             //     'entry_type' => RepartitionECType::class,
             //     'allow_add' => true,

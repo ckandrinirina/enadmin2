@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LoginTypeRepository")
+ * @ORM\Table(name="type_acces")
  */
 class LoginType
 {

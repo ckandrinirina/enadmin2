@@ -9,6 +9,7 @@ use PhpParser\Node\Expr\Cast\String_;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ECRepository")
+ * @ORM\Table(name="ec")
  */
 class EC
 {

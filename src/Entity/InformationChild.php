@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InformationChildRepository")
+ * @ORM\Table(name="information_fils")
  */
 class InformationChild
 {

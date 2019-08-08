@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FicheIndividuelRepository")
+ * @ORM\Table(name="fiche_individuel")
  */
 class FicheIndividuel
 {

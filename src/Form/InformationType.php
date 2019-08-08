@@ -16,7 +16,7 @@ class InformationType extends AbstractType
     {
         $builder
             ->add('contenu',TextType::class,[
-                'label'=>'Contenu'
+                'label'=>false
                 ])
             ->add('niveaux',EntityType::class,[
                 'class' => Niveaux::class,
@@ -24,7 +24,7 @@ class InformationType extends AbstractType
                 {
                     return $niveaux->getNiveau();
                 },
-                'label'=>'Destination',
+                'label'=>'Groupe déstinataire',
                 'multiple'=>true,
             ])
         ;

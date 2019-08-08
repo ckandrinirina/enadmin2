@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EnseignantRepository")
+ * * @ORM\Table(name="enseignant")
  */
 class Enseignant
 {

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeParcoursRepository")
+ * @ORM\Table(name="type_parcour")
  */
 class TypeParcours
 {

@@ -23,7 +23,7 @@ class UCType extends AbstractType
                 'label' => 'nom'
             ])
             ->add('coefficient',TextType::class,[
-                'label' => 'coéfficient'
+                'label' => 'coefficient'
             ])
             ->add('credit',IntegerType::class,[
                 'label' => 'crédit'
@@ -35,16 +35,16 @@ class UCType extends AbstractType
                 },
                 'label'=>'niveaux',
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
             ])
             ->add('semestres',EntityType::class , [
                 'class'=>Semestre::class,
                 'choice_label' => function (Semestre $semestre){
                     return $semestre->getSemestre();
                 },
-                'label'=>'semestre',
+                'label'=>'semestres',
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
             ]);
         ;
     }
