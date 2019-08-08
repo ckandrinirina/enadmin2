@@ -181,8 +181,6 @@ class NoteAjouteController extends AbstractController
                 $note->setNoteUc($note_uc['0']);
                 $em->persist($note_uc['0']);
             }
-
-            dump($note);
             $em->persist($note);
             $em->flush();
         }

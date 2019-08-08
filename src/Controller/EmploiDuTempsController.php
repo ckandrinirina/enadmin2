@@ -171,7 +171,6 @@ class EmploiDuTempsController extends AbstractController
         $sem = $semestreRepository->find($semestre);
 
         $ec = $repartionRepository->findByNiveauxBySemestre($niveau, $semestre);
-        dump($ec);
         $i = 0;
 
         foreach ($ec as $e) {

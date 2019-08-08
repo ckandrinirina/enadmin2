@@ -64,7 +64,6 @@ class DeliberationController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $result = $request->request->all();
-        dump($result);
         $result = $result['niveaux_choice'];
         $niveaux_repository = $em->getRepository(Niveaux::class);
         if ($result['_token']) {
