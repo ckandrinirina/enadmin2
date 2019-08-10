@@ -161,6 +161,12 @@ class EtudiantController extends AbstractController
     public function edit(Request $request, Etudiant $etudiant, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($this->getUser()->getEtudiant() != null)
+        {
+            if($this->getUser()->getEtudiant()->getId() != $etudiant->getId())
+                return $this->redirectToRoute('accueil');
+        }
+
         if ($etudiant == null)
             return $this->redirectToRoute('accueil');
 

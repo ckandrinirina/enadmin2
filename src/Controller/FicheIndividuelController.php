@@ -10,11 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\NoteUc;
 use App\Entity\AnneUniversitaire;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class FicheIndividuelController extends AbstractController
 {
     /**
      * @Route("/fiche/individuel/{etudiant}/{type}/{niveaux}", name="fiche_individuel")
+     * 
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index($etudiant, $type, $niveaux)
     {
@@ -101,6 +106,11 @@ class FicheIndividuelController extends AbstractController
      */
     public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage)
     {
+        if($this->getUser()->getEtudiant() != null)
+        {
+            if($this->getUser()->getEtudiant()->getId() != $etudiant)
+                return $this->redirectToRoute('accueil');
+        }
         $em = $this->getDoctrine()->getManager();
         $status = 'fiche de note';
         $etudiant_repository = $em->getRepository(Etudiant::class);
@@ -153,6 +163,10 @@ class FicheIndividuelController extends AbstractController
 
     /**
      * @Route("/fiche-note-pdf/{etudiant}/{niveaux}/{semestre}/{au}{ratrapage}", name="fiche_note_pdf")
+     * 
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage,$au)
     {

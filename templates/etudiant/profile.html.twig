@@ -28,7 +28,7 @@
                     <h3 class="profile-username text-center">{{ etudiant.nom}}
                         {{ etudiant.prenom }}</h3>
                     <p class="text-muted text-center">
-                        <button class="btn bg-purple margin" type="button">{{ etudiant.niveaux.niveau }}</button>
+                        <button class="btn bg-purple margin" type="button">{{ etudiant.niveaux.niveau }}  (Niveau en cours)</button>
                     </p>
                     <div class="row">
                         <div class="col-md-6">
@@ -62,8 +62,12 @@
                         <div class="col-md-6">
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Contact :</b>
-                                    <p class="pull-right">{{ etudiant.contact }}</p>
+                                    <b>Téléphone :</b>
+                                    <p class="pull-right">{{ etudiant.contact }},{{ etudiant.contact2 }},{{etudiant.contact3}}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Adresse E-mail :</b>
+                                    <p class="pull-right">{{ etudiant.mail }}</p>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Adresse</b>
@@ -94,20 +98,20 @@
     </div>
     <div class="row">
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
-        {% elseif app.user.etudiant.id == etudiant.id %}
-            <div class="col-md-2">
-                <a href="{{path('etudiant_edit',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-bitbucket">
-                    <i class="fa fa-edit"></i>Modifier profile
-                </a>
-            </div>
+            {% elseif app.user.etudiant.id == etudiant.id %}
+                <div class="col-md-2">
+                    <a href="{{path('etudiant_edit',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                        <i class="fa fa-edit"></i>Modifier profile
+                    </a>
+                </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
-        {% elseif app.user.etudiant.id == etudiant.id %}
-            <div class="col-md-2">
-                <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
-                    <i class="fa fa-lock"></i>Modifier l'accès
-                </a>
-            </div>
+            {% elseif app.user.etudiant.id == etudiant.id %}
+                <div class="col-md-2">
+                    <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
+                        <i class="fa fa-lock"></i>Modifier l'accès
+                    </a>
+                </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
             <div class="col-md-2">
@@ -119,6 +123,19 @@
             <div class="col-md-2">
                 <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
                     <i class="fa fa-sticky-note"></i>Scolarité
+                </a>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
+            <div class="col-md-2">
+                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-flickr">
+                    <i class="glyphicon glyphicon-folder-open"></i>Fiche de note
+                </a>
+            </div>
+        {% elseif app.user.etudiant.id == etudiant.id %}
+            <div class="col-md-2">
+                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-flickr">
+                    <i class="glyphicon glyphicon-folder-open"></i>Fiche de note
                 </a>
             </div>
         {% endif %}
@@ -136,8 +153,8 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {#    <script>
-                    $(function () {
-                        $('#example1').DataTable()
-                    })
-                </script>#}
+                        $(function () {
+                            $('#example1').DataTable()
+                        })
+                    </script>#}
 {% endblock %}

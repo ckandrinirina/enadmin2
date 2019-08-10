@@ -71,6 +71,17 @@
                 </ul>
             </li>
 
+            <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
+                <a href="#"><i class="fa fa-calendar-o"></i> <span>Emploi du temps</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTemps')) }}
+                </ul>
+            </li>
+
             {# <li class="{% if status == "listeEc" %} {{ "active" }} {% endif %}"><a href="{{ path('e_c') }}"><i class="fa  fa-folder-open-o"></i> <span>Liste des EC par enseignant</span></a></li> #}
             {# <li class="{% if status == "UCEC" %} {{ "active" }} {% endif %}"><a href="{{ path('ucList') }}"><i class="fa  fa-folder-open-o"></i> <span>Liste des EC par UE</span></a></li> #}
 
@@ -95,17 +106,6 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::repartition')) }}
                 </ul>
             </li> #}
-            
-            <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-calendar-o"></i> <span>Emploi du temps</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    {{ render(controller('App\\Controller\\TypeParcoursController::emploiDuTemps')) }}
-                </ul>
-            </li>
             
             {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "notelist" %} {{ "active" }} {% endif %}">

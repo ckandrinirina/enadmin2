@@ -76,7 +76,11 @@ class NoteAjouteController extends AbstractController
         }
 
         $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
-        $ec = $ecRepository->findEcByEnseignant($this->getUser()->getEnseignant()->getId());
+        if($this->getUser()->getEnseignant() != null )
+            $ec = $ecRepository->findEcByEnseignant($this->getUser()->getEnseignant()->getId());
+        else
+            $ec = null;
+
 
         return $this->render(
             'note_ajoute/ajoute.html.twig',

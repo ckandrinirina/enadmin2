@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouté enseignant{% endblock %}
+{% block title %}Ajouté enseignant
+{% endblock %}
 
 {% block insideHeader %}
     <section class="content-header">
@@ -8,7 +9,10 @@
             Ajouté enseignant
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Ajouté enseignant</a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Ajouté enseignant</a>
+            </li>
         </ol>
     </section>
 {% endblock %}
@@ -36,6 +40,15 @@
                     {{ form_row(form.contact) }}
                 </div>
                 <div class="form-group">
+                    {{ form_row(form.contact2) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.contact3) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.mail) }}
+                </div>
+                <div class="form-group">
                     {{ form_row(form.dateNaissance) }}
                 </div>
                 <div class="form-group">
@@ -49,30 +62,30 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right">Valider</button>
+                <button class="btn btn-primary pull-right" type="submit">Valider</button>
             </div>
             {{ form_end(form) }}
         </div>
     </div>
     {#{{ form_start(form,{'attr':{'novalidate' : 'novalidate'}}) }}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.prenom) }}
-        {{ form_row(form.photo) }}
-        {{ form_row(form.pere) }}
-        {{ form_row(form.professionPere) }}
-        {{ form_row(form.mere) }}
-        {{ form_row(form.professionMere) }}
-        {{ form_row(form.contact) }}
-        {{ form_row(form.date_naissance) }}
-        {{ form_row(form.lieuxNaissance) }}
-        {{ form_row(form.adresse) }}
-        {{ form_row(form.anneEntre) }}
-        {{ form_row(form.sexe) }}
-        {{ form_row(form.niveaux) }}
-        {{ form_row(form.anneUniversitaire) }}
-
-        <button type="submit" class="btn btn-primary">Ajouté</button>
-    {{ form_end(form) }}#}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.prenom) }}
+            {{ form_row(form.photo) }}
+            {{ form_row(form.pere) }}
+            {{ form_row(form.professionPere) }}
+            {{ form_row(form.mere) }}
+            {{ form_row(form.professionMere) }}
+            {{ form_row(form.contact) }}
+            {{ form_row(form.date_naissance) }}
+            {{ form_row(form.lieuxNaissance) }}
+            {{ form_row(form.adresse) }}
+            {{ form_row(form.anneEntre) }}
+            {{ form_row(form.sexe) }}
+            {{ form_row(form.niveaux) }}
+            {{ form_row(form.anneUniversitaire) }}
+    
+            <button type="submit" class="btn btn-primary">Ajouté</button>
+        {{ form_end(form) }}#}
 {% endblock %}
 
 {% block javascripts %}

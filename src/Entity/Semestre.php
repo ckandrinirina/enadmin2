@@ -70,6 +70,11 @@ class Semestre
      */
     private $salles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Moyenne", mappedBy="semestre")
+     */
+    private $moyennes;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
@@ -80,6 +85,7 @@ class Semestre
         $this->noteUcs = new ArrayCollection();
         $this->emploiDuTemps = new ArrayCollection();
         $this->salles = new ArrayCollection();
+        $this->moyennes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -432,6 +438,37 @@ class Semestre
             // set the owning side to null (unless already changed)
             if ($salle->getSemestre() === $this) {
                 $salle->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Moyenne[]
+     */
+    public function getMoyennes(): Collection
+    {
+        return $this->moyennes;
+    }
+
+    public function addMoyenne(Moyenne $moyenne): self
+    {
+        if (!$this->moyennes->contains($moyenne)) {
+            $this->moyennes[] = $moyenne;
+            $moyenne->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMoyenne(Moyenne $moyenne): self
+    {
+        if ($this->moyennes->contains($moyenne)) {
+            $this->moyennes->removeElement($moyenne);
+            // set the owning side to null (unless already changed)
+            if ($moyenne->getSemestre() === $this) {
+                $moyenne->setSemestre(null);
             }
         }
 

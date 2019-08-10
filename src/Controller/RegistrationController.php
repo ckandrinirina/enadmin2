@@ -79,6 +79,11 @@ class RegistrationController extends AbstractController
      */
     public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, User $user): Response
     {
+        if($this->getUser()->getEtudiant() != null)
+        {
+            if($this->getUser()->getId() != $user->getId())
+                return $this->redirectToRoute('accueil');
+        }
         $status = "register";
         $form = $this->createForm(RegistrationEditType::class, $user);
         $form->handleRequest($request);

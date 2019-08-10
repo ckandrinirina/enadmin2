@@ -144,6 +144,26 @@ class Etudiant
      */
     private $scolarites;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact3;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Moyenne", mappedBy="etudiant")
+     */
+    private $moyennes;
+
 
     public function __construct()
     {
@@ -152,6 +172,7 @@ class Etudiant
         $this->noteUcs = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->information = new ArrayCollection();
+        $this->moyennes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -493,6 +514,73 @@ class Etudiant
             // set the owning side to null (unless already changed)
             if ($scolarite->getEtudiant() === $this) {
                 $scolarite->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getContact2(): ?string
+    {
+        return $this->contact2;
+    }
+
+    public function setContact2(?string $contact2): self
+    {
+        $this->contact2 = $contact2;
+
+        return $this;
+    }
+
+    public function getContact3(): ?string
+    {
+        return $this->contact3;
+    }
+
+    public function setContact3(?string $contact3): self
+    {
+        $this->contact3 = $contact3;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Moyenne[]
+     */
+    public function getMoyennes(): Collection
+    {
+        return $this->moyennes;
+    }
+
+    public function addMoyenne(Moyenne $moyenne): self
+    {
+        if (!$this->moyennes->contains($moyenne)) {
+            $this->moyennes[] = $moyenne;
+            $moyenne->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMoyenne(Moyenne $moyenne): self
+    {
+        if ($this->moyennes->contains($moyenne)) {
+            $this->moyennes->removeElement($moyenne);
+            // set the owning side to null (unless already changed)
+            if ($moyenne->getEtudiant() === $this) {
+                $moyenne->setEtudiant(null);
             }
         }
 

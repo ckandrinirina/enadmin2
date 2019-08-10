@@ -42,17 +42,39 @@
                                     <b>Type :</b>
                                     <p class="pull-right">{{ enseignant.type.type }}</p>
                                 </li>
+                                <li class="list-group-item">
+                                    <b>Imatriculation :</b>
+                                    <p class="pull-right">{{ enseignant.matricule }}</p>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Contact :</b>
-                                    <p class="pull-right">{{ enseignant.contact }}</p>
+                                    <b>Téléphone :</b>
+                                    <p class="pull-right">{{ enseignant.contact }},{{ enseignant.contact2 }},{{enseignant.contact3}}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Adresse</b>
+                                    <b>Adresse E-mail :</b>
+                                    <p class="pull-right">{{ enseignant.mail }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Adresse :</b>
                                     <p class="pull-right">{{ enseignant.adresse }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Adresse :</b>
+                                    <p class="pull-right">
+                                        {% set i = 0 %}
+                                        {% set limit = enseignant.eCs | length %}
+                                        {% for ec in enseignant.eCs %}
+                                            {{ ec.nom | upper }}
+                                            {% if i + 1 < limit  %}
+                                                ,
+                                            {% endif %}
+                                            {% set i = i + 1 %}
+                                        {% endfor %}
+                                    </p>
                                 </li>
                             </ul>
                         </div>
@@ -71,43 +93,13 @@
                 </div>
         {% endif %}
         {% if app.user.enseignant == null %}
-        {% elseif app.user.enseignant.id == enseignant.id %}
+            {% elseif app.user.enseignant.id == enseignant.id %}
                 <div class="col-md-2">
                     <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
                         <i class="fa fa-lock"></i>Modifier l'accès
                     </a>
                 </div>
         {% endif %}
-        <div class="col-md-3">
-            <a class="btn btn-block btn-social btn-flickr" data-target="#modal-default" data-toggle="modal">
-                <i class="fa fa-file-image-o"></i>
-                Liste de matière enseigné
-            </a>
-        </div>
-        <div class="modal fade" id="modal-default">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title">Liste des matière enseigné</h4>
-                    </div>
-                    <div class="modal-body">
-                        {% set i = 0 %}
-                        {% set limit = enseignant.eCs | length %}
-                        {% for ec in enseignant.eCs %}
-                            {{ ec.nom | upper }}
-                            {% if i + 1 < limit  %}<br/>
-                            {% endif %}
-                            {% set i = i + 1 %}
-                        {% endfor %}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-default pull-right" data-dismiss="modal" type="button">Fermer</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}
@@ -123,8 +115,8 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {#    <script>
-                                    $(function () {
-                                        $('#example1').DataTable()
-                                    })
-                                </script>#}
+                                            $(function () {
+                                                $('#example1').DataTable()
+                                            })
+                                        </script>#}
 {% endblock %}

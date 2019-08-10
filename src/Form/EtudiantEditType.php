@@ -17,61 +17,72 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Doctrine\DBAL\Types\StringType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class EtudiantEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',TextType::class,[
-                'label'=>'Nom'
-                ])
-            ->add('prenom',TextType::class,[
-                'label'=>'Prénom(s)'
-                ])
-            ->add('photo',FileType::class, [
-                'label' => 'Ajoute une image',
+            ->add('nom', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom(s)'
+            ])
+            ->add('photo', FileType::class, [
+                'label' => 'Ajouter une image',
                 'data_class' => null,
-                ])
-            ->add('pere',TextType::class,[
-                'label'=>'Pere'
-                ])
-            ->add('professionPere',TextType::class,[
-                'label'=>'Profession du pere'
-                ])
-            ->add('mere',TextType::class,[
-                'label'=>'mere'
-                ])
-            ->add('professionMere',TextType::class,[
-                'label'=>'Profession du mere'
-                ])
-            ->add('contact',TelType::class)
-            ->add('date_naissance',BirthdayType::class,[
-                'label'=>'Date de Naissance'
             ])
-            ->add('lieuxNaissance',TextType::class,[
-                'label'=>'Lieux de naissance'
-                ])
-            ->add('adresse',TextType::class,[
-                'label'=>'Adresse'
-                ])
-            ->add('anneEntre',IntegerType::class,[
-                'label'=>'Anné d\'entré à l\'université '
+            ->add('pere', TextType::class, [
+                'label' => 'Père'
             ])
-            ->add('parcour',EntityType::class,[
+            ->add('professionPere', TextType::class, [
+                'label' => 'Profession du pere'
+            ])
+            ->add('mere', TextType::class, [
+                'label' => 'Mère'
+            ])
+            ->add('professionMere', TextType::class, [
+                'label' => 'Profession du mere'
+            ])
+            ->add('contact', TelType::class, [
+                'label' => 'Numero de téléphone primaire'
+            ])
+            ->add('contact2', TelType::class, [
+                'label' => 'Autre numero de téléphone'
+            ])
+            ->add('contact3', TelType::class, [
+                'label' => 'Autre numero de téléphone'
+            ])
+            ->add('mail', EmailType::class, [
+                'label' => 'Adresse E-mail'
+            ])
+            ->add('date_naissance', BirthdayType::class, [
+                'label' => 'Date de Naissance'
+            ])
+            ->add('lieuxNaissance', TextType::class, [
+                'label' => 'Lieu de naissance'
+            ])
+            ->add('adresse', TextType::class, [
+                'label' => 'Adresse'
+            ])
+            ->add('anneEntre', IntegerType::class, [
+                'label' => 'Anné d\'entré à l\'université '
+            ])
+            ->add('parcour', EntityType::class, [
                 'class' => TypeParcours::class,
-                'choice_label' => function(TypeParcours $typeParcours)
-                {
+                'choice_label' => function (TypeParcours $typeParcours) {
                     return $typeParcours->getType();
                 },
-                'label'=>'Type de parcour'
+                'label' => 'Type de parcour'
             ])
-            ->add('sexe',EntityType::class , [
-                'class'=>Sexe::class,
-                'choice_label' => function (Sexe $sexe){
+            ->add('sexe', EntityType::class, [
+                'class' => Sexe::class,
+                'choice_label' => function (Sexe $sexe) {
                     return $sexe->getSexe();
                 },
-                'label'=>'sexe'
+                'label' => 'sexe'
             ])
             // ->add('niveaux',EntityType::class , [
             //     'class'=>Niveaux::class,
@@ -88,8 +99,7 @@ class EtudiantEditType extends AbstractType
             //     'label'=>'année universitaire'
             // ])
             /*->add('scolarite')
-            ->add('user')*/
-        ;
+            ->add('user')*/;
     }
 
     public function configureOptions(OptionsResolver $resolver)

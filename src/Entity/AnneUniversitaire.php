@@ -44,12 +44,18 @@ class AnneUniversitaire
      */
     private $noteUcs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Moyenne", mappedBy="anneUniversitaire")
+     */
+    private $moyennes;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->ficheIndividuels = new ArrayCollection();
         $this->noteUcs = new ArrayCollection();
+        $this->moyennes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,6 +193,37 @@ class AnneUniversitaire
             // set the owning side to null (unless already changed)
             if ($noteUc->getAnneUniversitaire() === $this) {
                 $noteUc->setAnneUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Moyenne[]
+     */
+    public function getMoyennes(): Collection
+    {
+        return $this->moyennes;
+    }
+
+    public function addMoyenne(Moyenne $moyenne): self
+    {
+        if (!$this->moyennes->contains($moyenne)) {
+            $this->moyennes[] = $moyenne;
+            $moyenne->setAnneUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMoyenne(Moyenne $moyenne): self
+    {
+        if ($this->moyennes->contains($moyenne)) {
+            $this->moyennes->removeElement($moyenne);
+            // set the owning side to null (unless already changed)
+            if ($moyenne->getAnneUniversitaire() === $this) {
+                $moyenne->setAnneUniversitaire(null);
             }
         }
 

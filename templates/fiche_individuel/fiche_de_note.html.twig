@@ -7,15 +7,8 @@
     <section class="content-header">
         <h1>
             Fiche de note
-            <span type="button" class="btn btn-info">{{ auNow.anneUniversitaire }}</span>
+            <span class="btn btn-info" type="button">{{ auNow.anneUniversitaire }}</span>
         </h1>
-        <ol class="breadcrumb">
-            <li>
-                <a href="#">
-                    <span type="button" class="btn btn-info">{{ auNow.anneUniversitaire }}</span>
-            </li>
-            {# <li class="active">{{ parcour.type }}</li> #}
-        </ol>
     </section>
 {% endblock %}
 
@@ -30,10 +23,10 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {# // <script>
-                //     $(function () {
-                //         $('#example1').DataTable()
-                //     })
-                // </script> #}
+                        //     $(function () {
+                        //         $('#example1').DataTable()
+                        //     })
+                        // </script> #}
 {% endblock %}
 
 {% block body %}
@@ -70,10 +63,21 @@
                                                 <div class="box">
                                                     <div class="box-header">
                                                         <h3 class="box-title">Listes des notes par niveaux   :</h3>
-                                                        <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'au':auid,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
-                                                            <i class="fa fa-file-pdf-o"></i>
-                                                            Générer un PDF
-                                                        </a>
+                                                        {% if app.user.etudiant == null %}
+                                                            <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'au':auid,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
+                                                                <i class="fa fa-file-pdf-o"></i>
+                                                                Générer un PDF
+                                                            </a>
+                                                        {% endif %}
+                                                        {% if app.user.etudiant != null %}
+                                                        <div class="alert alert-warning alert-dismissible">
+                                                            <h4>
+                                                                <i class="icon fa fa-warning"></i>
+                                                                Attention!
+                                                            </h4>
+                                                            Cette fiche est présentée à titre d'information,les notes officielle sont delivrées par le service de scolarité de l'ESPA
+                                                        </div>
+                                                        {% endif %}
                                                         <div class="btn-group">
                                                             <button class="btn btn-info" type="button">
                                                                 {% if rat == 0 %}

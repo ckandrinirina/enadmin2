@@ -62,7 +62,7 @@ class Enseignant
     private $login;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , nullable=true)
      * 
      * @Assert\NotBlank(message="Atention inserer une image uniquemement.")
      * @Assert\File(mimeTypes={ "image/jpeg" })
@@ -78,6 +78,26 @@ class Enseignant
      * @ORM\OneToOne(targetEntity="App\Entity\Parametrage", mappedBy="chefmention", cascade={"persist", "remove"})
      */
     private $parametrage;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact3;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mail;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $matricule;
 
     public function __construct()
     {
@@ -242,6 +262,54 @@ class Enseignant
         if ($newChefmention !== $parametrage->getChefmention()) {
             $parametrage->setChefmention($newChefmention);
         }
+
+        return $this;
+    }
+
+    public function getContact2(): ?string
+    {
+        return $this->contact2;
+    }
+
+    public function setContact2(?string $contact2): self
+    {
+        $this->contact2 = $contact2;
+
+        return $this;
+    }
+
+    public function getContact3(): ?string
+    {
+        return $this->contact3;
+    }
+
+    public function setContact3(?string $contact3): self
+    {
+        $this->contact3 = $contact3;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getMatricule(): ?string
+    {
+        return $this->matricule;
+    }
+
+    public function setMatricule(?string $matricule): self
+    {
+        $this->matricule = $matricule;
 
         return $this;
     }

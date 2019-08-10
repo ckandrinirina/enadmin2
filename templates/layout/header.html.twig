@@ -133,11 +133,11 @@
                         <!-- The user image in the navbar-->
                         {% if is_granted('ROLE_ADMIN') %}
                             {% if app.user.enseignant != NULL %}
-                                <img src="{{ asset(app.user.enseignant.photo) }}" class="" alt="User Image" style="width:50px;height:auto">
+                                <img src="{{ asset(app.user.enseignant.photo) }}" class="" alt="User Image" style="width:auto;height:20px">
                             {% endif %}
                         {% elseif is_granted('ROLE_USER') %}
                             {% if app.user.etudiant != NULL %}
-                                <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image" style="width:50px;height:auto">
+                                <img src="{{ asset(app.user.etudiant.photo) }}" class="" alt="User Image" style="width:auto;height:20px">
                             {% endif %}
                         {% endif %}
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->

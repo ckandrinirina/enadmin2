@@ -85,6 +85,11 @@ class Niveaux
      */
     private $informations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Moyenne", mappedBy="niveau")
+     */
+    private $moyennes;
+
 
     public function __construct()
     {
@@ -97,6 +102,7 @@ class Niveaux
         $this->noteUcs = new ArrayCollection();
         $this->salles = new ArrayCollection();
         $this->informations = new ArrayCollection();
+        $this->moyennes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -452,6 +458,37 @@ class Niveaux
         if ($this->informations->contains($information)) {
             $this->informations->removeElement($information);
             $information->removeNiveau($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Moyenne[]
+     */
+    public function getMoyennes(): Collection
+    {
+        return $this->moyennes;
+    }
+
+    public function addMoyenne(Moyenne $moyenne): self
+    {
+        if (!$this->moyennes->contains($moyenne)) {
+            $this->moyennes[] = $moyenne;
+            $moyenne->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMoyenne(Moyenne $moyenne): self
+    {
+        if ($this->moyennes->contains($moyenne)) {
+            $this->moyennes->removeElement($moyenne);
+            // set the owning side to null (unless already changed)
+            if ($moyenne->getNiveau() === $this) {
+                $moyenne->setNiveau(null);
+            }
         }
 
         return $this;

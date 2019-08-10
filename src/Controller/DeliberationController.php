@@ -59,6 +59,10 @@ class DeliberationController extends AbstractController
     /**
      * @Route("/change_admis/{id}", name="admis")
      * 
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * 
+     *  @IsGranted("ROLE_SUPER_ADMIN")
+     * 
      */
     public function change_niveaux(Etudiant $etudiant, Request $request)
     {
