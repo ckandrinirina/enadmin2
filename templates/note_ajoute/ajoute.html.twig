@@ -83,7 +83,6 @@
                                                     <!-- /.box-header -->
                                                     <div class="box-body">
                                                         <table class="table table-bordered table-striped" id="example1">
-                                                            {% if matriceNote != null %}
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Etudiant/EC</th>
@@ -237,9 +236,6 @@
                                                                         {% set i = i+1 %}
                                                                     {% endfor %}
                                                                     <div id="idCount" data-countadd="{{countAdd}}" data-countdel="{{countDel}}"></div>
-                                                                {% else %}
-                                                                    <h1>Non disponible pour cette semestre</h1>
-                                                                {% endif %}
                                                             </tbody>
                                                         </table>
                                                     </div>

@@ -19,7 +19,22 @@ class NoteUcRepository extends ServiceEntityRepository
         parent::__construct($registry, NoteUc::class);
     }
 
-    public function find_by_uc_by_ratrapage_by_etudiant($uc,$ratrapage,$etudiant)
+    // public function find_by_uc_by_ratrapage_by_etudiant($uc,$ratrapage,$etudiant)
+    // {
+    //     return $this->createQueryBuilder('n')
+    //         ->innerJoin('n.uc','u','WITH','u.id = :val1')
+    //         ->setParameter('val1',$uc)
+    //         ->addSelect('u')
+    //         ->innerJoin('n.etudiant','e','WITH','e.id = :val3')
+    //         ->setParameter('val3',$etudiant)
+    //         ->addSelect('e')
+    //         ->where('n.isRatarapage = :val2')
+    //         ->setParameter('val2',$ratrapage)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+    public function find_by_uc_by_ratrapage_by_etudiant($uc,$etudiant)
     {
         return $this->createQueryBuilder('n')
             ->innerJoin('n.uc','u','WITH','u.id = :val1')
@@ -28,8 +43,6 @@ class NoteUcRepository extends ServiceEntityRepository
             ->innerJoin('n.etudiant','e','WITH','e.id = :val3')
             ->setParameter('val3',$etudiant)
             ->addSelect('e')
-            ->where('n.isRatarapage = :val2')
-            ->setParameter('val2',$ratrapage)
             ->getQuery()
             ->getResult();
     }
@@ -64,6 +77,7 @@ class NoteUcRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();        
     }
+
 
     // /**
     //  * @return NoteUc[] Returns an array of NoteUc objects

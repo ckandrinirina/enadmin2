@@ -11,15 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\NoteUc;
 use App\Entity\AnneUniversitaire;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Scolarite;
 
 class FicheIndividuelController extends AbstractController
 {
     /**
      * @Route("/fiche/individuel/{etudiant}/{type}/{niveaux}", name="fiche_individuel")
      * 
-     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * Require ROLE_ADMIN for only this controller method.
      * 
-     *  @IsGranted("ROLE_SUPER_ADMIN")
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function index($etudiant, $type, $niveaux)
     {
@@ -121,7 +122,9 @@ class FicheIndividuelController extends AbstractController
 
         $allAu = $auRepository->findAllByOrder();
         $auNow = $auRepository->find($au);
+
         $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage ,$au);
+
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
@@ -166,7 +169,7 @@ class FicheIndividuelController extends AbstractController
      * 
      * Require ROLE_SUPER_ADMIN for only this controller method.
      * 
-     *  @IsGranted("ROLE_SUPER_ADMIN")
+     *  @IsGranted("ROLE_ADMIN")
      */
     public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage,$au)
     {
@@ -176,11 +179,13 @@ class FicheIndividuelController extends AbstractController
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $semestreRepository = $em->getRepository(Semestre::class);
         $note_ue_repository = $em->getRepository(NoteUc::class);
+        $scolarite_repository = $em->getRepository(Scolarite::class);
 
         $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage,$au);
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
+
         $i = 0;
         $somme = 0;
         $credit_aquis = 0;
@@ -193,6 +198,13 @@ class FicheIndividuelController extends AbstractController
             $moyenne = $somme / $i;
         else
             $moyenne = 0;
+        
+        $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant_info);
+        
+        if($scolarite_actuel != null )
+            $scolarite_actuel = $scolarite_actuel['0'];
+        else 
+            $scolarite_actuel = null;
 
         $niv = $niveauxRepository->findByType($type);
         return $this->render(
@@ -210,7 +222,8 @@ class FicheIndividuelController extends AbstractController
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
                 'credit_aquis' => $credit_aquis,
-                'au'=>$au
+                'au'=>$au,
+                'scolarite'=>$scolarite_actuel
             ]
         );
     }

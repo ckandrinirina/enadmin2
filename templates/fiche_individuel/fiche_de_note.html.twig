@@ -23,10 +23,10 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {# // <script>
-                        //     $(function () {
-                        //         $('#example1').DataTable()
-                        //     })
-                        // </script> #}
+                                //     $(function () {
+                                //         $('#example1').DataTable()
+                                //     })
+                                // </script> #}
 {% endblock %}
 
 {% block body %}
@@ -70,28 +70,27 @@
                                                             </a>
                                                         {% endif %}
                                                         {% if app.user.etudiant != null %}
-                                                        <div class="alert alert-warning alert-dismissible">
-                                                            <h4>
-                                                                <i class="icon fa fa-warning"></i>
-                                                                Attention!
-                                                            </h4>
-                                                            Cette fiche est présentée à titre d'information,les notes officielle sont delivrées par le service de scolarité de l'ESPA
-                                                        </div>
+                                                            <div class="alert alert-warning alert-dismissible">
+                                                                <h4>
+                                                                    <i class="icon fa fa-warning"></i>
+                                                                    Attention!
+                                                                </h4>
+                                                                Cette fiche est présentée à titre d'information,les notes officielle sont delivrées par le service de scolarité de l'ESPA
+                                                            </div>
                                                         {% endif %}
                                                         <div class="btn-group">
-                                                            <button class="btn btn-info" type="button">
-                                                                {% if rat == 0 %}
-                                                                    {{ 'Premier session' }}
-                                                                {% else  %}
-                                                                    {{ 'Ratrapage' }}
-                                                                {% endif %}
-                                                            </button>
-                                                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
-                                                                <span class="caret"></span>
-                                                                <span class="sr-only">Toggle Dropdown</span>
-                                                            </button>
-                                                            <ul class="dropdown-menu" role="menu">
-                                                                <li>
+                                                            {# <button class="btn btn-info" type="button">
+                                                                                                                            {% if rat == 0 %}
+                                                                                                                                {{ 'Premier session' }}
+                                                                                                                            {% else  %}
+                                                                                                                                {{ 'Ratrapage' }}
+                                                                                                                            {% endif %}
+                                                                                                                        </button> #}
+                                                            {# <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                                                                                                            <span class="caret"></span>
+                                                                                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                                                                                        </button> #}
+                                                                <ul class="dropdown-menu" role="menu"> <li>
                                                                     <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Premier session</a>
                                                                 </li>
                                                                 <li>
@@ -134,13 +133,24 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     {% for note in n_ue.notes %}
-                                                                        <tr>
-                                                                            <td>{{ note.EC.nom }}</td>
-                                                                            <td>{{ note.EC.coefficient }}</td>
-                                                                            <td>{{ note.valeur }}</td>
-                                                                            <td>{{ note.valueCoeff }}</td>
-                                                                            <td>{{ note.EC.credit }}</td>
-                                                                        </tr>
+                                                                        {% if note.isFinal == 1 %}
+                                                                            <tr>
+                                                                                <td>{{ note.EC.nom }}</td>
+                                                                                <td>{{ note.EC.coefficient }}</td>
+                                                                                <td>{{ note.valeur }}</td>
+                                                                                <td>{{ note.valueCoeff }}</td>
+                                                                                <td>{{ note.EC.credit }}</td>
+                                                                            </tr>
+                                                                        {% endif %}
+                                                                        {% if note.isFinal == 0 %}
+                                                                            <tr>
+                                                                                <td class="text-red">{{ note.EC.nom }}</td>
+                                                                                <td class="text-red">{{ note.EC.coefficient }}</td>
+                                                                                <td class="text-red">{{ note.valeur }}</td>
+                                                                                <td class="text-red">{{ note.valueCoeff }}</td>
+                                                                                <td class="text-red">{{ note.EC.credit }}</td>
+                                                                            </tr>
+                                                                        {% endif %}
                                                                     {% endfor %}
                                                                 </tbody>
                                                                 <tfoot>

@@ -131,7 +131,6 @@ class ECController extends AbstractController
                 $em->persist($repEc[$i]);
                 $i = $i + 1;
             }
-
             $em->persist($ec);
 
             $em->flush();

@@ -73,6 +73,11 @@ class Note
      */
     private $note_uc;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_final;
+
     public function __construct()
     {
         $this->ficheIndividuels = new ArrayCollection();
@@ -230,6 +235,18 @@ class Note
     public function setNoteUc(?NoteUc $note_uc): self
     {
         $this->note_uc = $note_uc;
+
+        return $this;
+    }
+
+    public function getIsFinal(): ?bool
+    {
+        return $this->is_final;
+    }
+
+    public function setIsFinal(bool $is_final): self
+    {
+        $this->is_final = $is_final;
 
         return $this;
     }

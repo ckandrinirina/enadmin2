@@ -69,6 +69,11 @@ class NoteUc
      */
     private $credit;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_final;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -214,6 +219,18 @@ class NoteUc
     public function setCredit(int $credit): self
     {
         $this->credit = $credit;
+
+        return $this;
+    }
+
+    public function getIsFinal(): ?bool
+    {
+        return $this->is_final;
+    }
+
+    public function setIsFinal(bool $is_final): self
+    {
+        $this->is_final = $is_final;
 
         return $this;
     }

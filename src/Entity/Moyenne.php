@@ -60,6 +60,11 @@ class Moyenne
      */
     private $credit;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_final;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,6 +162,18 @@ class Moyenne
     public function setCredit(float $credit): self
     {
         $this->credit = $credit;
+
+        return $this;
+    }
+
+    public function getIsFinal(): ?bool
+    {
+        return $this->is_final;
+    }
+
+    public function setIsFinal(bool $is_final): self
+    {
+        $this->is_final = $is_final;
 
         return $this;
     }

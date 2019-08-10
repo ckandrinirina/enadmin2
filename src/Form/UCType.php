@@ -28,24 +28,11 @@ class UCType extends AbstractType
             ->add('credit',IntegerType::class,[
                 'label' => 'crédit'
             ])
-            ->add('niveaux',EntityType::class , [
-                'class'=>Niveaux::class,
-                'choice_label' => function (Niveaux $niveaux){
-                    return $niveaux->getNiveau();
-                },
-                'label'=>'niveaux',
-                'multiple' => true,
-                'expanded' => false,
+            ->add('niveaux', CollectionType::class, [
+                'entry_type' => NiveauxType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
-            ->add('semestres',EntityType::class , [
-                'class'=>Semestre::class,
-                'choice_label' => function (Semestre $semestre){
-                    return $semestre->getSemestre();
-                },
-                'label'=>'semestres',
-                'multiple' => true,
-                'expanded' => false,
-            ]);
         ;
     }
 

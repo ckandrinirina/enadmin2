@@ -28,7 +28,7 @@
                     {{ form_row(form.coefficient) }}
                     {{ form_row(form.credit) }}
                     {{ form_row(form.niveaux) }}
-                    {{ form_row(form.semestres) }}
+                    {# {{ form_row(form.semestres) }} #}
                 </div>
             </div>
             <div class="box-footer">
@@ -46,20 +46,20 @@
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script src="{{asset('assets/js/ma6.js')}}"></script>
     <script>
-        // $(function () {
-        //     SymfonyCollection.init({
-        //         selector: '#uc_niveaux',
-        //         label: 'niveau',
-        //         add: {
-        //             content: 'Ajouter un niveau'
-        //         },
-        //         remove: {
-        //             content: 'supprimer un niveau',
-        //             attr: {
-        //                 class: 'btn btn-link btn-sm'
-        //             }
-        //         }
-        //     });
-        // });
+        $(function () {
+            SymfonyCollection.init({
+                selector: '#uc_niveaux',
+                label: 'niveau',
+                add: {
+                    content: 'Ajouter un niveau'
+                },
+                remove: {
+                    content: 'supprimer un niveau',
+                    attr: {
+                        class: 'btn btn-link btn-sm'
+                    }
+                }
+            });
+        });
     </script>
 {% endblock %}

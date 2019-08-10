@@ -36,9 +36,19 @@
             .header {
                 font-size: 0.8em;
             }
-            .marg-top
-            {
-                margin-top:0.1cm;
+            .marg-top {
+                margin-top: 0.1cm;
+            }
+            .list-group-item {
+                position: relative;
+                display: block;
+                padding: 1px 5px;
+                margin-bottom: -1px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+            p {
+                margin: 0 0 1px;
             }
         </style>
     {% endblock %}
@@ -54,13 +64,15 @@
                 </p>
                 <p>Parcours : Electronique et commande
                 </p>
-                <p>Niveau : L3
+                <p>Niveau :
+                    {{ etudiant.niveaux.nom }}
                 </p>
             </div>
             <div class="col-md-4 col-md-offset-2">
-                <p>Année Universitaire</p>
+                <p>Année Universitaire
+                    {{ etudiant.anneUniversitaire.anneUniversitaire }}</p>
                 <p>Semestre
-                    <strong>S5</strong>
+                    <strong>{{ etudiant.niveaux.semestres['0'].nom }}</strong>
                 </p>
                 <p></p>
             </div>
@@ -83,9 +95,9 @@
                     <p class="pull-right" style="font-size:0.8em">
                         {{ etudiant.dateNaissance | date('d/m/Y')  }}</p>
                 </li>
-                <li class="list-group-item" style="font-size:0.8em">
-                    <b>Numéro d'inscription</b>
-                    <p class="pull-right" style="font-size:0.8em">13,287</p>
+                <li class="list-group-item">
+                    <b style="font-size:0.8em">Numéro d'inscription</b>
+                    <p class="pull-right" style="font-size:0.8em">{% if scolarite != null %}{{scolarite.numeroInscription}}{% endif %}</p>
                 </li>
             </ul>
             {%  for n_ue in note_ue %}
@@ -102,13 +114,15 @@
                     </thead>
                     <tbody>
                         {% for note in n_ue.notes %}
-                            <tr>
-                                <td>{{ note.EC.nom }}</td>
-                                <td>{{ note.EC.coefficient }}</td>
-                                <td>{{ note.valeur }}</td>
-                                <td>{{ note.valueCoeff }}</td>
-                                <td>{{ note.EC.credit }}</td>
-                            </tr>
+                            {% if note.isFinal == 1 %}
+                                <tr>
+                                    <td>{{ note.EC.nom }}</td>
+                                    <td>{{ note.EC.coefficient }}</td>
+                                    <td>{{ note.valeur }}</td>
+                                    <td>{{ note.valueCoeff }}</td>
+                                    <td>{{ note.EC.credit }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                     <tfoot>
@@ -123,7 +137,7 @@
                             <th>Résultat</th>
                             <th></th>
                             <th>
-                                {% if n_ue.valueCoeff < 10 %}Acquis{% else %}Ajourné
+                                {% if n_ue.valueCoeff > 10 %}Acquis{% else %}Ajourné
                                 {% endif %}
                             </th>
                             <th></th>
@@ -133,11 +147,13 @@
                 </table>
             {% endfor %}
         </div>
-        <div class="col-md-2" style="width:8cm">
+        <div class="col-md-3" style="width:10cm">
             <table class="table-bordered">
                 <tr>
-                    <th>Moyenne Semestrielle</th>
-                    <th>{{ moyenne }}
+                    <th>Moyenne Semestrielle
+                    </th>
+                    <th>
+                        {{ moyenne }}
                         /20</th>
                 </tr>
                 <tr>

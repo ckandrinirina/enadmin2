@@ -19,6 +19,23 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    public function find_last_note_1_s($etudiant, $ec, $semestre, $niveau, $au)
+    {
+        return $this->createQueryBuilder('n')
+            ->innerJoin('n.etudiant','e','WITH','e.id = :etudiant')
+            ->setParameter('etudiant',$etudiant)
+            ->innerJoin('n.niveaux','niv','WITH','niv.id = :val')
+            ->setParameter('val',$niveau)
+            ->innerJoin('n.semestre','s','WITH','s.id = :val1')
+            ->setParameter('val1',$semestre)
+            ->innerJoin('n.anneUniversitaire','au','WITH', 'au.id = :val2')
+            ->setParameter('val2',$au)
+            ->innerJoin('n.EC','ec','WITH','ec.id = :ec')
+            ->setParameter('ec',$ec)
+            ->andWhere('n.isRatrapage = 0')
+            ->getQuery()
+            ->getResult();
+    } 
     public function findByNiveauxBySemestreEtudiant($niveaux,$semestre,$au,$ratrapage)
     {
         return $this->createQueryBuilder('n')

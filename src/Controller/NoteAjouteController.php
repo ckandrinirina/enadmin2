@@ -58,7 +58,8 @@ class NoteAjouteController extends AbstractController
                 $ecOrd[] = $ecNom;
                 $nbrEc = $nbrEc + 1;
             }
-        } else {
+        }
+        else {
             $ecOrd = NULL;
             $idEcOrd = NULL;
         }
@@ -74,7 +75,6 @@ class NoteAjouteController extends AbstractController
             $nomOrd = NULL;
             $idEtOrd = NULL;
         }
-
         $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
         if($this->getUser()->getEnseignant() != null )
             $ec = $ecRepository->findEcByEnseignant($this->getUser()->getEnseignant()->getId());
@@ -120,6 +120,7 @@ class NoteAjouteController extends AbstractController
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $auRepository = $em->getRepository(AnneUniversitaire::class);
         $note_uc_repository = $em->getRepository(NoteUc::class);
+        $note_repository = $em->getRepository(Note::class);
 
         $etudiantId = $etudiantRepository->find($etudiant);
         $ecId = $ecRepository->find($ec);
@@ -140,17 +141,36 @@ class NoteAjouteController extends AbstractController
             $note->setNiveaux($niveauId);
             $note->setAnneUniversitaire($auId);
             $note->setIsRatrapage($ratrapage);
+
+            //if note is not valide => test if is ratrapage
             if ($note->getValeur() < 10)
+            {
+                if($ratrapage == 1)
+                {
+                    //if is ratrapage set is_final a true
+                    $note->setIsFinal(true);
+                }
+                //else is_final false
+                else
+                    $note->setIsFinal(false);
+
                 $note->setIsValide(false);
+            }
+            //if note valide set is final
             else
+            {
+                $note->setIsFinal(true);
                 $note->setIsValide(true);
+            }
 
             $note->setValueCoeff(($note->getValeur()) * ($ecId->getCoefficient()));
 
             $uc = $note->getEC()->getUC();
             $id_uc = $uc->getId();
-            $note_uc = $note_uc_repository->find_by_uc_by_ratrapage_by_etudiant($id_uc, $ratrapage, $etudiant);
+            //$note_uc = $note_uc_repository->find_by_uc_by_ratrapage_by_etudiant($id_uc, $ratrapage, $etudiant);
+            $note_uc = $note_uc_repository->find_by_uc_by_ratrapage_by_etudiant($id_uc,$etudiant);
 
+            //if note_uc doesn't exist => add
             if ($note_uc == null) {
                 $note_uc_new = new NoteUc();
                 $note_uc_new->setUc($uc);
@@ -160,24 +180,73 @@ class NoteAjouteController extends AbstractController
                 $note_uc_new->setNiveaux($niveauId);
                 $note_uc_new->setValueCoeff(($note->getValueCoeff() * ($uc->getCoefficient())));
                 $note_uc_new->setIsRatarapage($ratrapage);
+                            
+                //if note_uc is not valide => test if is ratrapage
+                if ($note_uc_new->getValueCoeff() < 10) 
+                {
+                    if($ratrapage == 1)
+                    {
+                        //if is ratrapage set is_final true
+                        $note_uc_new->setIsFinal(true);
+                    }
+                    //else is final false
+                    else
+                        $note_uc_new->setIsFinal(false);
 
-                if ($note_uc_new->getValueCoeff() < 10) {
                     $note_uc_new->setIsValide(false);
                     $note_uc_new->setCredit(0);
-                } else {
+                }
+                //if note_uc is valide 
+                else 
+                {
+                    //set is_final true
+                    $note_uc_new->setIsFinal(true);
                     $note_uc_new->setIsValide(true);
                     $note_uc_new->setCredit($uc->getCredit());
                 }
                 $note->setNoteUc($note_uc_new);
                 $em->persist($note_uc_new);
-            } else {
+            } 
+            //if exist edit
+            else 
+            {
                 $last_value_coeff = $note_uc['0']->getValueCoeff();
-                $new_value_coeff = ($last_value_coeff) + ($note->getValueCoeff() * ($uc->getCoefficient()));
-
+                //if note is ratrapage
+                if($ratrapage == 1)
+                {
+                    //find last note value coeff
+                    $last_note_of_uc = $note_repository->find_last_note_1_s($etudiant, $ec, $semestre, $niveau, $au);
+                    $last_note_of_uc = $last_note_of_uc['0'];
+                    //remove last note value
+                    $last_note_of_uc_value = $last_note_of_uc->getValueCoeff();
+                    $new_value_coeff = $last_value_coeff - $last_note_of_uc_value;                      
+                    //add new note value 
+                    $new_value_coeff = $new_value_coeff + ($note->getValueCoeff() * ($uc->getCoefficient()));
+                }
+                //else if is note ratrapage
+                else
+                {
+                    //add new value 
+                    $new_value_coeff = ($last_value_coeff) + ($note->getValueCoeff() * ($uc->getCoefficient()));
+                }
+                //if note_uc is not valide => test if is ratrapage
                 if ($new_value_coeff < 10) {
+                    if($note_uc['0']->getIsRatarapage() == 1)
+                    {
+                        //if is ratrapage set is_final true
+                        $note_uc['0']->setIsFinal(true);
+                    }
+                    //else set is final false
+                    else
+                        $note_uc['0']->setIsFinal(false);
                     $note_uc['0']->setIsValide(false);
                     $note_uc['0']->setCredit(0);
-                } else {
+                } 
+                //if note_uc is valide 
+                else 
+                {
+                    //set is_final true
+                    $note_uc['0']->setIsFinal(true);
                     $note_uc['0']->setIsValide(true);
                     $note_uc['0']->setCredit($uc->getCredit());
                 }
@@ -225,16 +294,22 @@ class NoteAjouteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $noteRepository = $em->getRepository(Note::class);
         $note_uc_repository = $em->getRepository(NoteUc::class);
-
+        
+        //recupere la note
         $note = $noteRepository->find($noteId);
 
+        //recuperer l'id du note
         $id_note_uc = $note->getNoteUc()->getId();
 
+        //recupération du note_uc
         $note_uc = $note_uc_repository->find($id_note_uc);
 
+        //recuperer la dernier valeur de note_uc
         $last_value_coeff = $note_uc->getValueCoeff();
+        //recupere la valeur du note a enlever
         $note_value_with_coeff = $note->getValueCoeff();
 
+        //enlever la valeur du note
         $new_value_coeff = $last_value_coeff - $note_value_with_coeff;
 
         if ($new_value_coeff < 10) {
