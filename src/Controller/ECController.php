@@ -96,6 +96,7 @@ class ECController extends AbstractController
 
         $form = $this->createForm(EcType::class, $ec);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $typeRep = $em->getRepository(TypeParcours::class);
@@ -106,8 +107,21 @@ class ECController extends AbstractController
             $niveaux = $ec->getUC()->getNiveaux();
             $semestres = $ec->getUC()->getSemestres();
 
-            // $uc = $ec->getUC();
-            // $all_ec = $uc->getECs();
+            $uc = $ec->getUC();
+            $all_ec = $uc->getECs();
+            //set coeff and credit as somme of all coeff + new coeff and credit
+            $coeff = 0;
+            $credit = 0;
+            foreach($all_ec as $single_ec)
+            {
+                $coeff = $coeff + $single_ec->getCoefficient();
+                $credit = $credit + $single_ec->getCredit();
+            }
+            $coeff = $coeff + $ec->getCoefficient();
+            $credit = $credit + $ec->getCredit();
+
+            $uc->setCoefficient($coeff);
+            $uc->setCredit($credit);
 
             // $nbr = 1;
             // foreach ($all_ec as $ec_count) {
@@ -131,6 +145,7 @@ class ECController extends AbstractController
                 $em->persist($repEc[$i]);
                 $i = $i + 1;
             }
+            $em->persist($uc);
             $em->persist($ec);
 
             $em->flush();
@@ -158,6 +173,7 @@ class ECController extends AbstractController
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
         $repartition_ec_repository = $em->getRepository(RepartitionEC::class);
+        $ec_repository = $em->getRepository(EC::class);
         // $repEc1 = new RepartitionEC();
         // $repEc2 = new RepartitionEC();
 
@@ -171,6 +187,23 @@ class ECController extends AbstractController
             $t = $type['0']->getId();
 
             $niveaux = $ec->getUC()->getNiveaux();
+
+            $uc = $ec->getUC();
+            $all_ec = $uc->getECs();
+            //set coeff and credit as somme of all coeff + new coeff and credit
+            $coeff = 0;
+            $credit = 0;
+            foreach($all_ec as $single_ec)
+            {
+                $coeff = $coeff + $single_ec->getCoefficient();
+                $credit = $credit + $single_ec->getCredit();
+            }
+            $last_ec = $ec_repository->find($ec->getId());
+            $coeff = $coeff - $last_ec->getCoefficient();
+            $credit = $credit - $last_ec->getCredit();
+            $coeff = $coeff + $ec->getCoefficient();
+            $credit = $credit + $ec->getCredit();
+
             // $semestres = $ec->getUC()->getSemestres();
 
             // $uc = $ec->getUC();
@@ -199,8 +232,10 @@ class ECController extends AbstractController
             //     $em->persist($repEc[$i]);
             //     $i = $i + 1;
             // }
-
-
+            $uc->setCoefficient($coeff);
+            $uc->setCredit($credit);
+            
+            $em->persist($uc);
             $em->persist($ec);
 
             $em->flush();
