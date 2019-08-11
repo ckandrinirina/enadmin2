@@ -12,6 +12,7 @@ use App\Entity\NoteUc;
 use App\Entity\AnneUniversitaire;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Scolarite;
+use App\Service\NoteService;
 
 class FicheIndividuelController extends AbstractController
 {
@@ -105,7 +106,7 @@ class FicheIndividuelController extends AbstractController
     /**
      * @Route("/fiche-note/{etudiant}/{niveaux}/{semestre}/{au}/{ratrapage}", name="fiche_note")
      */
-    public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage)
+    public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage, NoteService $note_service)
     {
         if($this->getUser()->getEtudiant() != null)
         {
@@ -128,18 +129,13 @@ class FicheIndividuelController extends AbstractController
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
-        $i = 0;
-        $somme = 0;
+
         $credit_aquis = 0;
-        foreach ($note_ue as $n_ue) {
-            $somme = $somme + $n_ue->getValueCoeff();
-            $i = $i + 1;
+        $moyenne = $note_service->calculate_moyenne($note_ue);
+        foreach ($note_ue as $n_ue) 
+        {
             $credit_aquis = $credit_aquis + $n_ue->getCredit();
         }
-        if ($i != 0)
-            $moyenne = $somme / $i;
-        else
-            $moyenne = 0;
 
         $niv = $niveauxRepository->findByType($type);
         return $this->render(

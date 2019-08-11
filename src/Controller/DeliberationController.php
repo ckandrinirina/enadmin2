@@ -11,6 +11,9 @@ use App\Entity\TypeParcours;
 use App\Entity\User;
 use App\Form\NiveauxChoiceType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\NoteUc;
+use App\Entity\UC;
+use App\Service\NoteService;
 
 class DeliberationController extends AbstractController
 {
@@ -21,7 +24,7 @@ class DeliberationController extends AbstractController
      * 
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function index($type, $niveaux)
+    public function index($type, $niveaux,NoteService $note_service)
     {
         $status = 'deliberation';
 
@@ -30,6 +33,8 @@ class DeliberationController extends AbstractController
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $etudiantRepository = $em->getRepository(Etudiant::class);
+        $note_uc_repository = $em->getRepository(NoteUc::class);
+        $uc_repository = $em->getRepository(UC::class);
 
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
@@ -40,8 +45,18 @@ class DeliberationController extends AbstractController
             foreach ($etudiants as $e) {
                 $form[$e->getId()] = $this->createForm(NiveauxChoiceType::class);
                 $view_form[$e->getId()] = $form[$e->getId()]->createView();
+                //find note_uc for semestre
+                $note_uc[$e->getId()]['0'] = $note_uc_repository->find_by_etudiant_by_niveaux($e->getId(),$e->getNiveaux()->getId(),$e->getNiveaux()->getSemestres()['0']->getId());
+                //calculate moyenne semestre impaire
+                $moyenne_s_impaire[$e->getId()] = $note_service->calculate_moyenne($note_uc[$e->getId()]['0']);
+                //find note_uc for semestre paire
+                $note_uc[$e->getId()]['1'] = $note_uc_repository->find_by_etudiant_by_niveaux($e->getId(),$e->getNiveaux()->getId(),$e->getNiveaux()->getSemestres()['1']->getId());
+                //calculate moyenne semestre paire
+                $moyenne_s_paire[$e->getId()] = $note_service->calculate_moyenne($note_uc[$e->getId()]['1']);
             }
-        } else {
+        }
+        else 
+        {
             $view_form = null;
         }
 
@@ -51,7 +66,10 @@ class DeliberationController extends AbstractController
             'status' => $status,
             'n' => $niveaux,
             'etudiants' => $etudiants,
-            'view_form' => $view_form
+            'view_form' => $view_form,
+            'note_uc' => $note_uc,
+            'moyenne_impaire' => $moyenne_s_impaire,
+            'moyenne_paire' => $moyenne_s_paire,
         ]);
     }
 

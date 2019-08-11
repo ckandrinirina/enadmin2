@@ -33,6 +33,19 @@ class NoteUcRepository extends ServiceEntityRepository
     //         ->getQuery()
     //         ->getResult();
     // }
+    
+    public function find_by_etudiant_by_niveaux($etudiant,$niveaux,$semestre)
+    {
+        return $this->createQueryBuilder('n')
+            ->innerJoin('n.etudiant','e','WITH','e.id = :etudiant')
+            ->setParameter('etudiant',$etudiant)
+            ->innerJoin('n.niveaux','niv','WITH','niv.id = :niveaux')
+            ->setParameter('niveaux',$niveaux)
+            ->innerJoin('n.semestre','sem','WITH','sem.id = :semestre')
+            ->setParameter('semestre',$semestre)
+            ->getQuery()
+            ->getResult();
+    }
 
     public function find_by_uc_by_ratrapage_by_etudiant($uc,$etudiant)
     {
