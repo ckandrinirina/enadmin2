@@ -68,7 +68,7 @@ class UCController extends AbstractController
      */
     public function edit_ue(Request $request,UC $uc)
     {
-        $status = 'addUc';
+        $status = 'editUe';
         $form = $this->createForm(UCType::class, $uc);
         $form->handleRequest($request);
         
@@ -146,7 +146,7 @@ class UCController extends AbstractController
      */
     public function repartition_uc_by_niveau_edit($type, $niveau)
     {
-        $status = 'r_u_b_n';
+        $status = 'r_u_b_n_edit';
         $em = $this->getDoctrine()->getManager();
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
