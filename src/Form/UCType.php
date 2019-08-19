@@ -26,7 +26,7 @@ class UCType extends AbstractType
                 'label' => 'coefficient'
             ])
             ->add('credit',IntegerType::class,[
-                'label' => 'crédit'
+                'label' => 'crédits'
             ])
             ->add('niveaux', CollectionType::class, [
                 'entry_type' => NiveauxType::class,

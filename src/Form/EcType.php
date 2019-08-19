@@ -37,7 +37,7 @@ class EcType extends AbstractType
                 'label' => 'code matière'
             ])
             ->add('credit',TextType::class,[
-                'label' => 'crédit'
+                'label' => 'crédits'
             ])
             // ->add('repartitionECs', CollectionType::class, [
             //     'entry_type' => RepartitionECType::class,

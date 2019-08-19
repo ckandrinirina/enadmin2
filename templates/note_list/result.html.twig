@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des note
+{% block title %}Résultats des examens
     {{ parcour.type }}
 {% endblock %}
 
@@ -31,7 +31,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('note_list',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'au':auid,'ratrapage':rat}) }}">{{ niveau.niveau }}</a>
+                            <a href="{{ path('note_result',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'au':auid,'ratrapage':rat}) }}">{{ niveau.niveau }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -44,7 +44,7 @@
                                 <ul class="nav nav-tabs pull-right">
                                     {% for semestre in semestres %}
                                         <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
-                                            <a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':semestre.id,'au':auid,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
+                                            <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':semestre.id,'au':auid,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
                                         </li>
                                     {% endfor %}
                                     <li class="pull-left header">
@@ -57,7 +57,7 @@
                                             <div class="col-xs-12">
                                                 <div class="box">
                                                     <div class="box-header">
-                                                        <h3 class="box-title">Résultats par niveau   :</h3>
+                                                        <h3 class="box-title">Résultats par semestre   :</h3>
                                                         <a href="{{ path('note_result_pdf',{'type':t , 'niveaux':n ,'semestre':s,'au':auid,'ratrapage':rat}) }}" class="pull-right btn  btn-social btn-flickr">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                             Générer un PDF
@@ -76,10 +76,10 @@
                                                             </button>
                                                             <ul class="dropdown-menu" role="menu">
                                                                 <li>
-                                                                    <a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Première session</a>
+                                                                    <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Première session</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                    <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="box-body">
                                     {% for aun in allAu %}
-                                        <a type="button" class="btn btn-info" href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':rat}) }}">
+                                        <a type="button" class="btn btn-info" href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':rat}) }}">
                                             {{ aun.anneUniversitaire }}
                                         </a>
                                     {% endfor %}
