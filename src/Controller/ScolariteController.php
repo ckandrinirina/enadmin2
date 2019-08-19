@@ -98,7 +98,6 @@ class ScolariteController extends AbstractController
         }
 
         $scolarite = $scolarite_repository->findByEtudiant($etudiant);
-
         $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant);
         if($scolarite_actuel != null )
             $scolarite_actuel = $scolarite_actuel['0'];
@@ -139,15 +138,15 @@ class ScolariteController extends AbstractController
     // }
 
     /**
-     * @Route("/scolarite-view/{id}", name="scolarite_view")
+     * @Route("/scolarite-view/{etudiant}/{niveau}", name="scolarite_view")
      */
-    public function scolarite_niveau(Niveaux $niveau)
+    public function scolarite_niveau($etudiant,$niveau)
     {
         $em = $this->getDoctrine()->getManager();
         $scolarite_repository = $em->getRepository(Scolarite::class);
         $scolarite_image_repository = $em->getRepository(ScolariteImage::class);
 
-        $scolarite = $scolarite_repository->findByNiveau($niveau);
+        $scolarite = $scolarite_repository->find_if_exist($etudiant,$niveau);
         $scolarite_image = $scolarite_image_repository->findByScolarites($scolarite);
 
         if($scolarite_image != null)
