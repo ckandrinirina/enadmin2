@@ -24,7 +24,7 @@ class InformationType extends AbstractType
                 {
                     return $niveaux->getNiveau();
                 },
-                'label'=>'Groupe déstinataire',
+                'label'=>'Groupe destinataire',
                 'multiple'=>true,
             ])
         ;

@@ -29,7 +29,7 @@ class EnseignantAddType extends AbstractType
                 'label' => 'Numero de téléphone primaire'
             ])
             ->add('contact2', TelType::class, [
-                'label' => 'Autre numero de téléphone'
+                'label' => 'Autre numéeo de téléphone'
             ])
             ->add('contact3', TelType::class, [
                 'label' => 'Autre numero de téléphone'

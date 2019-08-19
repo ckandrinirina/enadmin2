@@ -46,7 +46,7 @@
                                     <p class="pull-right">{{ etudiant.lieuxNaissance }}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Parcour :</b>
+                                    <b>Parcours :</b>
                                     <p class="pull-right">{{ etudiant.parcour.type }}</p>
                                 </li>
                                 <li class="list-group-item">
@@ -97,7 +97,7 @@
                                                 <div class="col-xs-12">
                                                     <div class="box">
                                                         <div class="box-header">
-                                                            <h3 class="box-title">Listes des UE et EC non valides  pour l'année
+                                                            <h3 class="box-title">Liste des UE et EC non validés  pour l'année
                                                                 {{ niveau.niveau }}
                                                                 :</h3>
                                                         </div>
@@ -119,7 +119,7 @@
                                                             </div>
                                                         {% endfor %}
                                                         <div class="box-body col-xs-4">
-                                                            <h3 class="text-muted text-center">Après ratrapage</h3>
+                                                            <h3 class="text-muted text-center">Après rattrapage</h3>
                                                             <table class="table table-bordered table-striped" id="example1">
                                                                 <thead>
                                                                     <tr>
@@ -147,7 +147,6 @@
             </div>
         {% endfor %}
         {#mila bouclena#}
-
     </div>
 {% endblock %}
 
@@ -162,8 +161,9 @@
     <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
     {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
     {#    <script>
-                $(function () {
-                    $('#example1').DataTable()
-                })
-            </script>#}
+                    $(function () {
+                        $('#example1').DataTable()
+                    })
+                </script>#}
 {% endblock %}
+

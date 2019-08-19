@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fiche de note
+{% block title %}Fiche de notes
 {% endblock %}
 
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Fiche de note
+            Fiche de notes
             <span class="btn btn-info" type="button">{{ auNow.anneUniversitaire }}</span>
         </h1>
     </section>
@@ -54,7 +54,7 @@
                                     {% endfor %}
                                     <li class="pull-left header">
                                         <i class="fa fa-th"></i>
-                                        Semestre</li>
+                                        Semestres</li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_1-1">
@@ -62,7 +62,7 @@
                                             <div class="col-xs-12">
                                                 <div class="box">
                                                     <div class="box-header">
-                                                        <h3 class="box-title">Listes des notes par niveaux   :</h3>
+                                                        <h3 class="box-title">Listes des notes par niveau   :</h3>
                                                         {% if app.user.etudiant == null %}
                                                             <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'au':auid,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
                                                                 <i class="fa fa-file-pdf-o"></i>
@@ -102,11 +102,11 @@
                                                     <!-- /.box-header -->
                                                     <div class="box-body">
                                                         <h4>
-                                                            Relevé de Notes par EC et UE et Résulatats du semestre
+                                                            Relevée de notes par EC et UE et Résultats du semestre
                                                         </h4>
                                                         <ul class="list-group list-group-unbordered col-md-8">
                                                             <li class="list-group-item">
-                                                                <b>Nom et prénoms</b>
+                                                                <b>Nom et prénom(s)</b>
                                                                 <p class="pull-right">{{etudiant.nom}}
                                                                     {{etudiant.prenom}}</p>
                                                             </li>

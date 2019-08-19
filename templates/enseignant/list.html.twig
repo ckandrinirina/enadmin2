@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}List enseignant
+{% block title %}Liste des enseignant
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
@@ -43,7 +43,7 @@
                                 <th>Nom</th>
                                 <th>Contact</th>
                                 <th>Matières enseignées</th>
-                                <th>Action</th>
+                                <th>Renseignements</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +65,7 @@
                                     <td>
                                         <a href="{{path('enseignant_profile',{'enseignant':enseignant.id})}}" class="btn btn-block btn-social btn-linkedin">
                                             <i class="fa fa-user"></i>
-                                            Profile
+                                            A propos
                                         </a>
                                     </td>
                                 </tr>

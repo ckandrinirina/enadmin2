@@ -44,7 +44,7 @@ class EtudiantType extends AbstractType
                 'label' => 'Mère'
             ])
             ->add('professionMere', TextType::class, [
-                'label' => 'Profession de la mère'
+                'label' => 'Profession du mère'
             ])
             ->add('contact', TelType::class, [
                 'label' => 'Numero de téléphone primaire'
@@ -62,7 +62,7 @@ class EtudiantType extends AbstractType
                 'label' => 'Date de Naissance'
             ])
             ->add('lieuxNaissance', TextType::class, [
-                'label' => 'Lieux de naissance'
+                'label' => 'Lieu de naissance'
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse'
@@ -75,28 +75,28 @@ class EtudiantType extends AbstractType
                 'choice_label' => function (TypeParcours $typeParcours) {
                     return $typeParcours->getType();
                 },
-                'label' => 'Type de parcour'
+                'label' => 'Type de parcours'
             ])
             ->add('sexe', EntityType::class, [
                 'class' => Sexe::class,
                 'choice_label' => function (Sexe $sexe) {
                     return $sexe->getSexe();
                 },
-                'label' => 'sexe'
+                'label' => 'Sexe'
             ])
             ->add('niveaux', EntityType::class, [
                 'class' => Niveaux::class,
                 'choice_label' => function (Niveaux $niveaux) {
                     return $niveaux->getNiveau();
                 },
-                'label' => 'niveaux'
+                'label' => 'Niveau'
             ])
             ->add('anneUniversitaire', EntityType::class, [
                 'class' => AnneUniversitaire::class,
                 'choice_label' => function (AnneUniversitaire $au) {
                     return $au->getAnneUniversitaire();
                 },
-                'label' => 'année universitaire'
+                'label' => 'Année universitaire'
             ])
             /*->add('scolarite')
             ->add('user')*/;

@@ -87,7 +87,7 @@
                                                     <th>Prénom(s)</th>
                                                     <th>Contact</th>
                                                     <th>Sexe</th>
-                                                    <th>Action</th>
+                                                    <th>Renseignements</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -99,7 +99,7 @@
                                                         <td>{{ etudiant.sexe.sexe }}</td>
                                                         <td>
                                                             <div class="btn-group">
-                                                                <button class="btn btn-info" type="button">Action</button>
+                                                                <button class="btn btn-info" type="button">Fiches</button>
                                                                 <button aria-expanded="false" class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button" >
                                                                     <span class="caret"></span>
                                                                     <span class="sr-only">Toggle Dropdown</span>
@@ -107,7 +107,7 @@
                                                                 <ul class="dropdown-menu" role="menu">
                                                                     {% if is_granted('ROLE_ADMIN') %}
                                                                         <li>
-                                                                            <a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}">fiche individuel</a>
+                                                                            <a href="{{ path('fiche_individuel',{'etudiant':etudiant.id,'type':etudiant.parcour.id,'niveaux':niveaux['0'].id}) }}">fiche individuelle</a>
                                                                         </li>
                                                                         <li>
                                                                             <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveaux['0'].id,'semestre':niveaux['0'].semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0' })}}">fiche de note</a>

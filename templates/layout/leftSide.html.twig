@@ -147,13 +147,13 @@
             {% endif %}
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa fa-user-plus"></i> <span>Ajouté étudiant</span></a></li>
-            <li class="{% if status == "addEns" %} {{ "active" }} {% endif %}"><a href="{{ path('enseignant_add') }}"><i class="fa fa-user-plus"></i> <span>Ajouté enseignant</span></a></li>
+            <li class="{% if status == "addE" %} {{ "active" }} {% endif %}"><a href="{{ path('etudiant_add') }}"><i class="fa fa-user-plus"></i> <span>Ajouter un membre</span></a></li>
+            {# <li class="{% if status == "addEns" %} {{ "active" }} {% endif %}"><a href="{{ path('enseignant_add') }}"><i class="fa fa-user-plus"></i> <span>Ajouté enseignant</span></a></li> #}
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "noteAjoute" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-pencil"></i> <span>Ajouté des notes</span>
+                <a href="#"><i class="fa fa-pencil"></i> <span>Ajouter des notes</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -165,16 +165,16 @@
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
-                <li class="{% if status == "add_ec" %} {{ "active" }} {% endif %}"><a href="{{ path('add_ec') }}"><i class="fa  fa-plus"></i> <span>Ajouté un EC</span></a></li>
+                <li class="{% if status == "add_ec" %} {{ "active" }} {% endif %}"><a href="{{ path('add_ec') }}"><i class="fa  fa-plus"></i> <span>Ajouter un EC</span></a></li>
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
-            <li class="{% if status == "addUc" %} {{ "active" }} {% endif %}"><a href="{{ path('add_u_c') }}"><i class="fa  fa-plus"></i> <span>Ajouté un UE</span></a></li>
+            <li class="{% if status == "addUc" %} {{ "active" }} {% endif %}"><a href="{{ path('add_u_c') }}"><i class="fa  fa-plus"></i> <span>Ajouter un UE</span></a></li>
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "eTemps" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-calendar-plus-o"></i> <span>Emploi du temps</span>
+                <a href="#"><i class="fa fa-calendar-plus-o"></i> <span>Editer l'emploi du temps</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -187,7 +187,7 @@
 
             {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "rep_sale_edit" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-gavel"></i> <span>Editions des salles</span>
+                <a href="#"><i class="fa fa-gavel"></i> <span>Edition des salles</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -226,7 +226,7 @@
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class="treeview {% if status == "user" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-lock"></i> <span>Gestion des acces</span>
+                <a href="#"><i class="fa fa-lock"></i> <span>Gestion des accès</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
