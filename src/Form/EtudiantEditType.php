@@ -38,13 +38,13 @@ class EtudiantEditType extends AbstractType
                 'label' => 'Père'
             ])
             ->add('professionPere', TextType::class, [
-                'label' => 'Profession du pere'
+                'label' => 'Profession du père'
             ])
             ->add('mere', TextType::class, [
                 'label' => 'Mère'
             ])
             ->add('professionMere', TextType::class, [
-                'label' => 'Profession du mere'
+                'label' => 'Profession du mère'
             ])
             ->add('contact', TelType::class, [
                 'label' => 'Numero de téléphone primaire'

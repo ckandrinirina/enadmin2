@@ -27,8 +27,8 @@ class RegistrationEditType extends AbstractType
                 'invalid_message' => 'Mot de passe different',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'mapped' => false,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer mot de passe'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Insérer les mots de passes',
