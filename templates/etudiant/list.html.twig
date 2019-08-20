@@ -83,6 +83,7 @@
                                         <table class="table table-bordered table-striped" id="example1">
                                             <thead>
                                                 <tr>
+                                                    <th>Numero</th>
                                                     <th>Nom</th>
                                                     <th>Prénom(s)</th>
                                                     <th>Contact</th>
@@ -91,8 +92,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {% set i = 1 %}
                                                 {% for etudiant in etudiants %}
                                                     <tr>
+                                                        <td>n°{{i}}</td>
                                                         <td>{{ etudiant.nom }}</td>
                                                         <td>{{ etudiant.prenom }}</td>
                                                         <td>{{ etudiant.contact }}</td>
@@ -120,6 +123,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    {% set i = i + 1 %}
                                                 {% endfor %}
                                             </tbody>
                                         </table>

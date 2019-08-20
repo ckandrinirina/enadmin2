@@ -100,23 +100,94 @@
                     </a>
                 </div>
         {% endif %}
-        </div>
     </div>
-{% endblock %}
+    <div class="callout callout-info">
+        <h4 class="text-center">Matières enseignées et description:</h4>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Nom de la matières et description</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Nom</th>
+                        <th>Progress</th>
+                        <th style="width: 40px">Label</th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>Update software</td>
+                        <td>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-red">55%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>Clean database</td>
+                        <td>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-yellow">70%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>Cron job running</td>
+                        <td>
+                            <div class="progress progress-xs progress-striped active">
+                                <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-light-blue">30%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>Fix and squish bugs</td>
+                        <td>
+                            <div class="progress progress-xs progress-striped active">
+                                <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-green">90%</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
 
+</div>
+{% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
-    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
-    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
-    {#    <script>
+<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+{#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+{#    <script>
                                             $(function () {
                                                 $('#example1').DataTable()
                                             })
                                         </script>#}
 {% endblock %}
+

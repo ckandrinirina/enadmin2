@@ -38,16 +38,18 @@
             <span>({{etudiants[0].parcour.type}})</span>
         </h4>
         <table class="table table-bordered" id="custom_table">
+            {% set i = 1 %}
             {% for etudiant in etudiants %}
                 <tr>
                     <td>
-                        <strong>n°1</strong>
+                        <strong>n°{{i}}</strong>
                     </td>
                     <td>
                         <strong>{{ etudiant.nom|upper }}
                             {{etudiant.prenom}}</strong>
                     </td>
                 </tr>
+                {% set i = i+1 %}
             {% endfor %}
         </table>
     {% endblock %}

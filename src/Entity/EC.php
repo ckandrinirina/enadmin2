@@ -70,6 +70,11 @@ class EC
      */
     private $enseignant;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -275,6 +280,18 @@ class EC
                 $emploiDuTemp->setEc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

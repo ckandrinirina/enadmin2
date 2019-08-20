@@ -32,7 +32,7 @@ class EtudiantController extends AbstractController
 
         $parcours = $typeParcoursRepository->find($type);
         $niv = $niveauxRepository->findByType($type);
-        $etudiants = $etudiantRepository->findByNiveaux($niveaux);
+        $etudiants = $etudiantRepository->findByNiveauxOrderByName($niveaux);
 
         return $this->render(
             'etudiant/list.html.twig',
@@ -113,7 +113,7 @@ class EtudiantController extends AbstractController
         $parcours = $typeParcoursRepository->find($type);
         $niv_name = $niveauxRepository->find($niveaux);
         $niv = $niveauxRepository->findByType($type);
-        $etudiants = $etudiantRepository->findByNiveaux($niveaux);
+        $etudiants = $etudiantRepository->findByNiveauxOrderByName($niveaux);
 
         $chef_mention_repository = $em->getRepository(Parametrage::class);
         $chef_mention = $chef_mention_repository->find('1');
