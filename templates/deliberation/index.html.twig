@@ -80,7 +80,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nom et Prénom(s)</th>
-                                                    <th>Detailles</th>
+                                                    <th>Détails</th>
                                                     <th>Moyenne S1</th>
                                                     <th>Moyenne S2</th>
                                                     <th>Admis en</th>
@@ -90,7 +90,7 @@
                                                 {% for etudiant in etudiants %}
                                                     <tr>
                                                         <td>{{ etudiant.nom }} {{ etudiant.prenom }}</td>
-                                                        <td><button href="javascript:void(0);" onclick="javascipt:window.open('{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'}) }}')" type="button" class="btn btn-block btn-info btn-sm">Detaille</button></td>
+                                                        <td><button href="javascript:void(0);" onclick="javascipt:window.open('{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'}) }}')" type="button" class="btn btn-block btn-info btn-sm">Détail</button></td>
                                                         <td>{{ moyenne_impaire[etudiant.id] }}</td>
                                                         <td>{{ moyenne_paire[etudiant.id] }}</td>
                                                         <td>

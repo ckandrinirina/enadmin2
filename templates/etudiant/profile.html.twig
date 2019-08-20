@@ -115,29 +115,37 @@
         {% endif %}
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
             <div class="col-md-2">
-                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
+                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-bitbucket">
                     <i class="fa fa-sticky-note"></i>Scolarité
                 </a>
             </div>
         {% elseif app.user.etudiant.id == etudiant.id %}
             <div class="col-md-2">
-                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-flickr">
+                <a href="{{path('scolarite',{'id':etudiant.id})}}" class="btn btn-block btn-social btn-bitbucket">
                     <i class="fa fa-sticky-note"></i>Scolarité
                 </a>
             </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
             <div class="col-md-2">
-                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-flickr">
+                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-bitbucket">
                     <i class="glyphicon glyphicon-folder-open"></i>Fiche de note
                 </a>
             </div>
         {% elseif app.user.etudiant.id == etudiant.id %}
             <div class="col-md-2">
-                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-flickr">
+                <a href="{{path('fiche_note',{'etudiant':etudiant.id,'niveaux':etudiant.niveaux.id,'semestre':etudiant.niveaux.semestres['0'].id,'au':etudiant.anneUniversitaire.id,'ratrapage':'0'})}}" class="btn btn-block btn-social btn-bitbucket">
                     <i class="glyphicon glyphicon-folder-open"></i>Fiche de note
                 </a>
             </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
+            {% elseif app.user.etudiant.id == etudiant.id %}
+                <div class="col-md-2">
+                    <a href="{{asset('download/Charte.docx')}}" class="btn btn-block btn-social btn-bitbucket">
+                        <i class="fa fa-file-word-o"></i>Charte de contrôle
+                    </a>
+                </div>
         {% endif %}
     </div>
 {% endblock %}

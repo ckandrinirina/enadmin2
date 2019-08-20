@@ -80,5 +80,11 @@
             "allow-contrib": true,
             "require": "4.2.*"
         }
+    },
+    "repositories": {
+        "phpunit-bridge": {
+            "type": "path",
+            "url": "/opt/lampstack-7.3.8-0/apache2/htdocs/enadmin2/vendor/symfony/phpunit-bridge"
+        }
     }
 }
