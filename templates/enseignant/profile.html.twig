@@ -64,9 +64,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Matières enseignées :</b>
-                                    <p class="pull-right">
-
-                                    </p>
+                                    <p class="pull-right"></p>
                                 </li>
                             </ul>
                         </div>
@@ -110,17 +108,16 @@
                         <th>Description</th>
                     </tr>
                     {% for ec in enseignant.eCs %}
-                    <tr>
-                        <td>{{ ec.nom | upper }}</td>
-                        <td>{{ ec.description}}</td>
-                    </tr>
+                        <tr>
+                            <td>{{ ec.nom | upper }}</td>
+                            <td>{{ ec.description}}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <!-- /.box-body -->
     </div>
-
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -132,11 +129,5 @@
 <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
-{#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
-{#    <script>
-                                            $(function () {
-                                                $('#example1').DataTable()
-                                            })
-                                        </script>#}
 {% endblock %}
 

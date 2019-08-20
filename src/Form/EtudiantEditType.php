@@ -91,13 +91,13 @@ class EtudiantEditType extends AbstractType
             //     },
             //     'label'=>'niveaux'
             // ])
-            // ->add('anneUniversitaire',EntityType::class , [
-            //     'class'=>AnneUniversitaire::class,
-            //     'choice_label' => function (AnneUniversitaire $au){
-            //         return $au->getAnneUniversitaire();
-            //     },
-            //     'label'=>'année universitaire'
-            // ])
+            ->add('anneUniversitaire',EntityType::class , [
+                'class'=>AnneUniversitaire::class,
+                'choice_label' => function (AnneUniversitaire $au){
+                    return $au->getAnneUniversitaire();
+                },
+                'label'=>'Année universitaire'
+            ])
             /*->add('scolarite')
             ->add('user')*/;
     }
