@@ -39,6 +39,9 @@ class EcType extends AbstractType
             ->add('credit',TextType::class,[
                 'label' => 'crédits'
             ])
+            ->add('description',TextType::class,[
+                'label' => 'description'
+            ])
             // ->add('repartitionECs', CollectionType::class, [
             //     'entry_type' => RepartitionECType::class,
             //     'allow_add' => true,
