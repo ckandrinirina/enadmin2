@@ -20,6 +20,7 @@ use App\Entity\Heures;
 use App\Entity\Jours;
 use App\Form\InformationChildrenType;
 use App\Entity\InformationChild;
+use App\Service\FileUploader;
 
 class AccueilController extends AbstractController
 {
@@ -114,15 +115,22 @@ class AccueilController extends AbstractController
      * @Route("/new-information/{route}", name="new-information")
      * 
      */
-    public function new_information(Request $request, $route = 0)
+    public function new_information(Request $request, $route = 0,FileUploader $fileUploader)
     {
         $info = new Information();
         $em = $this->getDoctrine()->getManager();
         $niveaux_repository = $em->getRepository(Niveaux::class);
+        $files = $request->files->all();
         $result = $request->request->all();
         $result = $result['information'];
+        $files = $files['information'];
         if ($result['_token']) {
             $em = $this->getDoctrine()->getManager();
+
+            $path = $fileUploader->upload($files['file']);
+
+            $info->setFile($path);
+
             $info->setUser($this->getUser());
             $info->setContenu($result['contenu']);
             $info->setAddAt(new \Datetime());
@@ -144,14 +152,21 @@ class AccueilController extends AbstractController
      * @Route("/new-information-children/{id}/{route}/{pagination}", name="new-information-children")
      * 
      */
-    public function new_information_children(Information $information, Request $request, $route = 0,$pagination)
+    public function new_information_children(Information $information, Request $request, $route = 0,$pagination,FileUploader $fileUploader)
     {
         $info = new InformationChild();
         $em = $this->getDoctrine()->getManager();
+        $files = $request->files->all();
         $result = $request->request->all();
         $result = $result['information_children'];
+        $files = $files['information_children'];
         if ($result['_token']) {
             $em = $this->getDoctrine()->getManager();
+
+            $path = $fileUploader->upload($files['file']);
+
+            $info->setFile($path);
+
             $info->setUser($this->getUser());
             $info->setContenu($result['contenu']);
             $info->setAddAt(new \Datetime());

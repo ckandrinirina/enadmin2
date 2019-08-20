@@ -59,6 +59,12 @@
                                 </a>
                                 {{information.contenu}}
                             </p>
+                            {% if information.file != null %}
+                            <div class="attachment">
+                                <h4>Attachements:</h4>
+                                <a href="{{asset(information.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                            </div>
+                            {% endif %}
                             <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
                                 Répondre  <span class="pull-right">(Reponses {{ information.informationChildren|length }})</span>
                             </button>
@@ -84,6 +90,12 @@
                                             </a>
                                             {{information.contenu}}
                                         </p>
+                                        {% if information.file != null %}
+                                        <div class="attachment">
+                                            <h4>Attachements:</h4>
+                                            <a href="{{asset(information.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                                        </div>
+                                        {% endif %}
                                         <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
                                             Répondre (Reponses {{ information.informationChildren|length }})
                                         </button>
@@ -119,6 +131,12 @@
                                             <br/>
                                             {{information2.contenu}}
                                         </p>
+                                        {% if information.file != null %}
+                                        <div class="attachment">
+                                            <h4>Attachements:</h4>
+                                            <a href="{{asset(information2.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                     {% endfor %}
                                     </div>
@@ -131,7 +149,9 @@
                                                         <i class="fa fa-send"></i>
                                                     </button>
                                                 </div>
+                                                <br/>
                                             </div>
+                                            {{ form_row(informationChildren_form_view[information.id].file) }}
                                         {{ form_end(informationChildren_form_view[information.id]) }}
                                     </div>
                                 </div>
@@ -177,6 +197,7 @@
                         </button>
                     </div>
                 </div>
+                {{ form_row(information_form_view.file) }}
                 {{ form_row(information_form_view.niveaux) }}
                 {{ form_end(information_form_view) }}
             </div>

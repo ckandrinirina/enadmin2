@@ -45,6 +45,11 @@ class Information
      */
     private $informationChildren;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
@@ -145,6 +150,18 @@ class Information
                 $informationChild->setInformation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
 
         return $this;
     }

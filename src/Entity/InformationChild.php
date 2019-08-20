@@ -38,6 +38,11 @@ class InformationChild
      */
     private $information;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class InformationChild
     public function setInformation(?Information $information): self
     {
         $this->information = $information;
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
 
         return $this;
     }

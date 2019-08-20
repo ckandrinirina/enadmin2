@@ -100,14 +100,14 @@
     <h4 class="text-center">Calendrier des évènements</h4>
 </div>
 {# hide if admin #}
-<div class="col-lg-6 col-md-12" style="background-color:white;margin-bottom:10px;">
+<div class="col-lg-12 col-md-12" style="background-color:white;margin-bottom:10px;">
     <a href="{#path('scolarite_add',{'id':etudiant.id})#}#" class="btn btn-block btn-social btn-flickr col-md-3" data-target="#modal-form" data-toggle="modal">
         <i class="fa fa-upload"></i>Ajouter un évènement
     </a>
     <br/>
     {% include '@Calendar/calendar.html' %}
 </div>
-<div class="col-lg-6 col-md-12">
+<div class="col-lg-12 col-md-12">
     <div class="box box-success">
         <div class="box-header ui-sortable-handle" style="cursor: move;">
             <i class="fa fa-calendar-minus-o"></i>
@@ -115,8 +115,8 @@
             <h3 class="box-title">Information</h3>
 
         </div>
-        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 300px;">
-            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 300px;">
+        <div >
+            <div class="box-body chat" id="chat-box" >
                 {% if  last_information == null %}
                     {{ 'Il n\'y a pas  de publication' }}{% endif %}
                     {% for information in last_information %}
@@ -139,6 +139,14 @@
                                 </a>
                                 {{information.contenu}}
                             </p>
+
+                            {% if information.file != null %}
+                            <div class="attachment">
+                                <h4>Attachements:</h4>
+                                <a href="{{asset(information.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                            </div>
+                            {% endif %}
+
                             <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
                                 Répondre  <span class="pull-right">(Reponses {{ information.informationChildren|length }})</span>
                             </button>
@@ -164,6 +172,13 @@
                                             </a>
                                             {{information.contenu}}
                                         </p>
+                                        {% if information.file != null %}
+                                        <div class="attachment">
+                                            <h4>Attachements:</h4>
+                                            <a href="{{asset(information.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                                        </div>
+                                        {% endif %}
+
                                         <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success-{{ information.id }}">
                                             Répondre (Reponses {{ information.informationChildren|length }})
                                         </button>
@@ -199,6 +214,12 @@
                                             <br/>
                                             {{information2.contenu}}
                                         </p>
+                                        {% if information.file != null %}
+                                        <div class="attachment">
+                                            <h4>Attachements:</h4>
+                                            <a href="{{asset(information2.file)}}" class="btn btn-primary btn-sm btn-flat" type="button">Télécharger</a>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                     {% endfor %}
                                     </div>
@@ -212,6 +233,7 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                            {{ form_row( informationChildren_form_view[information.id].file ) }}
                                         {{ form_end(informationChildren_form_view[information.id]) }}
                                     </div>
                                 </div>
@@ -236,6 +258,7 @@
                         </button>
                     </div>
                 </div>
+                {{ form_row(information_form_view.file) }}
                 {{ form_row(information_form_view.niveaux) }}
                 {{ form_end(information_form_view) }}
             </div>
@@ -386,6 +409,7 @@
         <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+        <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
         <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
         <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
         <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>

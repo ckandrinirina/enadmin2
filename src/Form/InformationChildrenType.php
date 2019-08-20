@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Niveaux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class InformationChildrenType extends AbstractType
 {
@@ -17,7 +18,12 @@ class InformationChildrenType extends AbstractType
         $builder
             ->add('contenu', TextType::class, [
                 'label' => false
-            ]);
+            ])
+            ->add('file', FileType::class, [
+                'label' => 'Joindre un fichier',
+                'data_class' => null,
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

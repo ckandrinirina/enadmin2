@@ -9,13 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Niveaux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class InformationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenu',TextType::class,[
+            ->add('contenu',TextareaType::class,[
                 'label'=>false
                 ])
             ->add('niveaux',EntityType::class,[
@@ -26,6 +28,10 @@ class InformationType extends AbstractType
                 },
                 'label'=>'Groupe destinataire',
                 'multiple'=>true,
+            ])
+            ->add('file', FileType::class, [
+                'label' => 'Joindre un fichier',
+                'data_class' => null,
             ])
         ;
     }
