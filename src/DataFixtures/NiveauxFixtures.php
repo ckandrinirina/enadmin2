@@ -89,6 +89,12 @@ class NiveauxFixtures extends Fixture implements OrderedFixtureInterface
         $niveaux111->setNom('M2(EA)');
         $manager->persist($niveaux111);
 
+        $niveaux222 = new Niveaux();
+        $niveaux222->setNiveau('TASI');
+        $niveaux222->setType($this->getReference('professionel'));
+        $niveaux222->setNom('TASI');
+        $manager->persist($niveaux222);
+
         $sortant = new Niveaux();
         $sortant->setNiveau('sortant');
         $sortant->setType($this->getReference('sortant'));
@@ -110,6 +116,7 @@ class NiveauxFixtures extends Fixture implements OrderedFixtureInterface
         $this->addReference('MP1',$niveaux10);
         $this->addReference('MP2IA',$niveaux11);
         $this->addReference('MP2EA',$niveaux111);
+        $this->addReference('TASI',$niveaux222);
         $this->addReference('sortantNiv',$sortant);
     }
     public function getOrder()

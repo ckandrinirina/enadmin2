@@ -168,6 +168,18 @@ class SemestreFixtures extends Fixture implements OrderedFixtureInterface
         $semestre12->setNom('S12');
         $manager->persist($semestre12);
 
+        $semestre11p = new Semestre();
+        $semestre11p->setSemestre('Sp11');
+        $semestre11p->addNiveau($this->getReference('TASI'));
+        $semestre11p->setNom('Sp11');
+        $manager->persist($semestre11p);
+
+        $semestre12p = new Semestre();
+        $semestre12p->setSemestre('Sp12');
+        $semestre12p->addNiveau($this->getReference('TASI'));
+        $semestre12p->setNom('Sp12');
+        $manager->persist($semestre12p);
+
         $manager->flush();
 
         $this->addReference('S1',$semestre1);

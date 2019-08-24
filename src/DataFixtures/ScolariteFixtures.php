@@ -11,21 +11,21 @@ class ScolariteFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $scolarite1 =   new Scolarite();
-        $scolarite1->   setNumeroInscription('en/numero/ok');
-        $scolarite1->   setDateInscription(new \DateTime());
+        // $scolarite1 =   new Scolarite();
+        // $scolarite1->   setNumeroInscription('en/numero/ok');
+        // $scolarite1->   setDateInscription(new \DateTime());
         // $scolarite1->   setDroit($this->getReference('droit1'));
-        $scolarite1->   setNiveau($this->getReference('L1'));
-        $scolarite1->   setEtudiant($this->getReference('etudiant1'));
-        $manager->      persist($scolarite1);
+        // $scolarite1->   setNiveau($this->getReference('L1'));
+        // $scolarite1->   setEtudiant($this->getReference('etudiant1'));
+        // $manager->      persist($scolarite1);
 
-        $scolarite2 =   new Scolarite();
-        $scolarite2->   setNumeroInscription('en/numero/ok');
-        $scolarite2->   setDateInscription(new \DateTime());
+        // $scolarite2 =   new Scolarite();
+        // $scolarite2->   setNumeroInscription('en/numero/ok');
+        // $scolarite2->   setDateInscription(new \DateTime());
         // $scolarite2->   setDroit($this->getReference('droit1'));
-        $scolarite2->   setNiveau($this->getReference('L2'));
-        $scolarite2->   setEtudiant($this->getReference('etudiant1'));
-        $manager->      persist($scolarite2);
+        // $scolarite2->   setNiveau($this->getReference('L2'));
+        // $scolarite2->   setEtudiant($this->getReference('etudiant1'));
+        // $manager->      persist($scolarite2);
 
         // $scolarite3 =   new Scolarite();
         // $scolarite3->   setNom('Electrostatique');
