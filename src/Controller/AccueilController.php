@@ -25,7 +25,7 @@ use App\Service\FileUploader;
 class AccueilController extends AbstractController
 {
     /**
-     * @Route("/", name="accueil" ,options = { "expose" = true })
+     * @Route("/accueil", name="accueil" ,options = { "expose" = true })
      */
     public function index(Request $request, EtService $etService)
     {
