@@ -22,12 +22,12 @@ class UCType extends AbstractType
             ->add('nom',TextType::class,[
                 'label' => 'nom'
             ])
-            ->add('coefficient',TextType::class,[
-                'label' => 'coefficient'
-            ])
-            ->add('credit',IntegerType::class,[
-                'label' => 'crédits'
-            ])
+            // ->add('coefficient',TextType::class,[
+            //     'label' => 'coefficient'
+            // ])
+            // ->add('credit',IntegerType::class,[
+            //     'label' => 'crédits'
+            // ])
             ->add('niveaux', CollectionType::class, [
                 'entry_type' => NiveauxType::class,
                 'allow_add' => true,

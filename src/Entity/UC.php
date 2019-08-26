@@ -35,12 +35,12 @@ class UC
     private $semestres;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $coefficient;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $credit;
 
@@ -142,7 +142,7 @@ class UC
         return $this->coefficient;
     }
 
-    public function setCoefficient(float $coefficient): self
+    public function setCoefficient($coefficient)
     {
         $this->coefficient = $coefficient;
 
@@ -154,7 +154,7 @@ class UC
         return $this->credit;
     }
 
-    public function setCredit(int $credit): self
+    public function setCredit($credit)
     {
         $this->credit = $credit;
 

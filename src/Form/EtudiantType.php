@@ -47,19 +47,19 @@ class EtudiantType extends AbstractType
                 'label' => 'Profession du mère'
             ])
             ->add('contact', TelType::class, [
-                'label' => 'Numero de téléphone primaire'
+                'label' => 'Numéro de téléphone primaire'
             ])
             ->add('contact2', TelType::class, [
-                'label' => 'Autre numero de téléphone'
+                'label' => 'Autre numéro de téléphone'
             ])
             ->add('contact3', TelType::class, [
-                'label' => 'Autre numero de téléphone'
+                'label' => 'Autre numéro de téléphone'
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'Adresse E-mail'
             ])
             ->add('date_naissance', BirthdayType::class, [
-                'label' => 'Date de Naissance'
+                'label' => 'Date de naissance'
             ])
             ->add('lieuxNaissance', TextType::class, [
                 'label' => 'Lieu de naissance'
@@ -68,7 +68,7 @@ class EtudiantType extends AbstractType
                 'label' => 'Adresse'
             ])
             ->add('anneEntre', IntegerType::class, [
-                'label' => 'Anné d\'entré à l\'université '
+                'label' => 'Année d\'entrée à l\'université '
             ])
             ->add('parcour', EntityType::class, [
                 'class' => TypeParcours::class,

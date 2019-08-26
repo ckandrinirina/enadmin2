@@ -53,7 +53,7 @@ class UCController extends AbstractController
             $uc2->setNom($uc->getNom());
             $em->persist($uc2);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
+            return $this->redirectToRoute('repartition_uc_by_niveau_edit',['type'=>$t,'niveau'=>$niveaux['0']->getId()]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);
@@ -98,7 +98,7 @@ class UCController extends AbstractController
              
             $em->persist($uc);
             $em->flush();
-            return $this->redirectToRoute('repartition_uc_by_niveau',['type'=>$t,'niveau'=>$uc->getNiveaux()['0']->getId()]);
+            return $this->redirectToRoute('repartition_uc_by_niveau_edit',['type'=>$t,'niveau'=>$uc->getNiveaux()['0']->getId()]);
         }
 
         return $this->render('uc/index.html.twig', ['status' => $status, 'form' => $form->createView()]);

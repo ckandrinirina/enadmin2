@@ -61,7 +61,7 @@ class EmploiDuTempsController extends AbstractController
      * @Route("/emploi/du/temps/pdf/{type}/{niveaux}/{semestre}", name="etemps_pdf")
      */
     public function index_pdf(EtService $etService, $type, $niveaux, $semestre)
-    {
+    { 
         $status = 'etemps';
         $em = $this->getDoctrine()->getManager();
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);

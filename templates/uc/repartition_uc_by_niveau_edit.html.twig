@@ -7,7 +7,7 @@
     <section class="content-header">
         <h1>
             Repartitions des UE et UC
-            <small>{{ parcour.type }}</small>
+            <small>{{ parcour.type }}</small> 
         </h1>
         <ol class="breadcrumb">
             <li>
@@ -26,7 +26,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('repartition_uc_by_niveau',{'type':parcour.id,'niveau':niveau.id}) }}">{{ niveau.nom }}</a>
+                            <a href="{{ path('repartition_uc_by_niveau_edit',{'type':parcour.id,'niveau':niveau.id}) }}">{{ niveau.nom }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -50,16 +50,17 @@
                                                         <div class="tab-pane active" id="tab_1-1">
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <div class="box">
+                                                                    <div class="box" style="background-color: #fff;overflow-y:scroll;">
 
                                                                         {% for sem in semestre %}
-                                                                            <div class="box-body col-md-6 col-xs-12">
+                                                                            <div class="box-body col-lg-6 col-md-6 col-xs-12">
                                                                                 <h3 class="text-muted text-center">{{ sem.semestre }}</h3>
                                                                                 <table class="table table-bordered table-striped" id="example1">
                                                                                     {% for ue in sem.uEs %}
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 <th>{{ue.nom}}</th>
+                                                                                                <th>{{ue.credit}}</th>
                                                                                                 {# <th>{{ue.nom}}  <a class="btn btn-block btn-primary btn-sm pull-right" href="{{path('ue_edit',{'id':ue.id})}}"><i class="fa fa-edit"></i></a></th> #}
                                                                                             </tr>
                                                                                         </thead>

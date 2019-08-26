@@ -47,13 +47,13 @@ class EtudiantEditType extends AbstractType
                 'label' => 'Profession du mère'
             ])
             ->add('contact', TelType::class, [
-                'label' => 'Numero de téléphone primaire'
+                'label' => 'Numéro de téléphone primaire'
             ])
             ->add('contact2', TelType::class, [
-                'label' => 'Autre numero de téléphone'
+                'label' => 'Autre numéro de téléphone'
             ])
             ->add('contact3', TelType::class, [
-                'label' => 'Autre numero de téléphone'
+                'label' => 'Autre numéro de téléphone'
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'Adresse E-mail'

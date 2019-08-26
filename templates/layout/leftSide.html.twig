@@ -19,11 +19,11 @@
             <div class="pull-left info">
                 {% if is_granted('ROLE_ADMIN') %}
                     {% if app.user.enseignant != NULL %}
-                        {{ app.user.enseignant.nom }}{{ '  ' }}{{ app.user.enseignant.prenom }}
+                       {{ app.user.enseignant.prenom }}
                     {% endif %}
                 {% elseif is_granted('ROLE_USER') %}
                     {% if app.user.etudiant != NULL %}
-                        {{ app.user.etudiant.nom }}{{ '  ' }}{{ app.user.etudiant.prenom }}
+                        {{ app.user.etudiant.prenom }}
                     {% endif %}
                 {% endif %}
                 <!-- Status -->

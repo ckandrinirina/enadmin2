@@ -50,16 +50,16 @@
                                                         <div class="tab-pane active" id="tab_1-1">
                                                             <div class="row">
                                                                 <div class="col-xs-12">
-                                                                    <div class="box">
-
+                                                                    <div class="box" style="background-color: #fff;overflow-y:scroll;">
                                                                         {% for sem in semestre %}
-                                                                            <div class="box-body col-xs-6">
+                                                                            <div class="box-body col-lg-6 col-md-6 col-xs-12">
                                                                                 <h3 class="text-muted text-center">{{ sem.semestre }}</h3>
                                                                                 <table class="table table-bordered table-striped" id="example1">
                                                                                     {% for ue in sem.uEs %}
                                                                                         <thead class="col-sm-offset-8">
                                                                                             <tr>
-                                                                                                <th>{{ue.nom}}</th>
+                                                                                                <th>{{ue.nom}} </th>
+                                                                                                <th>{{ue.credit}} crédits</th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
