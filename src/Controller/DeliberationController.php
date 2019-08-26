@@ -58,6 +58,9 @@ class DeliberationController extends AbstractController
         else 
         {
             $view_form = null;
+            $note_uc = null;
+            $moyenne_s_impaire = null;
+            $moyenne_s_paire = null;
         }
 
         return $this->render('deliberation/index.html.twig', [

@@ -75,12 +75,24 @@ class EC
      */
     private $description;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Niveaux", inversedBy="eCs")
+     */
+    private $niveaux;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="eCs")
+     */
+    private $semestres;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
         $this->ficheIndividuels = new ArrayCollection();
         $this->repartitionECs = new ArrayCollection();
         $this->emploiDuTemps = new ArrayCollection();
+        $this->niveaux = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function getEnseignant(): ?Enseignant
@@ -292,6 +304,82 @@ class EC
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?Niveaux
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?Niveaux $niveau): self
+    {
+        $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Niveaux[]
+     */
+    public function getNiveaux(): Collection
+    {
+        return $this->niveaux;
+    }
+
+    public function addNiveau(Niveaux $niveau): self
+    {
+        if (!$this->niveaux->contains($niveau)) {
+            $this->niveaux[] = $niveau;
+        }
+
+        return $this;
+    }
+
+    public function removeNiveau(Niveaux $niveau): self
+    {
+        if ($this->niveaux->contains($niveau)) {
+            $this->niveaux->removeElement($niveau);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Semestre[]
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        if ($this->semestres->contains($semestre)) {
+            $this->semestres->removeElement($semestre);
+        }
 
         return $this;
     }

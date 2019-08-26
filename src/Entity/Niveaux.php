@@ -90,6 +90,11 @@ class Niveaux
      */
     private $moyennes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\EC", mappedBy="niveaux")
+     */
+    private $eCs;
+
 
     public function __construct()
     {
@@ -103,6 +108,7 @@ class Niveaux
         $this->salles = new ArrayCollection();
         $this->informations = new ArrayCollection();
         $this->moyennes = new ArrayCollection();
+        $this->eCs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -488,6 +494,37 @@ class Niveaux
             // set the owning side to null (unless already changed)
             if ($moyenne->getNiveau() === $this) {
                 $moyenne->setNiveau(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EC[]
+     */
+    public function getECs(): Collection
+    {
+        return $this->eCs;
+    }
+
+    public function addEC(EC $eC): self
+    {
+        if (!$this->eCs->contains($eC)) {
+            $this->eCs[] = $eC;
+            $eC->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEC(EC $eC): self
+    {
+        if ($this->eCs->contains($eC)) {
+            $this->eCs->removeElement($eC);
+            // set the owning side to null (unless already changed)
+            if ($eC->getNiveau() === $this) {
+                $eC->setNiveau(null);
             }
         }
 

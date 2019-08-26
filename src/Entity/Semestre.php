@@ -75,6 +75,11 @@ class Semestre
      */
     private $moyennes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\EC", mappedBy="semestres")
+     */
+    private $eCs;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
@@ -86,6 +91,7 @@ class Semestre
         $this->emploiDuTemps = new ArrayCollection();
         $this->salles = new ArrayCollection();
         $this->moyennes = new ArrayCollection();
+        $this->eCs = new ArrayCollection();
     }
 
     public function getId(): ?int
