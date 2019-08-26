@@ -30,9 +30,6 @@ class EcType extends AbstractType
                 },
                 'label' => 'UE'
             ])
-            ->add('coefficient',TextType::class,[
-                'label' => 'coefficient'
-            ])
             ->add('code',TextType::class,[
                 'label' => 'code matière'
             ])
@@ -42,6 +39,7 @@ class EcType extends AbstractType
             ->add('description',TextType::class,[
                 'label' => 'description'
             ])
+            ->add('is_active');
             // ->add('repartitionECs', CollectionType::class, [
             //     'entry_type' => RepartitionECType::class,
             //     'allow_add' => true,

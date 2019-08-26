@@ -36,6 +36,16 @@ class ECRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByNiveauxBySemestre($niveaux, $semestre)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.niveaux','n','WITH','n.id = :niveaux')
+            ->setParameter('niveaux',$niveaux)
+            ->innerJoin('e.semestres','s','WITH','s.id = :semestre')
+            ->setParameter('semestre',$semestre)
+            ->getQuery()
+            ->getResult();
+    }
 
 /*    public function findByPag()
     {

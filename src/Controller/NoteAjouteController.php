@@ -43,7 +43,8 @@ class NoteAjouteController extends AbstractController
         $etudiantRepository = $em->getRepository(Etudiant::class);
         $ecRepository = $em->getRepository(EC::class);
 
-        $ecParNiveauxParSemestre = $RepEcRepository->findByNiveauxBySemestre($niveaux, $semestre);
+        //$ecParNiveauxParSemestre = $RepEcRepository->findByNiveauxBySemestre($niveaux, $semestre);
+        $ecParNiveauxParSemestre = $ecRepository->findByNiveauxBySemestre($niveaux, $semestre);
         $auNow = $auRepository->find($au);
         $niv = $niveauxRepository->findByType($type);
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
@@ -52,8 +53,8 @@ class NoteAjouteController extends AbstractController
 
         if ($ecParNiveauxParSemestre != null) {
             foreach ($ecParNiveauxParSemestre as $e) {
-                $ecNom = $e->getEC()->getNom();
-                $idEc = $e->getEC()->getId();
+                $ecNom = $e->getNom();
+                $idEc = $e->getId();
                 $idEcOrd[] = $idEc;
                 $ecOrd[] = $ecNom;
                 $nbrEc = $nbrEc + 1;

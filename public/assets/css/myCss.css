@@ -3,3 +3,8 @@
    overflow-y:scroll; 
    height: 100%;
 }
+.table>thead:first-child>tr:first-child>th {
+   border-top: 0;
+   vertical-align: bottom;
+   vertical-align: baseline;
+}

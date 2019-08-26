@@ -85,6 +85,11 @@ class EC
      */
     private $semestres;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $is_active;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -380,6 +385,18 @@ class EC
         if ($this->semestres->contains($semestre)) {
             $this->semestres->removeElement($semestre);
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive(?bool $is_active): self
+    {
+        $this->is_active = $is_active;
 
         return $this;
     }

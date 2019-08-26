@@ -110,39 +110,40 @@ class ECController extends AbstractController
             $uc = $ec->getUC();
             $all_ec = $uc->getECs();
             //set coeff and credit as somme of all coeff + new coeff and credit
-            $coeff = 0;
             $credit = 0;
             foreach($all_ec as $single_ec)
             {
-                $coeff = $coeff + $single_ec->getCoefficient();
                 $credit = $credit + $single_ec->getCredit();
             }
-            $coeff = $coeff + $ec->getCoefficient();
             $credit = $credit + $ec->getCredit();
 
-            $uc->setCoefficient($coeff);
             $uc->setCredit($credit);
 
-            // $nbr = 1;
-            // foreach ($all_ec as $ec_count) {
-            //     $nbr = $nbr + 1;
-            // }
-            // $coeff = 1 / $nbr;
+            $nbr = 1;
+            foreach ($all_ec as $ec_count) {
+                $nbr = $nbr + 1;
+            }
+            $coeff = 1 / $nbr;
 
-            // foreach ($all_ec as $ec_count) {
-            //     $ec_count->setCoefficient($coeff);
-            //     $em->persist($ec_count);
-            // }
+            foreach ($all_ec as $ec_count) {
+                $ec_count->setCoefficient($coeff);
+                $em->persist($ec_count);
+            }
 
-            // $ec->setCoefficient($coeff);
+            $ec->setCoefficient($coeff);
 
             $i = 0;
+            // foreach ($niveaux as $niveau) {
+            //     $repEc[$i] = new RepartitionEC();
+            //     $repEc[$i]->setEc($ec);
+            //     $repEc[$i]->setNiveaux($niveau);
+            //     $repEc[$i]->setSemestre($semestres[$i]);
+            //     $em->persist($repEc[$i]);
+            //     $i = $i + 1;
+            // }
             foreach ($niveaux as $niveau) {
-                $repEc[$i] = new RepartitionEC();
-                $repEc[$i]->setEc($ec);
-                $repEc[$i]->setNiveaux($niveau);
-                $repEc[$i]->setSemestre($semestres[$i]);
-                $em->persist($repEc[$i]);
+                $ec->addNiveau($niveau);
+                $ec->addSemestre($semestres[$i]);
                 $i = $i + 1;
             }
             $em->persist($uc);
