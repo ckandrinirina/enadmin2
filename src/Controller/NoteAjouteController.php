@@ -40,7 +40,6 @@ class NoteAjouteController extends AbstractController
         $auRepository = $em->getRepository(AnneUniversitaire::class);
         $niveauxRepository = $em->getRepository(Niveaux::class);
         $semestreRepository = $em->getRepository(Semestre::class);
-        $RepEcRepository = $em->getRepository(RepartitionEC::class);
         $typeParcoursRepository = $em->getRepository(TypeParcours::class);
         $etudiantRepository = $em->getRepository(Etudiant::class);
         $ecRepository = $em->getRepository(EC::class);
@@ -261,22 +260,38 @@ class NoteAjouteController extends AbstractController
                 $note->setNoteUc($note_uc['0']);
 
                 //test if note eliminatoire exist
-                foreach($note_uc['0']->getNotes() as $notes)
-                {
-                    if ($notes->getValeur() < 5) 
-                    {
-                        if($note_uc['0']->getIsRatarapage() == 1)
-                        { 
-                            $note_uc['0']->setIsFinal(true);
+                //FIXME note
+                //if ratrapage pas probleme
+                if ($ratrapage == 0) {
+                    foreach ($note_uc['0']->getNotes() as $notes) {
+                        if ($notes->getValeur() < 5) {
+                            if ($note_uc['0']->getIsRatarapage() == 1) {
+                                $note_uc['0']->setIsFinal(true);
+                            } else {
+                                $note_uc['0']->setIsFinal(false);
+                            }
+                            $note_uc['0']->setIsValide(false);
+                            $note_uc['0']->setCredit(0);
                         }
-                        else
-                        {
-                            $note_uc['0']->setIsFinal(false);
-                        }
-                        $note_uc['0']->setIsValide(false);
-                        $note_uc['0']->setCredit(0);
                     }
                 }
+                //else if rarapage
+                if ($ratrapage == 1) {
+                    foreach ($note_uc['0']->getNotes() as $notes) {
+                        if ($notes->getIsRatrapage() == 1) {
+                            if ($notes->getValeur() < 5) {
+                                if ($note_uc['0']->getIsRatarapage() == 1) {
+                                    $note_uc['0']->setIsFinal(true);
+                                } else {
+                                    $note_uc['0']->setIsFinal(false);
+                                }
+                                $note_uc['0']->setIsValide(false);
+                                $note_uc['0']->setCredit(0);
+                            }
+                        }
+                    }
+                }
+
                 //test if note eliminatoire exist
 
                 //si note eliminatoir credit = 0
@@ -292,13 +307,14 @@ class NoteAjouteController extends AbstractController
             $em->flush();
 
             //calculate moyenne
-            $all_note_ue = $note_uc_repository->fin_by_e_n_s_r($etudiant, $niveau, $semestre, $ratrapage, $au);
+            $all_note_ue = $note_uc_repository->fin_by_e_n_s_r_2($etudiant, $niveau, $semestre, $au);
             //calculate nbr off crédit off all uc
             $nbr_credit_ue = 0;
             $moyenne = 0;
             $nbr_note_uc = 0;
             //find ue active by semestre
             $uc_niveau = $uc_repository->find_active_semestre($semestre,$niveau);
+
             foreach($uc_niveau as $uc)
             {
                 $nbr_note_uc = $nbr_note_uc + 1; 
@@ -308,10 +324,12 @@ class NoteAjouteController extends AbstractController
             {
                $nbr_credit_ue = $nbr_credit_ue + $nuc->getCredit();
             }
+
             foreach($all_note_ue as $nuc)
             {
                 $moyenne = $moyenne + $nuc->getValueCoeff();
             }
+            
             $moyenne = $moyenne/$nbr_note_uc;
             $moyenne = $moyenne*($nbr_credit_ue/30); 
             //calculate moyenne
@@ -437,13 +455,30 @@ class NoteAjouteController extends AbstractController
                 }
             }
         }
+
+        //else if rarapage
+        if ($ratrapage == 1) {
+            foreach ($note_uc['0']->getNotes() as $note_last) {
+                if ($note_last->getIsRatrapage() == 1) {
+                    if ($note_last->getValeur() < 5) {
+                        if ($note_uc['0']->getIsRatarapage() == 1) {
+                            $note_uc['0']->setIsFinal(true);
+                        } else {
+                            $note_uc['0']->setIsFinal(false);
+                        }
+                        $note_uc['0']->setIsValide(false);
+                        $note_uc['0']->setCredit(0);
+                    }
+                }
+            }
+        }
         //test if note eliminatoire exist
         $em->persist($note_uc);
 
         $etudiant = $note_uc->getEtudiant();
 
         //calculate moyenne
-        $all_note_ue = $note_uc_repository->fin_by_e_n_s_r($etudiant->getId(), $niveaux, $semestre, $ratrapage, $au);
+        $all_note_ue = $note_uc_repository->fin_by_e_n_s_r_2($etudiant->getId(), $niveaux, $semestre,$au);
         //calculate nbr off crédit off all uc
         $nbr_credit_ue = 0;
         $moyenne = 0;

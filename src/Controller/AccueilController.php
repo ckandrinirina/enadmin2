@@ -127,23 +127,34 @@ class AccueilController extends AbstractController
         if ($result['_token']) {
             $em = $this->getDoctrine()->getManager();
 
-            $path = $fileUploader->upload($files['file']);
+            if($files['file'] != null)
+            {
+                $path = $fileUploader->upload($files['file']);
+            }
+            else
+                $path = null;
 
             $info->setFile($path);
 
             $info->setUser($this->getUser());
             $info->setContenu($result['contenu']);
             $info->setAddAt(new \Datetime());
-            foreach ($result['niveaux'] as $niv) {
-                $niv_entity = $niveaux_repository->find($niv);
-                $info->addNiveau($niv_entity);
+            if (!isset($result['niveaux'])) {
+                $niv_entity = $niveaux_repository->findAll();
+                foreach ($niv_entity as $niv_l)
+                    $info->addNiveau($niv_l);
+            } else {
+                foreach ($result['niveaux'] as $niv) {
+                    $niv_entity = $niveaux_repository->find($niv);
+                    $info->addNiveau($niv_entity);
+                }
             }
             $em->persist($info);
             $em->flush();
             if ($route == 0)
                 return $this->redirectToRoute('accueil');
             else
-                return $this->redirectToRoute('list_all_info');
+                return $this->redirectToRoute('list_all_info',['pagination' => '0']);
         }
     }
 
@@ -163,7 +174,12 @@ class AccueilController extends AbstractController
         if ($result['_token']) {
             $em = $this->getDoctrine()->getManager();
 
-            $path = $fileUploader->upload($files['file']);
+            if($files['file'] != null)
+            {
+                $path = $fileUploader->upload($files['file']);
+            }
+            else
+                $path = null;
 
             $info->setFile($path);
 

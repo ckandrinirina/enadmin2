@@ -224,7 +224,7 @@
                                     {% endfor %}
                                     </div>
                                     <div class="modal-footer">
-                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id,'pagination':'0'}), 'method': 'POST'}) }}
+                                        {{ form_start(informationChildren_form_view[information.id],{'attr':{'novalidate' : 'novalidate'},'action': path('new-information-children',{'id':information.id,'pagination':'0'}), 'method': 'POST'}) }}
                                             <div class="input-group">
                                                 {{ form_row( informationChildren_form_view[information.id].contenu ) }}
                                                 <div class="input-group-btn">
@@ -249,7 +249,7 @@
             <!-- /.chat -->
             <a href="{{path('list_all_info',{'pagination':'0'})}}" class="btn btn-block btn-info btn-xs">Afficher toute les informations</a>
             <div class="box-footer">
-                {{ form_start(information_form_view,{'action': path('new-information'), 'method': 'POST'}) }}
+                {{ form_start(information_form_view,{'attr':{'novalidate' : 'novalidate'},'action': path('new-information'), 'method': 'POST'}) }}
                 <div class="input-group">
                     {{ form_row(information_form_view.contenu) }}
                     <div class="input-group-btn">

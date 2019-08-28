@@ -91,6 +91,25 @@ class NoteUcRepository extends ServiceEntityRepository
             ->getResult();        
     }
 
+    public function fin_by_e_n_s_r_2($etudiant,$niveaux,$semestre,$au)
+    {
+        return $this->createQueryBuilder('n')
+            ->innerJoin('n.etudiant','e','WITH','e.id = :val3')
+            ->setParameter('val3',$etudiant)
+            ->addSelect('e')
+            ->innerJoin('n.niveaux','niv','WITH','niv.id = :val1')
+            ->setParameter('val1',$niveaux)
+            ->addSelect('niv')
+            ->innerJoin('n.semestre','s','WITH','s.id = :val2')
+            ->setParameter('val2',$semestre)
+            ->addSelect('s')
+            ->innerJoin('n.anneUniversitaire','au','WITH','au.id = :val5')
+            ->setParameter('val5',$au)
+            ->addSelect('au')
+            ->getQuery()
+            ->getResult();        
+    }
+
 
     // /**
     //  * @return NoteUc[] Returns an array of NoteUc objects

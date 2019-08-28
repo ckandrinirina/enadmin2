@@ -141,7 +141,7 @@
                                     {% endfor %}
                                     </div>
                                     <div class="modal-footer">
-                                        {{ form_start(informationChildren_form_view[information.id],{'action': path('new-information-children',{'id':information.id,'route':'1','pagination':pagination}), 'method': 'POST'}) }}
+                                        {{ form_start(informationChildren_form_view[information.id],{'attr':{'novalidate' : 'novalidate'},'action': path('new-information-children',{'id':information.id,'route':'1','pagination':pagination}), 'method': 'POST'}) }}
                                             <div class="input-group">
                                                 {{ form_row(informationChildren_form_view[information.id].contenu) }}
                                                 <div class="input-group-btn">
@@ -188,7 +188,7 @@
             <br/>
             <br/>
             <div class="box-footer">
-                {{ form_start(information_form_view,{'action': path('new-information',{'route':'1'}), 'method': 'POST'}) }}
+                {{ form_start(information_form_view,{'attr':{'novalidate' : 'novalidate'},'action': path('new-information',{'route':'1'}), 'method': 'POST'}) }}
                 <div class="input-group">
                     {{ form_row(information_form_view.contenu) }}
                     <div class="input-group-btn">
