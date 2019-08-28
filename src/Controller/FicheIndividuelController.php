@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\NoteUc;
 use App\Entity\AnneUniversitaire;
+use App\Entity\Moyenne;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Scolarite;
 use App\Service\NoteService;
@@ -120,22 +121,29 @@ class FicheIndividuelController extends AbstractController
         $semestreRepository = $em->getRepository(Semestre::class);
         $note_ue_repository = $em->getRepository(NoteUc::class);
         $auRepository = $em->getRepository(AnneUniversitaire::class);
+        $moyenne_repository = $em->getRepository(Moyenne::class);
 
         $allAu = $auRepository->findAllByOrder();
         $auNow = $auRepository->find($au);
 
         $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage ,$au);
+        $moyenne = $moyenne_repository->find_by_e_s_n_au($etudiant, $semestre, $niveaux, $au);
+
+        if($moyenne != null)
+            $moyenne = $moyenne['0'];
+        else
+            $moyenne = null;
 
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
 
-        $credit_aquis = 0;
-        $moyenne = $note_service->calculate_moyenne($note_ue);
-        foreach ($note_ue as $n_ue) 
-        {
-            $credit_aquis = $credit_aquis + $n_ue->getCredit();
-        }
+        // $credit_aquis = 0;
+        // $moyenne = $note_service->calculate_moyenne($note_ue);
+        // foreach ($note_ue as $n_ue) 
+        // {
+        //     $credit_aquis = $credit_aquis + $n_ue->getCredit();
+        // }
 
         $niv = $niveauxRepository->findByType($type);
         return $this->render(
@@ -152,7 +160,6 @@ class FicheIndividuelController extends AbstractController
                 'r' => $ratrapage,
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
-                'credit_aquis' => $credit_aquis,
                 'allAu' => $allAu,
                 'auid' => $au,
                 'auNow' => $auNow,

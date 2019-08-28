@@ -36,7 +36,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'au':auid,'semestre':niveau.semestres['0'].id,'ratrapage':'1' })}}">{{ niveau.niveau }}</a>
+                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'au':auid,'semestre':niveau.semestres['0'].id,'ratrapage':'0' })}}">{{ niveau.niveau }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -165,7 +165,7 @@
                                                                         <th>Résultat</th>
                                                                         <th></th>
                                                                         <th>
-                                                                            {% if n_ue.valueCoeff < 10 %}Acquis{% else %}Ajourné
+                                                                            {% if n_ue.credit == 0 %}Ajourné{% else %}Acquis
                                                                             {% endif %}
                                                                         </th>
                                                                         <th></th>
@@ -180,12 +180,23 @@
                                                             <table class="table table-bordered table-striped">
                                                                 <tr>
                                                                     <th>Moyenne Semestrielle</th>
-                                                                    <th>{{ moyenne }}
+                                                                    {% if moyenne != null %}
+                                                                    <th>{{ moyenne.value }}
                                                                         /20</th>
+                                                                    {% else %}
+                                                                        <th>0
+                                                                        /20</th>
+                                                                    {% endif %}
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Crédit Acquis</th>
-                                                                    <th>{{ credit_aquis }}</th>
+                                                                    {% if moyenne != null %}
+                                                                    <th>{{ moyenne.credit }}
+                                                                        /20</th>
+                                                                    {% else %}
+                                                                        <th>0
+                                                                        /20</th>
+                                                                    {% endif %}
                                                                 </tr>
                                                             </table>
                                                         </div>
