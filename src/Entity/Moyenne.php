@@ -46,24 +46,9 @@ class Moyenne
     private $anneUniversitaire;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_ratrapage;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_valide;
-
-    /**
      * @ORM\Column(type="float")
      */
     private $credit;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_final;
 
     public function getId(): ?int
     {
@@ -78,6 +63,18 @@ class Moyenne
     public function setValue(float $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getCredit(): ?float
+    {
+        return $this->credit;
+    }
+
+    public function setCredit(float $credit): self
+    {
+        $this->credit = $credit;
 
         return $this;
     }
@@ -126,54 +123,6 @@ class Moyenne
     public function setAnneUniversitaire(?AnneUniversitaire $anneUniversitaire): self
     {
         $this->anneUniversitaire = $anneUniversitaire;
-
-        return $this;
-    }
-
-    public function getIsRatrapage(): ?bool
-    {
-        return $this->is_ratrapage;
-    }
-
-    public function setIsRatrapage(bool $is_ratrapage): self
-    {
-        $this->is_ratrapage = $is_ratrapage;
-
-        return $this;
-    }
-
-    public function getIsValide(): ?bool
-    {
-        return $this->is_valide;
-    }
-
-    public function setIsValide(bool $is_valide): self
-    {
-        $this->is_valide = $is_valide;
-
-        return $this;
-    }
-
-    public function getCredit(): ?float
-    {
-        return $this->credit;
-    }
-
-    public function setCredit(float $credit): self
-    {
-        $this->credit = $credit;
-
-        return $this;
-    }
-
-    public function getIsFinal(): ?bool
-    {
-        return $this->is_final;
-    }
-
-    public function setIsFinal(bool $is_final): self
-    {
-        $this->is_final = $is_final;
 
         return $this;
     }

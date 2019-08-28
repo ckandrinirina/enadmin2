@@ -15,8 +15,10 @@ use App\Form\NoteType;
 use App\Service\NoteService;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\EC;
+use App\Entity\Moyenne;
 use App\Entity\NoteUc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\UC;
 
 /**
  * Require ROLE_ADMIN.
@@ -60,6 +62,7 @@ class NoteAjouteController extends AbstractController
                 $nbrEc = $nbrEc + 1;
             }
         }
+
         else {
             $ecOrd = NULL;
             $idEcOrd = NULL;
@@ -122,6 +125,8 @@ class NoteAjouteController extends AbstractController
         $auRepository = $em->getRepository(AnneUniversitaire::class);
         $note_uc_repository = $em->getRepository(NoteUc::class);
         $note_repository = $em->getRepository(Note::class);
+        $moyenne_repository = $em->getRepository(Moyenne::class);
+        $uc_repository = $em->getRepository(UC::class);
 
         $etudiantId = $etudiantRepository->find($etudiant);
         $ecId = $ecRepository->find($ec);
@@ -181,7 +186,7 @@ class NoteAjouteController extends AbstractController
                 $note_uc_new->setNiveaux($niveauId);
                 $note_uc_new->setValueCoeff(($note->getValueCoeff() * ($uc->getCoefficient())));
                 $note_uc_new->setIsRatarapage($ratrapage);
-                            
+                
                 //if note_uc is not valide => test if is ratrapage
                 if ($note_uc_new->getValueCoeff() < 10) 
                 {
@@ -240,6 +245,7 @@ class NoteAjouteController extends AbstractController
                     //else set is final false
                     else
                         $note_uc['0']->setIsFinal(false);
+
                     $note_uc['0']->setIsValide(false);
                     $note_uc['0']->setCredit(0);
                 } 
@@ -253,11 +259,81 @@ class NoteAjouteController extends AbstractController
                 }
                 $note_uc['0']->setValueCoeff($new_value_coeff);
                 $note->setNoteUc($note_uc['0']);
+
+                //test if note eliminatoire exist
+                foreach($note_uc['0']->getNotes() as $notes)
+                {
+                    if ($notes->getValeur() < 5) 
+                    {
+                        if($note_uc['0']->getIsRatarapage() == 1)
+                        { 
+                            $note_uc['0']->setIsFinal(true);
+                        }
+                        else
+                        {
+                            $note_uc['0']->setIsFinal(false);
+                        }
+                        $note_uc['0']->setIsValide(false);
+                        $note_uc['0']->setCredit(0);
+                    }
+                }
+                //test if note eliminatoire exist
+
+                //si note eliminatoir credit = 0
+                if($note->getValeur() < 5)
+                {
+                    $note_uc['0']->setIsValide(false);
+                    $note_uc['0']->setCredit(0);
+                }               
                 $em->persist($note_uc['0']);
             }
             $em->persist($note);
+
             $em->flush();
+
+            //calculate moyenne
+            $all_note_ue = $note_uc_repository->fin_by_e_n_s_r($etudiant, $niveau, $semestre, $ratrapage, $au);
+            //calculate nbr off crédit off all uc
+            $nbr_credit_ue = 0;
+            $moyenne = 0;
+            $nbr_note_uc = 0;
+            //find ue active by semestre
+            $uc_niveau = $uc_repository->find_active_semestre($semestre,$niveau);
+            foreach($uc_niveau as $uc)
+            {
+                $nbr_note_uc = $nbr_note_uc + 1; 
+            }
+            //
+            foreach($all_note_ue as $nuc)
+            {
+               $nbr_credit_ue = $nbr_credit_ue + $nuc->getCredit();
+            }
+            foreach($all_note_ue as $nuc)
+            {
+                $moyenne = $moyenne + $nuc->getValueCoeff();
+            }
+            $moyenne = $moyenne/$nbr_note_uc;
+            $moyenne = $moyenne*($nbr_credit_ue/30); 
+            //calculate moyenne
+            //insert moyenne
+            $moyenneAdd = $moyenne_repository->find_by_e_s_n_au($etudiant,$semestre,$niveau,$au);
+
+            if ($moyenneAdd == null)
+                $moyenneAdd = new Moyenne();
+            else
+                $moyenneAdd = $moyenneAdd[0];
+
+            $moyenneAdd->setAnneUniversitaire($auRepository->find($au));
+            $moyenneAdd->setEtudiant($etudiantRepository->find($etudiant));
+            $moyenneAdd->setNiveau($niveauxRepository->find($niveau));
+            $moyenneAdd->setSemestre($semestreRepository->find($semestre));
+            $moyenneAdd->setValue($moyenne);
+            $moyenneAdd->setCredit($nbr_credit_ue);
+            $em->persist($moyenneAdd);
+            $em->flush();
+            //
         }
+
         return $this->render(
             'note_ajoute/noteFormAjoute.html.twig',
             [
@@ -295,9 +371,16 @@ class NoteAjouteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $noteRepository = $em->getRepository(Note::class);
         $note_uc_repository = $em->getRepository(NoteUc::class);
+        $uc_repository = $em->getRepository(UC::class);
+        $auRepository = $em->getRepository(AnneUniversitaire::class);
+        $etudiantRepository = $em->getRepository(Etudiant::class);
+        $semestreRepository = $em->getRepository(Semestre::class);
+        $niveauxRepository = $em->getRepository(Niveaux::class);
+        $moyenne_repository = $em->getRepository(Moyenne::class);
         
         //recupere la note
         $note = $noteRepository->find($noteId);
+        $em->remove($note);
 
         //recuperer l'id du note
         $id_note_uc = $note->getNoteUc()->getId();
@@ -314,21 +397,93 @@ class NoteAjouteController extends AbstractController
         $new_value_coeff = $last_value_coeff - $note_value_with_coeff;
 
         if ($new_value_coeff < 10) {
+            if ($note_uc->getIsRatarapage() == 1) 
+            {
+                //if is ratrapage set is_final true
+                $note_uc->setIsFinal(true);
+            }
+            //else set is final false
+            else
+                $note_uc->setIsFinal(false);
+
             $note_uc->setIsValide(false);
             $note_uc->setCredit(0);
-        } else {
+        } 
+        else 
+        {
+            $note_uc->setIsFinal(false);
             $note_uc->setIsValide(true);
-            $note_uc->setCredit($note_uc->getUc()->getCoefficient());
-        }
-        if ($new_value_coeff == 0) {
-            $em->remove($note_uc);
-        } else {
-            $note_uc->setValueCoeff($new_value_coeff);
-            $em->persist($note_uc);
+            $note_uc->setCredit($note_uc->getUc()->getCredit());
         }
 
+        $note_uc->setValueCoeff($new_value_coeff);
+        //test if note eliminatoire exist
+        foreach ($note_uc->getNotes() as $note_last) 
+        {
+            if($note_last->getId() != $note->getId())
+            {
+                if ($note_last->getValeur() < 5) 
+                {
+                    if ($note_uc->getIsRatarapage() == 1) 
+                    {
+                        $note_uc->setIsFinal(true);
+                    } 
+                    else 
+                    {
+                        $note_uc->setIsFinal(false);
+                    }
+                    $note_uc->setIsValide(false);
+                    $note_uc->setCredit(0);
+                }
+            }
+        }
+        //test if note eliminatoire exist
+        $em->persist($note_uc);
+
+        $etudiant = $note_uc->getEtudiant();
+
+        //calculate moyenne
+        $all_note_ue = $note_uc_repository->fin_by_e_n_s_r($etudiant->getId(), $niveaux, $semestre, $ratrapage, $au);
+        //calculate nbr off crédit off all uc
+        $nbr_credit_ue = 0;
+        $moyenne = 0;
+        $nbr_note_uc = 0;
+        //find ue active by semestre
+        $uc_niveau = $uc_repository->find_active_semestre($semestre, $niveaux);
+        foreach ($uc_niveau as $uc) 
+        {
+            $nbr_note_uc = $nbr_note_uc + 1;
+        }
+        //
+        foreach ($all_note_ue as $nuc) {
+            $nbr_credit_ue = $nbr_credit_ue + $nuc->getCredit();
+        }
+
+        foreach ($all_note_ue as $nuc) {
+            $moyenne = $moyenne + $nuc->getValueCoeff();
+        }
+
+        $moyenne = $moyenne / $nbr_note_uc;
+        $moyenne = $moyenne * ($nbr_credit_ue / 30);
+        //calculate moyenne
+        //insert moyenne
+        $moyenneAdd = $moyenne_repository->find_by_e_s_n_au($etudiant->getId(), $semestre, $niveaux, $au);
+
+        if ($moyenneAdd == null)
+            $moyenneAdd = new Moyenne();
+        else
+            $moyenneAdd = $moyenneAdd[0];
+
+        $moyenneAdd->setAnneUniversitaire($auRepository->find($au));
+        $moyenneAdd->setEtudiant($etudiantRepository->find($etudiant->getId()));
+        $moyenneAdd->setNiveau($niveauxRepository->find($niveaux));
+        $moyenneAdd->setSemestre($semestreRepository->find($semestre));
+        $moyenneAdd->setValue($moyenne);
+        $moyenneAdd->setCredit($nbr_credit_ue);
+        
+        $em->persist($moyenneAdd);
+
         $type = $note->getNiveaux()->getType()->getId();
-        $em->remove($note);
         $em->flush();
 
         return $this->redirectToRoute(

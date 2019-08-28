@@ -50,6 +50,17 @@ class UCRepository extends ServiceEntityRepository
                     ->getResult();
     }
 
+    public function find_active_semestre($semestre,$niveau)
+    {
+        return $this->createQueryBuilder('e')
+                    ->innerJoin('e.semestres','s','WITH','s.id = :semestre')
+                    ->setParameter('semestre',$semestre)
+                    ->innerJoin('e.niveaux','n','WITH','n.id = :niveau')
+                    ->setParameter('niveau',$niveau)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return UC[] Returns an array of UC objects
     //  */

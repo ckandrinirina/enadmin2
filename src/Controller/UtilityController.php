@@ -15,17 +15,12 @@ class UtilityController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $repartition_ec_repository = $em->getRepository(RepartitionEC::class);
-        $ec_repository = $em->getRepository(EC::class);
-        
-        $repartition_ec = $repartition_ec_repository->findAll();
-        foreach($repartition_ec as $rep)
+        $ec_rep = $em->getRepository(EC::class);
+        $ec = $ec_rep->findAll();
+        foreach($ec as $rep)
         {
-            $ec = $ec_repository->find($rep->getEc()->getId());
-            $ec->addNiveau($rep->getNiveaux());
-            $ec->addSemestre($rep->getSemestre());
-            $em->persist($ec);
+            $rep->setIsActive(1);
+            $em->persist($rep);
         }
         $em->flush();
         return $this->render('utility/index.html.twig');

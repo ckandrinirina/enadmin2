@@ -7,4 +7,11 @@
    border-top: 0;
    vertical-align: bottom;
    vertical-align: baseline;
+   /* transform-origin: 0 0;
+   transform: rotate(-90deg);
+   transform: rotate(-90deg);
+   transform-origin: bottomss left;
+   width: 100%; */
 }
+
+.ui-datatable th { writing-mode: vertical-lr; }

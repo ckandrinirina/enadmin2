@@ -64,12 +64,14 @@
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             {% for ec in ue.ecs %}
+                                                                                            {% if ec.isActive == 1 %}                                                        
                                                                                                 <tr>
                                                                                                     <td>{{ ec.nom }}</td>
                                                                                                     <td>{{ ec.code }}</td>
                                                                                                     <td>{{ ec.credit }}
                                                                                                         crédits</td>
                                                                                                 </tr>
+                                                                                            {% endif %}
                                                                                             {% endfor %}
                                                                                         </tbody>
                                                                                     {% endfor %}

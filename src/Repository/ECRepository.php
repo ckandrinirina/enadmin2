@@ -43,6 +43,7 @@ class ECRepository extends ServiceEntityRepository
             ->setParameter('niveaux',$niveaux)
             ->innerJoin('e.semestres','s','WITH','s.id = :semestre')
             ->setParameter('semestre',$semestre)
+            ->where('e.is_active = 1')
             ->getQuery()
             ->getResult();
     }

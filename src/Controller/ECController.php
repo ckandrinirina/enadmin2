@@ -113,23 +113,39 @@ class ECController extends AbstractController
             $credit = 0;
             foreach($all_ec as $single_ec)
             {
-                $credit = $credit + $single_ec->getCredit();
+                //test if ec is active
+                if($single_ec->getIsActive() == 1)
+                    //credit total off ue
+                    $credit = $credit + $single_ec->getCredit();
             }
-            $credit = $credit + $ec->getCredit();
-
+            //credit total + new ec
+            if($ec->getIsActive() == 1)
+                $credit = $credit + $ec->getCredit();
+            //set value off uc to total
             $uc->setCredit($credit);
 
             $nbr = 1;
+            //calculate nbr off all ec
             foreach ($all_ec as $ec_count) {
-                $nbr = $nbr + 1;
+                if($ec_count->getIsActive() ==1 )
+                    $nbr = $nbr + 1;
             }
+            //coeff off all ec = 1 / $nbr of ec
+            if($ec->getIsActive() == 0)
+                $nbr = $nbr - 1;
+
+            if($nbr == 0)
+                $nbr = 1;
+
             $coeff = 1 / $nbr;
 
             foreach ($all_ec as $ec_count) {
+                //set coeff of all ec in ue ass new coeff
                 $ec_count->setCoefficient($coeff);
                 $em->persist($ec_count);
             }
 
+            //set new ec coeff
             $ec->setCoefficient($coeff);
 
             $i = 0;
@@ -173,7 +189,7 @@ class ECController extends AbstractController
     {
         $status = "add_ec";
         $em = $this->getDoctrine()->getManager();
-        $repartition_ec_repository = $em->getRepository(RepartitionEC::class);
+        //$repartition_ec_repository = $em->getRepository(RepartitionEC::class);
         $ec_repository = $em->getRepository(EC::class);
         // $repEc1 = new RepartitionEC();
         // $repEc2 = new RepartitionEC();
@@ -196,45 +212,48 @@ class ECController extends AbstractController
             $credit = 0;
             foreach($all_ec as $single_ec)
             {
-                $coeff = $coeff + $single_ec->getCoefficient();
+                //test if ec is active
+                if($single_ec->getIsActive() == 1)
+                    //credit total off ue
+                    $coeff = $coeff + $single_ec->getCoefficient();
                 $credit = $credit + $single_ec->getCredit();
             }
+            //remove last coeff
             $last_ec = $ec_repository->find($ec->getId());
-            $coeff = $coeff - $last_ec->getCoefficient();
             $credit = $credit - $last_ec->getCredit();
-            $coeff = $coeff + $ec->getCoefficient();
-            $credit = $credit + $ec->getCredit();
 
-            // $semestres = $ec->getUC()->getSemestres();
+            if($ec->getIsActive()==1)
+                $credit = $credit + $ec->getCredit();
 
-            // $uc = $ec->getUC();
-            // $all_ec = $uc->getECs();
+            $semestres = $ec->getUC()->getSemestres();
 
-            // $nbr = 1;
-            // foreach ($all_ec as $ec_count) {
-            //     $nbr = $nbr + 1;
-            // }
-            // $coeff = 1 / $nbr;
+            $nbr = 0;
+            foreach ($all_ec as $ec_count) {
+                if($ec_count->getIsActive() == 1)
+                    //credit total off ue
+                    $nbr = $nbr + 1;
+            }
 
-            // foreach ($all_ec as $ec_count) {
-            //     $ec_count->setCoefficient($coeff);
-            //     $em->persist($ec_count);
-            // }
+            if($nbr == 0)
+                $nbr = 1;
 
-            // $ec->setCoefficient($coeff);
+            $coeff = 1 / $nbr;
 
-            // $i = 0;
-            // foreach ($niveaux as $niveau) {
-            //     $repEc[$i] = $repartition_ec_repository->find_by_s_n_ec($semestres[$i]->getId(), $niveau->getId(), $ec->getId());
-            //     $repEc[$i] = $repEc[$i][0];
-            //     $repEc[$i]->setEc($ec);
-            //     $repEc[$i]->setNiveaux($niveau);
-            //     $repEc[$i]->setSemestre($semestres[$i]);
-            //     $em->persist($repEc[$i]);
-            //     $i = $i + 1;
-            // }
-            $uc->setCoefficient($coeff);
+            foreach ($all_ec as $ec_count) {
+                $ec_count->setCoefficient($coeff);
+                $em->persist($ec_count);
+            }
+
+            $ec->setCoefficient($coeff);
+
+            $i = 0;
+            foreach ($niveaux as $niveau) {
+                $ec->addNiveau($niveau);
+                $ec->addSemestre($semestres[$i]);
+                $i = $i + 1;
+            }
             $uc->setCredit($credit);
+            
             
             $em->persist($uc);
             $em->persist($ec);

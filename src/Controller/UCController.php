@@ -48,7 +48,7 @@ class UCController extends AbstractController
             {
                 $uc2->addSemestre($sem);
             }
-            $uc2->setCoefficient($uc->getCoefficient());
+            $uc2->setCoefficient(1);
             $uc2->setCredit($uc->getCredit());
             $uc2->setNom($uc->getNom());
             $em->persist($uc2);
