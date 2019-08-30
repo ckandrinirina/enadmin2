@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EnseignantRepository")
- * * @ORM\Table(name="enseignant")
+ * @ORM\Table(name="enseignant")
  */
 class Enseignant
 {
@@ -27,21 +27,25 @@ class Enseignant
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $contact;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $dateNaissance;
 
@@ -91,11 +95,13 @@ class Enseignant
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $matricule;
 

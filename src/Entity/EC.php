@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PhpParser\Node\Expr\Cast\String_;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ECRepository")
@@ -22,6 +23,7 @@ class EC
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $nom;
 
@@ -57,11 +59,13 @@ class EC
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $code;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Champ obligatoire")
      */
     private $credit;
     
