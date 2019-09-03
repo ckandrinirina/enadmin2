@@ -1,3 +1,16 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "connectionTimeout": 30,
+            "database": "electronique",
+            "dialect": "MySQL",
+            "name": "electronique",
+            "password": "andrinirinaroot",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
 }

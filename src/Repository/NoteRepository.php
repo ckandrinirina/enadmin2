@@ -92,6 +92,27 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function specialFindOne2($niveaux,$semestre,$au,$id,$ec,$ratrapage)
+    {
+        return $this->createQueryBuilder('n')
+            ->innerJoin('n.etudiant','e','WITH','e.id = :val1')
+            ->setParameter('val1',$id)
+            ->addSelect('e')
+            ->innerJoin('n.EC','ec','WITH','ec.nom = :val2')
+            ->setParameter('val2',$ec)
+            ->addSelect('ec')
+            ->where('n.niveaux = :val3')
+            ->setParameter('val3',$niveaux)
+            ->andWhere('n.semestre = :val4')
+            ->setParameter('val4',$semestre)
+            ->andWhere('n.anneUniversitaire = :val5')
+            ->setParameter('val5',$au)
+            ->andWhere('n.isRatrapage = :val6')
+            ->setParameter('val6',$ratrapage)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findInvalideNote($etudiant,$semestre)
     {
         $valide = 0;

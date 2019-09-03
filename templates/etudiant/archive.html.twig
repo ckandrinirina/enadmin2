@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Archivage
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+{% endblock %}
+
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Gestion d'archive
+            {#<small>{{ parcour.type }}</small>#}
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>
+                    Gestions d'archive</a>
+            </li>
+            {#<li class="active">{{ parcour.type }}</li>#}
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestions d'archive</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table class="table table-bordered table-striped" id="example1">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Date d'entré</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for et in archives %}
+                        <tr>
+                            <td>{{ et.nom }}</td>
+                            <td>{{ et.prenom }}</td>
+                            <td>{{ et.anneEntre }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-info" type="button">Action</button>
+                                    <button aria-expanded="false" class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li>
+                                                <a href="{{ path('fiche_individuel',{'etudiant':et.id,'type':et.parcour.id,'niveaux':et.parcour.niveauxs['0'].id}) }}">fiche individuel</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('fiche_note',{'etudiant':et.id ,'niveaux':et.parcour.niveauxs['0'].id,'semestre':et.parcour.niveauxs['0'].semestres['0'].id,'au':et.anneUniversitaire.id,'ratrapage':'0' })}}">fiche de note</a>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{{ path('etudiant_profile',{'etudiant':et.id})}}">Profile</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Date d'entré</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script>
+        $('#example1').DataTable()
+    </script>
+{% endblock %}

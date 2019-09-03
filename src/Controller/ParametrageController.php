@@ -14,6 +14,7 @@ use App\Form\ParametrageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametrage;
 use App\Entity\Enseignant;
+use App\Entity\Etudiant;
 
 class ParametrageController extends AbstractController
 {
@@ -210,16 +211,29 @@ class ParametrageController extends AbstractController
     public function add_au(Request $request)
     {
         $au = new AnneUniversitaire();
+
         $em = $this->getDoctrine()->getManager();
         $au_repository = $em->getRepository(AnneUniversitaire::class);
+        $etudiant_repository = $em->getRepository(Etudiant::class);
+
         $last_au = $au_repository->findLatestAu();
         $last_au_value = explode('/', $last_au['0']->getAnneUniversitaire());
         $new_au_value = ($last_au_value['0'] + 1);
         $new_au_value2 = ($last_au_value['1'] + 1);
         $final_new_value = $new_au_value . '/' . $new_au_value2;
+
         $au->setAnneUniversitaire($final_new_value);
         $em->persist($au);
-        $em->flush($au);
+
+        $etudiants = $etudiant_repository->findAll();
+
+        foreach($etudiants as $etudiant)
+        {
+            $etudiant->setAnneUniversitaire($au);
+            $em->persist($etudiant);
+        }  
+        
+        $em->flush();
         return $this->redirectToRoute('parametrage');
     }
 }

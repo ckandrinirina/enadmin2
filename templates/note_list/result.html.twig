@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats des examens
+    {{ parcour.type }}
+{% endblock %}
+
+{% block insideHeader %}
+    <section class="content-header">
+        <h1>
+            Résultats des examens
+            <small>{{ parcour.type }}</small>
+        </h1>
+        <h1>
+            Année universitaire:
+            <span class="btn btn-info" type="button">{{ auNow.anneUniversitaire }}</span>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>Résultats des examens</a>
+            </li>
+            <li class="active">{{ parcour.type }}</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    {% for niveau in niveaux %}
+                        <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
+                            <a href="{{ path('note_result',{'type':parcour.id,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'au':auid,'ratrapage':rat}) }}">{{ niveau.niveau }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div
+                            class="col-md-12">
+                            <!-- Custom Tabs (Pulled to the right) -->
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs pull-right">
+                                    {% for semestre in semestres %}
+                                        <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
+                                            <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':semestre.id,'au':auid,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    <li class="pull-left header">
+                                        <i class="fa fa-th"></i>
+                                        Semestres</li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1-1">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Résultats par semestre   :</h3>
+                                                        <a href="{{ path('note_result_pdf',{'type':t , 'niveaux':n ,'semestre':s,'au':auid,'ratrapage':rat}) }}" class="pull-right btn  btn-social btn-flickr">
+                                                            <i class="fa fa-file-pdf-o"></i>
+                                                            Générer un PDF
+                                                        </a>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-info" type="button">
+                                                                {% if rat == 0 %}
+                                                                    {{ 'Premier session' }}
+                                                                {% else  %}
+                                                                    {{ 'Ratrapage' }}
+                                                                {% endif %}
+                                                            </button>
+                                                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                                                <span class="caret"></span>
+                                                                <span class="sr-only">Toggle Dropdown</span>
+                                                            </button>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Première session</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        <table class="table table-bordered table-striped" id="example1">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Etudiant/EC</th>
+                                                                    {% for nd in ecOrd %}
+                                                                        <th>{{ nd }}</th>
+                                                                    {% endfor %}
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% set i = 0 %}
+                                                                {% for nm in nomOrd %}
+                                                                    <tr>
+                                                                        <td>{{ nm }}</td>
+                                                                        {% for value in matriceNote[i] %}
+                                                                            <td>
+                                                                                {% if value == "déja valider" %}
+                                                                                    <p class="text-green"></p>
+                                                                                {% elseif value < 10 %}
+                                                                                    <p>AJ</p>
+                                                                            {% else %}
+                                                                                {% endif %}
+                                                                            </td>
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                    {% set i = i+1 %}
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Historique par année universitaire</h3>
+                                </div>
+                                <div class="box-body">
+                                    {% for aun in allAu %}
+                                        <a type="button" class="btn btn-info" href="{{ path('note_result',{'type':parcour.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':rat}) }}">
+                                            {{ aun.anneUniversitaire }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+    {#<script src="{{ asset('dist/js/demo.js') }}"></script>#}
+    {#    <script>
+                $(function () {
+                    $('#example1').DataTable()
+                })
+            </script>#}
+{% endblock %}

@@ -68,7 +68,7 @@ class NoteAjouteController extends AbstractController
         }
         if ($etudiant != NULL) {
             foreach ($etudiant as $nt) {
-                $nom = $nt->getNom();
+                $nom = $nt->getNom().' '.$nt->getPrenom();
                 $idEt = $nt->getId();
                 $idEtOrd[] = $idEt;
                 $nomOrd[] = $nom;
@@ -78,7 +78,11 @@ class NoteAjouteController extends AbstractController
             $nomOrd = NULL;
             $idEtOrd = NULL;
         }
-        $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+
+        //$matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+
+        $matriceNote = $noteService->generateMatriceNote2($idEtOrd, $ecOrd, $nbrEt, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+
         if($this->getUser()->getEnseignant() != null )
             $ec = $ecRepository->findEcByEnseignant($this->getUser()->getEnseignant()->getId());
         else

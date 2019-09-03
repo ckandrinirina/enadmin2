@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         {% for e in et[i] %}
-                            {{e.ec.enseignant.nom}}  {{e.ec.enseignant.prenom}}<br/>
+                            {{e.ec.enseignant.nom}}  {{e.ec.enseignant.prenom|first|upper}}<br/>
                         {% endfor %}
                     </td>
                 </tr>

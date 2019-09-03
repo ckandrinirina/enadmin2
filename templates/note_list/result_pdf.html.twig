@@ -1,0 +1,98 @@
+{% extends "base_pdf.html.twig" %}
+{% block config %}
+    <div id="root" layout="portrait" size="A4">
+    {% endblock %}
+
+    {% block return_top %}
+        <a href="{{ path('note_result',{'type':t , 'niveaux':n ,'semestre':s,'au':auid,'ratrapage':rat}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block return_bottom %}
+        <a href="{{ path('note_result',{'type':t , 'niveaux':n ,'semestre':s,'au':auid,'ratrapage':rat}) }}" id="button_generate" class="btn btn-danger">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            Retourner à la liste</a>
+    {% endblock %}
+
+    {% block custom_style %}
+        <style type="text/css">
+            tr {
+                height: 1px;
+            }
+            td,
+            th {
+                /* font-size: 0.9em */
+            }
+            .tableC
+            {
+                width:28.9cm;
+                margin-left:0.4cm;
+                font-size:1em;
+            }
+        </style>
+    {% endblock %}
+
+    {% block tete %}{% endblock %}
+
+    {% block body %}
+        <h4 class="text-center">
+            <strong>RESULTAT DE L'EXAMEN POUR LE NIVEAU {{nivOne.niveau}} / SEMESTRE {{semOne.semestre}}
+                {# {{ niv_name.niveau }}</strong> #}
+            </h4>
+            <div>
+                <table class=" table-bordered tableC" id="example1">
+                    <thead>
+                        <tr>
+                            <th>Etudiant/EC</th>
+                            {% for nd in ecOrd %}
+                                <th>{{ nd }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set i = 0 %}
+                        {% for nm in nomOrd %}
+                            <tr>
+                                <td style="padding-left:0.1cm">{{ nm }}</td>
+                                {% for value in matriceNote[i] %}
+                                    <td class="text-center">
+                                        {% if value == "déja valider" %}
+                                            <p class="text-green"></p>
+                                        {% elseif value < 10 %}
+                                            <p>AJ</p>
+                                    {% else %}
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            {% set i = i+1 %}
+                        {% endfor %}
+                        {% set i = 0 %}
+                    </tbody>
+                </table>
+            </div> 
+        {% endblock %}
+
+        {% block script_function %}
+            <script>
+                function test() {
+                    var element = document.getElementById('content');
+                    html2pdf().from(element).set({
+                        margin: 0.1,
+                        filename: 'test.pdf',
+                        html2canvas: {
+                            scale: 5
+                        },
+                        jsPDF: {
+                            orientation: 'landscape',
+                            unit: 'in',
+                            format: 'letter',
+                            compressPDF: false
+                        }
+                    }).save();
+                }
+            </script>
+        {% endblock %}
+
+        {% block footer_pdf %}{% endblock %}

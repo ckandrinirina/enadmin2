@@ -46,17 +46,18 @@ class NoteListController extends AbstractController
         $niv = $niveauxRepository->findByType($type);
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
         $parcours = $typeParcoursRepository->find($type);
-
-        if (isset($note)) {
+        
+        if ($note != null ) {
             foreach ($note as $nt) {
-                if ($nt->getEtudiant()->getNom() != $nom) {
-                    $nom = $nt->getEtudiant()->getNom();
-                    $nomOrd[] = $nom;
-                    $nbrNom = $nbrNom + 1;
-                }
+                $nom = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
+                $nomOrd[] = $nom;
+                $nbrNom = $nbrNom + 1;
+                $idEt = $nt->getEtudiant()->getId();
+                $idEtOrd[] = $idEt;
             }
         } else {
             $nomOrd = NULL;
+            $idEtOrd = NULL;
         }
 
         if (isset($ec)) {
@@ -71,7 +72,9 @@ class NoteListController extends AbstractController
             $ecOrd = NULL;
         }
 
-        $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrNom, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+        //$matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrNom, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+
+        $matriceNote = $noteService->generateMatriceNote2($idEtOrd, $ecOrd, $nbrNom, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
 
         return $this->render(
             'note_list/list.html.twig',

@@ -87,14 +87,14 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                {{ form_start(form_new_heures,{'action': path('new-heure'), 'method': 'POST'}) }}
+                {# {{ form_start(form_new_heures,{'action': path('new-heure'), 'method': 'POST'}) }}
                 <div class="input-group margin">
                     {{ form_row(form_new_heures.heures) }}
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-flat" style="position: relative;margin-bottom: -25px;" type="submit">Ajouter</button>
                     </span>
                 </div>
-                {{ form_end(form_new_heures) }}
+                {{ form_end(form_new_heures) }} #}
             </div>
             <!-- /.box-body -->
         </div>
@@ -149,6 +149,15 @@
         </div>
         <!-- /.box -->
     </div>
+    <br/>
+    
+    <div class="rox">
+        <div class="callout callout-info">
+            <h4 class="text-center">Front-office:</h4>
+        </div>
+    </div>
+
+
     {% for salle in salles %}
         <div class="modal fade" id="modal-default-sup-{{salle.id}}">
             <div class="modal-dialog">
@@ -226,6 +235,7 @@
             </div>
         </div>
     {% endfor %}
+
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
