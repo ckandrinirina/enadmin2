@@ -15,14 +15,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametrage;
 use App\Entity\Enseignant;
 use App\Entity\Etudiant;
+use App\Entity\ParamGen;
 
 class ParametrageController extends AbstractController
 {
     /**
      * @Route("/parametrage", name="parametrage")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index()
@@ -32,6 +33,7 @@ class ParametrageController extends AbstractController
         $salles_repository = $em->getRepository(SalleClass::class);
         $anne_universitaire_repository = $em->getRepository(AnneUniversitaire::class);
         $heures_repository = $em->getRepository(Heures::class);
+        $second_tranche_repository = $em->getRepository(ParamGen::class);
 
         $salles = $salles_repository->findAll();
         $heures = $heures_repository->findAll();
@@ -44,6 +46,8 @@ class ParametrageController extends AbstractController
         $chef_mention_repository = $em->getRepository(Parametrage::class);
         $chef_mention = $chef_mention_repository->find('1');
 
+        $second_tranche = $second_tranche_repository->findAll();
+
         if ($salles != null) {
             foreach ($salles as $s) {
                 $form[$s->getId()] = $this->createForm(SalleClasseType::class);
@@ -52,7 +56,7 @@ class ParametrageController extends AbstractController
         } else {
             $view_form = null;
         }
-        
+
         if ($heures != null) {
             foreach ($heures as $h) {
                 $formH[$h->getId()] = $this->createForm(HeuresType::class);
@@ -73,15 +77,16 @@ class ParametrageController extends AbstractController
             'formH' => $formH,
             'form_new_heures' => $form_new_heures->createView(),
             'form_chef' => $form_chef->createView(),
-            'chef_mention' => $chef_mention
+            'chef_mention' => $chef_mention,
+            'second_tranche' => $second_tranche
         ]);
     }
 
     /**
      * @Route("/delete-salle/{id}", name="delete-salle")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function delete_salle(SalleClass $salle)
@@ -94,9 +99,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/edit-salle/{id}", name="edit-salle")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function edit_salle(SalleClass $salle, Request $request)
@@ -115,9 +120,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/new-salle", name="new-salle")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function new_salle(Request $request)
@@ -137,9 +142,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/edit-heure/{id}", name="edit-heure")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function edit_heure(Heures $heure, Request $request)
@@ -158,9 +163,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/change_chef/{id}", name="change_chef")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function change_chef(Parametrage $parametrage, Request $request)
@@ -181,9 +186,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/new-heure", name="new-heure")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function new_heure(Request $request)
@@ -203,9 +208,9 @@ class ParametrageController extends AbstractController
 
     /**
      * @Route("/new-au", name="add-au")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function add_au(Request $request)
@@ -231,8 +236,8 @@ class ParametrageController extends AbstractController
         {
             $etudiant->setAnneUniversitaire($au);
             $em->persist($etudiant);
-        }  
-        
+        }
+
         $em->flush();
         return $this->redirectToRoute('parametrage');
     }

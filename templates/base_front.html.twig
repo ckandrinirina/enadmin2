@@ -6,10 +6,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet"> -->
 
 	<link rel="stylesheet" href="{{asset('front/css/open-iconic-bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('font-google.css')}}">
 	<link rel="stylesheet" href="{{asset('front/css/animate.css')}}">
 
 	<link rel="stylesheet" href="{{asset('front/css/owl.carousel.min.css')}}">
@@ -98,133 +99,16 @@
 		</div>
 	</section>
 
-	<section class="ftco-services ftco-no-pb">
-		<div class="container-wrap">
-			<div class="row no-gutters">
-				<div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-primary">
-					<div class="media block-6 d-block text-center">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="flaticon-teacher"></span>
-						</div>
-						<div class="media-body p-2 mt-3">
-							<h3 class="heading">Enseignants certifiés</h3>
-							<p>Des enseignants diplomés pour bien former les étudiants a devenir un vrai ingénieur.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-tertiary">
-					<div class="media block-6 d-block text-center">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="flaticon-reading"></span>
-						</div>
-						<div class="media-body p-2 mt-3">
-							<h3 class="heading">Des éducations suplémentaires</h3>
-							<p>Pour former la comportement des étudiants a s'adapter une fois au travaille.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-fifth">
-					<div class="media block-6 d-block text-center">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="flaticon-books"></span>
-						</div>
-						<div class="media-body p-2 mt-3">
-							<h3 class="heading">Bibliothéque &amp; Laboratoire</h3>
-							<p>Pour approfonidir encore plus les formations des étudiants et mettre en pratique les connaissances acquis.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-quarternary">
-					<div class="media block-6 d-block text-center">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="flaticon-diploma"></span>
-						</div>
-						<div class="media-body p-2 mt-3">
-							<h3 class="heading">Certification</h3>
-							<p>Diplôme réconnue par l'Etat et les fonctions publiques.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+	{% block second_tranche %}{% endblock %}
 
 	<section class="ftco-section ftco-no-pt ftc-no-pb">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-5 order-md-last wrap-about py-5 wrap-about bg-light">
-					<div class="text px-4 ftco-animate">
-						<h2 class="mb-4">Bienvenue au mention électronique de l'ESPA</h2>
-						<p>Description.</p>
-						<!-- <p><a href="#" class="btn btn-secondary px-4 py-3">Read More</a></p> -->
-					</div>
-				</div>
-				<div class="col-md-7 wrap-about py-5 pr-md-4 ftco-animate">
-					<h2 class="mb-4">Notre offre</h2>
-					<p>Offre.</p>
-					<div class="row mt-5">
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-security"></span></div>
-								<div class="text">
-									<h3>Localisation</h3>
-									<p>CUR VONTOVORONA</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-reading"></span></div>
-								<div class="text">
-									<h3>Chef de la Mention</h3>
-									<p>RAMANANTSIHOARANA HARISOA Nathalie</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-diploma"></span></div>
-								<div class="text">
-									<h3>Enseignant et professeur diplomés</h3>
-									<p>Descrtiption</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-education"></span></div>
-								<div class="text">
-									<h3>Salle de classe suffisante</h3>
-									<p>Description</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-jigsaw"></span></div>
-								<div class="text">
-									<h3>Des cours impréssionnants</h3>
-									<p>description.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="services-2 d-flex">
-								<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
-										class="flaticon-kids"></span></div>
-								<div class="text">
-									<h3>Des sports et loisirs</h3>
-									<p>description.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+
+				{% block description %}{% endblock %}
+
+				{% block offre %}{% endblock %}
+
 			</div>
 		</div>
 	</section>

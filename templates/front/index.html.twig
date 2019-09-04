@@ -1,1 +1,135 @@
 {% extends 'base_front.html.twig' %}
+
+{% block second_tranche %}
+<section class="ftco-services ftco-no-pb">
+  <div class="container-wrap">
+    <div class="row no-gutters">
+      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-primary">
+        <div class="media block-6 d-block text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <span class="flaticon-teacher"></span>
+          </div>
+          <div class="media-body p-2 mt-3">
+            <h3 class="heading">{{second_tranche['0'].titre}}</h3>
+            <p>{{second_tranche['0'].description}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-tertiary">
+        <div class="media block-6 d-block text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <span class="flaticon-reading"></span>
+          </div>
+          <div class="media-body p-2 mt-3">
+            <h3 class="heading">{{second_tranche['1'].titre}}</h3>
+            <p>{{second_tranche['0'].description}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-fifth">
+        <div class="media block-6 d-block text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <span class="flaticon-books"></span>
+          </div>
+          <div class="media-body p-2 mt-3">
+            <h3 class="heading">{{second_tranche['2'].titre}}</h3>
+            <p>{{second_tranche['2'].description}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-quarternary">
+        <div class="media block-6 d-block text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <span class="flaticon-diploma"></span>
+          </div>
+          <div class="media-body p-2 mt-3">
+            <h3 class="heading">{{second_tranche['3'].titre}}</h3>
+            <p>{{second_tranche['3'].description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+{% block description %}
+<div class="col-md-5 order-md-last wrap-about py-5 wrap-about bg-light">
+  <div class="text px-4 ftco-animate">
+    <h2 class="mb-4">{{description['0'].titre}}</h2>
+    <p>{{description['0'].description}}</p>
+    <!-- <p><a href="#" class="btn btn-secondary px-4 py-3">Read More</a></p> -->
+  </div>
+</div>
+{% endblock %}
+
+
+{% block offre %}
+<div class="col-md-7 wrap-about py-5 pr-md-4 ftco-animate">
+  <h2 class="mb-4">Notre offre</h2>
+  <p>Offre.</p>
+  <div class="row mt-5">
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-security"></span></div>
+        <div class="text">
+          <h3>{{offre['0'].titre}}</h3>
+          <p>{{offre['0'].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-reading"></span></div>
+        <div class="text">
+          <h3>{{offre['1'].titre}}</h3>
+          <p>{{offre['1'].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-diploma"></span></div>
+        <div class="text">
+          <h3>{{offre['2'].titre}}</h3>
+          <p>{{offre['2'].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-education"></span></div>
+        <div class="text">
+          <h3>{{offre['3'].titre}}</h3>
+          <p>{{offre['3'].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-jigsaw"></span></div>
+        <div class="text">
+          <h3>{{offre['4'].titre}}</h3>
+          <p>{{offre['4'].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="services-2 d-flex">
+        <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
+            class="flaticon-kids"></span></div>
+        <div class="text">
+          <h3>{{offre['5'].titre}}</h3>
+          <p>{{offre['5'].description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
