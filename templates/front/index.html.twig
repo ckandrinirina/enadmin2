@@ -133,3 +133,162 @@
   </div>
 </div>
 {% endblock %}
+{% block droit %}
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <div class="col-md-8 text-center heading-section ftco-animate">
+        <h2 class="mb-4"><span>Notre</span> Ecolage</h2>
+        <p>En général il y a deux parcours chez nous</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-3 ftco-animate">
+        <div class="pricing-entry bg-light pb-4 text-center">
+          <div>
+            <h3 class="mb-3">{{droit['0'].titre}}</h3>
+            <p><span class="price">Droit:{{droit['0'].description}} Ar</span> <span class="per">/ans</span></p>
+          </div>
+          <div class="img" style="background-image: url(images/bg_1.jpg);"></div>
+          <!-- <div class="px-4">
+            <p>Lorem ipsum</p>
+          </div> -->
+          <!-- <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Information</a> -->
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 ftco-animate">
+        <div class="pricing-entry bg-light pb-4 text-center">
+          <div>
+            <h3 class="mb-3">{{droit['1'].titre}}</h3>
+            <p><span class="price">Droit:{{droit['1'].description}} Ar</span> <span class="per">/ans</span></p>
+          </div>
+          <div class="img" style="background-image: url(images/bg_2.jpg);"></div>
+          <!-- <div class="px-4">
+            <p>Lorem ipsum</p>
+          </div> -->
+          <!-- <p class="button text-center"><a href="#" class="btn btn-secondary px-4 py-3">Information</a> -->
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 ftco-animate">
+        <div class="pricing-entry bg-light active pb-4 text-center">
+          <div>
+            <h3 class="mb-3">{{droit['2'].titre}}</h3>
+            <p><span class="price">Droit:{{droit['2'].description}} Ar</span> <span class="per">/ans</span></p>
+          </div>
+          <div class="img" style="background-image: url(images/bg_3.jpg);"></div>
+          <!-- <div class="px-4">
+            <p>Lorem ipsum</p>
+          </div> -->
+          <!-- <p class="button text-center"><a href="#" class="btn btn-tertiary px-4 py-3">Information</a> -->
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 ftco-animate">
+        <div class="pricing-entry bg-light pb-4 text-center">
+          <div>
+            <h3 class="mb-3">{{droit['3'].titre}}</h3>
+            <p><span class="price">Droit:{{droit['3'].description}} Ar</span> <span class="per">/ans</span></p>
+          </div>
+          <div class="img" style="background-image: url(images/bg_5.jpg);"></div>
+          <!-- <div class="px-4">
+            <p>Lorem ipsum</p>
+          </div> -->
+          <!-- <p class="button text-center"><a href="#" class="btn btn-quarternary px-4 py-3">Information</a></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block enseignants %}
+{% for enseignant in enseignants %}
+<div class="col-md-6 col-lg-3 ftco-animate">
+  <div class="staff">
+    <div class="img-wrap d-flex align-items-stretch">
+      <div class="img align-self-stretch" style="background-image: url('{{asset('front/images/profil.png')}}');">
+      </div>
+    </div>
+    <div class="text pt-3 text-center">
+      <h3>{{enseignant.nom}}</h3>
+      <span class="position mb-2">{{enseignant.prenom}}</span>
+      <div class="faded">
+        <p>Description.</p>
+        <ul class="ftco-social text-center">
+          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- <div class="col-md-6 col-lg-3 ftco-animate">
+  <div class="staff">
+    <div class="img-wrap d-flex align-items-stretch">
+      <div class="img align-self-stretch" style="background-image: url('{{asset('front/images/profil.png')}}');">
+      </div>
+    </div>
+    <div class="text pt-3 text-center">
+      <h3>RAMANANTSIHOARANA HARISOA NATHALIE</h3>
+      <span class="position mb-2">Chef de la mention</span>
+      <div class="faded">
+        <p>Lorem upsum</p>
+        <ul class="ftco-social text-center">
+          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6 col-lg-3 ftco-animate">
+  <div class="staff">
+    <div class="img-wrap d-flex align-items-stretch">
+      <div class="img align-self-stretch" style="background-image: url('{{asset('front/images/profil.png')}}');">
+      </div>
+    </div>
+    <div class="text pt-3 text-center">
+      <h3>RASTEFANO ELYSE</h3>
+      <span class="position mb-2">Doyen</span>
+      <div class="faded">
+        <p>Lorem</p>
+        <ul class="ftco-social text-center">
+          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6 col-lg-3 ftco-animate">
+  <div class="staff">
+    <div class="img-wrap d-flex align-items-stretch">
+      <div class="img align-self-stretch" style="background-image: url('{{asset('front/images/profil.png')}}');">
+      </div>
+    </div>
+    <div class="text pt-3 text-center">
+      <h3>RAKOTOMIRAHO SOLONIAINA</h3>
+      <span class="position mb-2">Doyen</span>
+      <div class="faded">
+        <p>EN</p>
+        <ul class="ftco-social text-center">
+          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
+          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
+{% endblock %}

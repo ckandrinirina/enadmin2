@@ -83,6 +83,15 @@ class EnseignantRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function find_vacataire()
+    {
+      return $this->createQueryBuilder('e')
+                  ->innerJoin('e.type','t','WITH','t.type = :type')
+                  ->setParameter('type','permanent')
+                  ->getQuery()
+                  ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Enseignant
     {

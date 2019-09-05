@@ -46,7 +46,9 @@ class ParametrageController extends AbstractController
         $chef_mention_repository = $em->getRepository(Parametrage::class);
         $chef_mention = $chef_mention_repository->find('1');
 
-        $second_tranche = $second_tranche_repository->findAll();
+        $second_tranche = $second_tranche_repository->findBy(['table_name'=>'second_tranche']);
+        $offre = $second_tranche_repository->findBy(['table_name'=>'offre']);
+        $welcome_description = $second_tranche_repository->findBy(['table_name'=>'description_electronique']);
 
         if ($salles != null) {
             foreach ($salles as $s) {
@@ -78,7 +80,9 @@ class ParametrageController extends AbstractController
             'form_new_heures' => $form_new_heures->createView(),
             'form_chef' => $form_chef->createView(),
             'chef_mention' => $chef_mention,
-            'second_tranche' => $second_tranche
+            'second_tranche' => $second_tranche,
+            'offre' => $offre,
+            'welcome_description' => $welcome_description['0']
         ]);
     }
 

@@ -151,11 +151,39 @@
   <div class="callout callout-info">
     <h4 class="text-center">Front-office</h4>
   </div>
+
   <div class="box">
     <div class="box-header">
-      <h3 class="box-title">Second tranche</h3>
+      <h3 class="box-title">Présentation générale</h3>
     </div>
-    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <table class="table table-condensed">
+        <tbody>
+          <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Modifier</th>
+          </tr>
+          {% for tranche_2 in second_tranche %}
+          <tr id="tr_tranche_2_{{tranche_2.id}}">
+            <td>{{tranche_2.titre}}</td>
+            <td>{{tranche_2.description}}</td>
+            <td>
+                <a class="btn btn-social-icon btn-flickr pull-right" style="margin-left:10px">
+                    <i class="fa fa-edit edit_second_tranche" id_param_gen="{{tranche_2.id}}" ></i>
+                </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Notre offre</h3>
+    </div>
     <div class="box-body no-padding">
       <table class="table table-condensed">
         <tbody>
@@ -163,7 +191,7 @@
             <th>Titre</th>
             <th>Description</th>
           </tr>
-          {% for tranche_2 in second_tranche %}
+          {% for tranche_2 in offre %}
           <tr>
             <td>{{tranche_2.titre}}</td>
             <td>{{tranche_2.description}}</td>
@@ -172,8 +200,30 @@
         </tbody>
       </table>
     </div>
-    <!-- /.box-body -->
   </div>
+
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Présentation de bienvenue</h3>
+    </div>
+    <div class="box-body no-padding">
+      <table class="table table-condensed">
+        <tbody>
+          <tr>
+            <th>Titre</th>
+            <th>Description</th>
+          </tr>
+          {% for tranche_2 in welcome_description %}
+          <tr>
+            <td>{{tranche_2.titre}}</td>
+            <td>{{tranche_2.description}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 <br />
 
@@ -265,4 +315,11 @@
 <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
 <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
 <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
+<script>
+  $('.edit_second_tranche').on('click',function(){
+    var id_param = $(this).attr('id_param_gen')
+    var tr_tranche = document.getElementById('tr_tranche_2_'+id_param)
+    
+  })
+</script>
 {% endblock %}
