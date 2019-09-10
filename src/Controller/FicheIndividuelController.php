@@ -19,9 +19,9 @@ class FicheIndividuelController extends AbstractController
 {
     /**
      * @Route("/fiche/individuel/{etudiant}/{type}/{niveaux}", name="fiche_individuel")
-     * 
+     *
      * Require ROLE_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_ADMIN")
      */
     public function index($etudiant, $type, $niveaux)
@@ -122,12 +122,16 @@ class FicheIndividuelController extends AbstractController
         $note_ue_repository = $em->getRepository(NoteUc::class);
         $auRepository = $em->getRepository(AnneUniversitaire::class);
         $moyenne_repository = $em->getRepository(Moyenne::class);
+        $scolarite_repository = $em->getRepository(Scolarite::class);
 
         $allAu = $auRepository->findAllByOrder();
         $auNow = $auRepository->find($au);
+        $etudiant_full = $etudiant_repository->find($etudiant);
 
         $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage ,$au);
         $moyenne = $moyenne_repository->find_by_e_s_n_au($etudiant, $semestre, $niveaux, $au);
+
+        $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant_full);
 
         if($moyenne != null)
             $moyenne = $moyenne['0'];
@@ -140,7 +144,7 @@ class FicheIndividuelController extends AbstractController
 
         // $credit_aquis = 0;
         // $moyenne = $note_service->calculate_moyenne($note_ue);
-        // foreach ($note_ue as $n_ue) 
+        // foreach ($note_ue as $n_ue)
         // {
         //     $credit_aquis = $credit_aquis + $n_ue->getCredit();
         // }
@@ -163,15 +167,16 @@ class FicheIndividuelController extends AbstractController
                 'allAu' => $allAu,
                 'auid' => $au,
                 'auNow' => $auNow,
+                'scolarite_actuel'=> $scolarite_actuel
             ]
         );
     }
 
     /**
      * @Route("/fiche-note-pdf/{etudiant}/{niveaux}/{semestre}/{au}{ratrapage}", name="fiche_note_pdf")
-     * 
+     *
      * Require ROLE_SUPER_ADMIN for only this controller method.
-     * 
+     *
      *  @IsGranted("ROLE_ADMIN")
      */
     public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage,$au)
@@ -201,12 +206,12 @@ class FicheIndividuelController extends AbstractController
             $moyenne = $somme / $i;
         else
             $moyenne = 0;
-        
+
         $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant_info);
-        
+
         if($scolarite_actuel != null )
             $scolarite_actuel = $scolarite_actuel['0'];
-        else 
+        else
             $scolarite_actuel = null;
 
         $niv = $niveauxRepository->findByType($type);

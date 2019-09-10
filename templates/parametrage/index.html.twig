@@ -166,11 +166,11 @@
           </tr>
           {% for tranche_2 in second_tranche %}
           <tr id="tr_tranche_2_{{tranche_2.id}}">
-            <td>{{tranche_2.titre}}</td>
-            <td>{{tranche_2.description}}</td>
+            <td id="tranche_2_titre_{{tranche_2.id}}">{{tranche_2.titre}}</td>
+            <td id="tranche_2_description_{{tranche_2.id}}">{{tranche_2.description}}</td>
             <td>
                 <a class="btn btn-social-icon btn-flickr pull-right" style="margin-left:10px">
-                    <i class="fa fa-edit edit_second_tranche" id_param_gen="{{tranche_2.id}}" ></i>
+                    <i class="fa fa-edit edit_second_tranche" id_titre="tranche_2_titre_{{tranche_2.id}}" id_description="tranche_2_description_{{tranche_2.id}}" id_tr="tr_tranche_2_{{tranche_2.id}}" id_param_gen="{{tranche_2.id}}" ></i>
                 </a>
             </td>
           </tr>
@@ -190,11 +190,17 @@
           <tr>
             <th>Titre</th>
             <th>Description</th>
+            <th>Modifier</th>
           </tr>
           {% for tranche_2 in offre %}
-          <tr>
-            <td>{{tranche_2.titre}}</td>
-            <td>{{tranche_2.description}}</td>
+          <tr id="tr_tranche_2_{{tranche_2.id}}">
+            <td id="tranche_2_titre_{{tranche_2.id}}">{{tranche_2.titre}}</td>
+            <td id="tranche_2_description_{{tranche_2.id}}">{{tranche_2.description}}</td>
+            <td>
+                <a class="btn btn-social-icon btn-flickr pull-right" style="margin-left:10px">
+                    <i class="fa fa-edit edit_second_tranche" id_titre="tranche_2_titre_{{tranche_2.id}}" id_description="tranche_2_description_{{tranche_2.id}}" id_tr="tr_tranche_2_{{tranche_2.id}}" id_param_gen="{{tranche_2.id}}" ></i>
+                </a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -212,11 +218,17 @@
           <tr>
             <th>Titre</th>
             <th>Description</th>
+            <th>Modifier</th>
           </tr>
           {% for tranche_2 in welcome_description %}
-          <tr>
-            <td>{{tranche_2.titre}}</td>
-            <td>{{tranche_2.description}}</td>
+          <tr id="tr_tranche_2_{{tranche_2.id}}">
+            <td id="tranche_2_titre_{{tranche_2.id}}">{{tranche_2.titre}}</td>
+            <td id="tranche_2_description_{{tranche_2.id}}">{{tranche_2.description}}</td>
+            <td>
+                <a class="btn btn-social-icon btn-flickr pull-right" style="margin-left:10px">
+                    <i class="fa fa-edit edit_second_tranche" id_titre="tranche_2_titre_{{tranche_2.id}}" id_description="tranche_2_description_{{tranche_2.id}}" id_tr="tr_tranche_2_{{tranche_2.id}}" id_param_gen="{{tranche_2.id}}" ></i>
+                </a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -315,11 +327,40 @@
 <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
 <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
 <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 <script>
-  $('.edit_second_tranche').on('click',function(){
+  $('body').on('click','.edit_second_tranche',function(){
     var id_param = $(this).attr('id_param_gen')
-    var tr_tranche = document.getElementById('tr_tranche_2_'+id_param)
-    
+    var id_tr = $(this).attr('id_tr')
+    var id_titre = $(this).attr('id_titre')
+    var id_description = $(this).attr('id_description')
+    var titre_content = $('#'+id_titre).text()
+    var description_content = $('#'+id_description).text()
+    var input = '<tr id="'+id_tr+'"><td><input type="text" name="titre_'+id_param+'" id="titre_'+id_param+'" value="'+titre_content+'"></td><td><input type="textarea" name="description_'+id_param+'" id="description_'+id_param+'" value="'+description_content+'" style="width:100%"></td><td><a class="btn btn-social-icon btn-dropbox pull-right"><i class="glyphicon glyphicon-ok valide_tranche_2" id_tr="'+id_tr+'" id_param="'+id_param+'"></i></a></td></tr>'
+    $('#'+id_tr).replaceWith(input)
   })
+
+  $('body').on('click','.valide_tranche_2',function(){
+    var id_param = $(this).attr('id_param')
+    var id_tr =$(this).attr('id_tr')
+    var url = Routing.generate('ajax_modif_param', {'id_param': id_param})
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: url,
+        data: {
+                id_param : id_param,
+                titre : $('#titre_'+id_param).val(),
+                description : $('#description_'+id_param).val()
+              },
+        error : function (){alert('error')},
+        success: function (data) {
+          var new_content = '<tr id="tr_tranche_2_'+data.id+'"><td id="tranche_2_titre_'+data.id+'">'+data.titre+'</td><td id="tranche_2_description_'+data.id+'">'+data.description+'</td><td><a class="btn btn-social-icon btn-flickr pull-right" style="margin-left:10px"><i class="fa fa-edit edit_second_tranche" id_titre="tranche_2_titre_'+data.id+'" id_description="tranche_2_description_'+data.id+'" id_tr="tr_tranche_2_'+data.id+'" id_param_gen="'+data.id+'" ></i></a></td></tr>'
+          $('#'+id_tr).replaceWith(new_content)
+        }
+    })
+  })
+  $()
 </script>
 {% endblock %}

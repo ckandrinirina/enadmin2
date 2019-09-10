@@ -47,19 +47,28 @@ class NoteListController extends AbstractController
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
         $parcours = $typeParcoursRepository->find($type);
         
-        if ($note != null ) {
-            foreach ($note as $nt) {
-                $nom = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
-                $nomOrd[] = $nom;
-                $nbrNom = $nbrNom + 1;
-                $idEt = $nt->getEtudiant()->getId();
-                $idEtOrd[] = $idEt;
+        $nom_temp ='';
+        if ($note != null ) 
+        {
+            foreach ($note as $nt) 
+            {
+                if($nom_temp != $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom())
+                {
+                    $nom_temp = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
+                    $nom = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
+                    $nomOrd[] = $nom;
+                    $nbrNom = $nbrNom + 1;
+                    $idEt = $nt->getEtudiant()->getId();
+                    $idEtOrd[] = $idEt;
+                }
             }
-        } else {
+        } 
+        else 
+        {
             $nomOrd = NULL;
             $idEtOrd = NULL;
         }
-
+        //dump($nomOrd,$idEtOrd);die();
         if (isset($ec)) {
             foreach ($ec as $e) {
                 if ($e->getEC()->getNom() != $ecNom) {
@@ -125,16 +134,26 @@ class NoteListController extends AbstractController
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
         $parcours = $typeParcoursRepository->find($type);
 
-        if (isset($note)) {
-            foreach ($note as $nt) {
-                if ($nt->getEtudiant()->getNom() != $nom) {
-                    $nom = $nt->getEtudiant()->getNom();
+        $nom_temp ='';
+        if ($note != null ) 
+        {
+            foreach ($note as $nt) 
+            {
+                if($nom_temp != $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom())
+                {
+                    $nom_temp = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
+                    $nom = $nt->getEtudiant()->getNom().' '.$nt->getEtudiant()->getPrenom();
                     $nomOrd[] = $nom;
                     $nbrNom = $nbrNom + 1;
+                    $idEt = $nt->getEtudiant()->getId();
+                    $idEtOrd[] = $idEt;
                 }
             }
-        } else {
+        } 
+        else 
+        {
             $nomOrd = NULL;
+            $idEtOrd = NULL;
         }
 
         if (isset($ec)) {
@@ -149,7 +168,7 @@ class NoteListController extends AbstractController
             $ecOrd = NULL;
         }
 
-        $matriceNote = $noteService->generateMatriceNote($nomOrd, $ecOrd, $nbrNom, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
+        $matriceNote = $noteService->generateMatriceNote2($idEtOrd, $ecOrd, $nbrNom, $nbrEc, $niveaux, $semestre, $au, $ratrapage);
 
         return $this->render(
             'note_list/result.html.twig',

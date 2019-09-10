@@ -40,7 +40,6 @@ class ScolariteRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
-
     // /**
     //  * @return Scolarite[] Returns an array of Scolarite objects
     //  */

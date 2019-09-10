@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Backup{% endblock %}
+{% block insideHeader %}
+  <section class="content-header">
+    <h1>
+      Sauvegarde et réstoration
+      {# <small>{{ parcour.type }}</small> #}
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="#">
+          <i class="fa fa-dashboard"></i>Sauvegarde et restoration</a>
+      </li>
+      {# <li class="active">{{ parcour.type }}</li> #}
+    </ol>
+  </section>
+{% endblock %}
+{% block body %}
+  <div class="box">
+    <div class="box-header with-border row">
+      <div class="col-md-4">
+        <h3 class="box-title">Liste des sauvagarde</h3>
+      </div>
+      <div class="col-md-4 pull-right">
+        <a class="btn btn-block btn-social btn-google"  href="{{path('backup_current')}}">
+          <i class="fa fa-google-plus"></i>
+          Sauvegarder la base de donné actuel
+        </a>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th style="width: 40px">Action</th>
+          </tr>
+          <tr>
+            <td>1.</td>
+            <td>Update software</td>
+            <td>
+              <div class="progress progress-xs">
+                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-red">55%</span></td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>Clean database</td>
+            <td>
+              <div class="progress progress-xs">
+                <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-yellow">70%</span></td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>Cron job running</td>
+            <td>
+              <div class="progress progress-xs progress-striped active">
+                <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-light-blue">30%</span></td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>Fix and squish bugs</td>
+            <td>
+              <div class="progress progress-xs progress-striped active">
+                <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-green">90%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+  {% endblock %}
+
+  {% block javascripts %}
+    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/core/locales/fr.js') }}"></script>
+    <script src="{{ asset('fullcalendar/interaction/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/daygrid/main.min.js') }}"></script>
+    <script src="{{ asset('fullcalendar/timegrid/main.min.js') }}"></script>
+  {% endblock %}

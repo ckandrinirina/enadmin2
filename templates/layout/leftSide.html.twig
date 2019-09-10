@@ -106,7 +106,7 @@
                     {{ render(controller('App\\Controller\\TypeParcoursController::repartition')) }}
                 </ul>
             </li> #}
-            
+
             {% if is_granted('ROLE_ADMIN') %}
             <li class="treeview {% if status == "notelist" %} {{ "active" }} {% endif %}">
                 <a href="#"><i class="fa fa-sticky-note-o"></i> <span>Liste des notes</span>
@@ -254,6 +254,15 @@
             {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class=" {% if status == "archive" %} {{ "active" }} {% endif %}">
                 <a href="{{ path('parametrage') }}"><i class="fa fa-gear"></i> <span>Paramétrage</span>
+                    <span class="pull-right-container">
+                </span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class=" {% if status == "backup" %} {{ "active" }} {% endif %}">
+                <a href="{{ path('backup') }}"><i class="fa fa-gear"></i> <span>Sauvagarde et réstoration</span>
                     <span class="pull-right-container">
                 </span>
                 </a>

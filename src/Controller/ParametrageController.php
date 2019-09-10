@@ -82,8 +82,30 @@ class ParametrageController extends AbstractController
             'chef_mention' => $chef_mention,
             'second_tranche' => $second_tranche,
             'offre' => $offre,
-            'welcome_description' => $welcome_description['0']
+            'welcome_description' => $welcome_description
         ]);
+    }
+
+    /**
+     * @Route("/ajax-change-role", name="ajax_modif_param" , options = { "expose" = true })
+     *
+     * Require ROLE_SUPER_ADMIN for only this controller method.
+     *
+     *  @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function ajax_modif_param(Request $request)
+    {
+      $param = $request->request->all();
+      $em = $this->getDoctrine()->getManager();
+      $param_repository = $em->getRepository(ParamGen::class);
+
+      $param_value = $param_repository->find($param['id_param']);
+      $param_value->setTitre($param['titre']);
+      $param_value->setDescription($param['description']);
+      $em->persist($param_value);
+      $em->flush();
+      return $this->json($param_value);
+        //return $response;
     }
 
     /**

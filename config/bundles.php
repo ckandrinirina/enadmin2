@@ -18,4 +18,5 @@ return [
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
+    BM\BackupManagerBundle\BMBackupManagerBundle::class => ['all' => true],
 ];
