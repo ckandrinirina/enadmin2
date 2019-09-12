@@ -20,7 +20,7 @@ class DeliberationController extends AbstractController
     /**
      * @Route("/deliberation-final/{type}/{niveaux}", name="deliberation_final")
      * 
-     * Require ROLE_SUPER_ADMIN for only this controller method.
+     *  Page reservé a l'administrateur.
      * 
      *  @IsGranted("ROLE_SUPER_ADMIN")
      */
@@ -80,7 +80,7 @@ class DeliberationController extends AbstractController
     /**
      * @Route("/change_admis/{id}", name="admis")
      * 
-     * Require ROLE_SUPER_ADMIN for only this controller method.
+     * Page reservé a l'administrateur.
      * 
      *  @IsGranted("ROLE_SUPER_ADMIN")
      * 

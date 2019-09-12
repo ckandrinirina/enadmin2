@@ -79,6 +79,9 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/edit-acces/{id}", name="app_edit_acces")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      * 
      */
     public function edit_acces(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificator $authenticator, User $user): Response

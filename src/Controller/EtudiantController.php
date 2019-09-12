@@ -20,6 +20,9 @@ class EtudiantController extends AbstractController
 {
     /**
      * @Route("/etudiant/{type}/{niveaux}", name="list")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function List($type, $niveaux)
     {
@@ -48,7 +51,6 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("etudiant-ajoute/{login}",name="etudiant_add",methods={"GET","POST"})
-     * 
      */
     public function ajoute(Request $request, $login = NULL, FileUploader $fileUploader)
     {
@@ -100,6 +102,9 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("/etudiant/pdf/{type}/{niveaux}", name="list_pdf")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function list_pdf($type, $niveaux) 
     {
@@ -135,6 +140,9 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("/etudiant-profile/{etudiant}", name="etudiant_profile")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function etudiant_profile($etudiant)
     {
@@ -156,7 +164,9 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("etudiant-edit/{id}/",name="etudiant_edit",methods={"GET","POST"})
-     * 
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")     
      */
     public function edit(Request $request, Etudiant $etudiant, FileUploader $fileUploader)
     {
@@ -199,7 +209,9 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("etudiant-archive",name="liste_archive")
-     * 
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")     
      */
     public function archive()
     {

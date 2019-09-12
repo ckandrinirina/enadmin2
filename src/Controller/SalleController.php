@@ -9,12 +9,16 @@ use App\Entity\Salle;
 use App\Entity\Niveaux;
 use App\Form\SalleType;
 use Symfony\Component\HttpFoundation\Request;
-use Proxies\__CG__\App\Entity\SalleClass;
+use App\Entity\SalleClass;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SalleController extends AbstractController
 {
     /**
      * @Route("/salle/{type}", name="salle")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index($type)
     {
@@ -39,6 +43,9 @@ class SalleController extends AbstractController
 
     /**
      * @Route("/salle-list/{niveau}", name="salle_niveau")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function sale_niveau($niveau)
     {
@@ -57,6 +64,9 @@ class SalleController extends AbstractController
 
     /**
      * @Route("/salle-edit/{type}", name="salle_edit")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index_2($type)
     {
@@ -81,6 +91,9 @@ class SalleController extends AbstractController
 
     /**
      * @Route("/salle-list-edit/{niveau}", name="salle_niveau_edit")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function sale_niveau_2($niveau)
     {
@@ -112,6 +125,9 @@ class SalleController extends AbstractController
 
     /**
      * @Route("/change-salle/{id}", name="change_salle")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      * 
      */
     public function change_salle(Salle $salle, Request $request)

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\InformationChildrenType;
 use App\Entity\InformationChild;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/information")
@@ -19,6 +21,9 @@ class InformationController extends AbstractController
 {
     /**
      * @Route("/", name="information_index", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(InformationRepository $informationRepository): Response
     {
@@ -31,6 +36,9 @@ class InformationController extends AbstractController
 
     /**
      * @Route("/new", name="information_new", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -56,6 +64,9 @@ class InformationController extends AbstractController
 
     /**
      * @Route("/{id}", name="information_show", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function show(Information $information): Response
     {
@@ -68,6 +79,9 @@ class InformationController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="information_edit", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Information $information): Response
     {
@@ -92,6 +106,9 @@ class InformationController extends AbstractController
 
     /**
      * @Route("/{id}", name="information_delete", methods={"DELETE"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Information $information): Response
     {
@@ -106,6 +123,9 @@ class InformationController extends AbstractController
 
     /**
      * @Route("/information-list/{pagination}",name="list_all_info")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function information_list_all($pagination)
     {

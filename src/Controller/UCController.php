@@ -106,6 +106,9 @@ class UCController extends AbstractController
 
     /**
      * @Route("u/c/list" , name="ucList")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function list()
     {
@@ -119,6 +122,9 @@ class UCController extends AbstractController
 
     /**
      * @Route("uc/rep/list/{type}/{niveau}" , name="repartition_uc_by_niveau")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_uc_by_niveau($type, $niveau)
     {
@@ -143,6 +149,9 @@ class UCController extends AbstractController
 
     /**
      * @Route("uc/rep/list-edit/{type}/{niveau}" , name="repartition_uc_by_niveau_edit")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_uc_by_niveau_edit($type, $niveau)
     {
@@ -167,6 +176,9 @@ class UCController extends AbstractController
 
     /**
      * @Route("uc/rep/list/pdf/{type}/{niveau}" , name="repartition_uc_by_niveau_pdf")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_uc_by_niveau_pdf($type, $niveau)
     {

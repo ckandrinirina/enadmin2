@@ -7,11 +7,15 @@ use App\Entity\TypeParcours;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\EnseignantType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class TypeParcoursController extends AbstractController
 {
     /**
      * @Route("/type/parcours", name="type_parcours")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function listAll()
     {
@@ -26,6 +30,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/type/repartition", name="repartition")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition()
     {
@@ -56,6 +63,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/type/noteAjoute", name="noteAjoute")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function noteAjoute()
     {
@@ -85,6 +95,9 @@ class TypeParcoursController extends AbstractController
     }
     /**
      * @Route("/type/emploiDuTemps/edit", name="emploiDuTempsEdit")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function emploiDuTempsEdit()
     {
@@ -99,6 +112,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/repartition/uc/by/niveau", name="repartition_uc_by_niveau_left")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_uc_by_niveau()
     {
@@ -113,6 +129,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/repartition/uc/by/niveau", name="repartition_uc_by_niveau_left_edit")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_uc_by_niveau_edit()
     {
@@ -127,6 +146,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("enseignant/type" ,name="enseignant_type")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function enseignant_type()
     {
@@ -142,6 +164,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/type/noteresult", name="noteresult")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function noteResult()
     {
@@ -158,6 +183,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/repartition/salle/by/niveau", name="repartition_salle")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_salle()
     {
@@ -172,6 +200,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/repartition/salle_2/by/niveau", name="_2")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition_salle_2()
     {
@@ -186,6 +217,9 @@ class TypeParcoursController extends AbstractController
 
     /**
      * @Route("/type/parcours", name="deliberation")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function deliberation()
     {

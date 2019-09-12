@@ -5,11 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use BackupManager\Manager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class BackupController extends AbstractController
 {
     /**
      * @Route("/sauvagarde", name="backup")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index()
     {

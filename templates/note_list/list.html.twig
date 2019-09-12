@@ -55,9 +55,9 @@
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-info">
                                                                 {% if rat == 0 %}
-                                                                    {{ 'Premier session' }}
+                                                                    {{ 'Première session' }}
                                                                 {% else  %}
-                                                                    {{ 'Ratrapage' }}
+                                                                    {{ 'Rattrapage' }}
                                                                 {% endif %}
                                                             </button>
                                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -65,7 +65,7 @@
                                                                 <span class="sr-only">Toggle Dropdown</span>
                                                             </button>
                                                             <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Premières session</a></li>
+                                                                <li><a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Première session</a></li>
                                                                 <li><a href="{{ path('note_list',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Rattrapage</a></li>
                                                             </ul>
                                                         </div>

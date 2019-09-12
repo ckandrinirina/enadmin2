@@ -19,6 +19,9 @@ class ECController extends AbstractController
 {
     /**
      * @Route("/e/c", name="e_c")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index()
     {
@@ -38,6 +41,9 @@ class ECController extends AbstractController
 
     /**
      * @Route("/e/c/repartition/{type}/{niveaux}", name="repartitionEC")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartition($type, $niveaux)
     {
@@ -63,6 +69,9 @@ class ECController extends AbstractController
 
     /**
      * @Route("/e/c/u/c", name="e_c_u_c")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function repartitionEcUc()
     {

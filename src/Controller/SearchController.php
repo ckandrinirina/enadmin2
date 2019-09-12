@@ -7,12 +7,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RechercheType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Etudiant;
-use Proxies\__CG__\App\Entity\Enseignant;
+use App\Entity\Enseignant;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SearchController extends AbstractController
 {
     /**
      * @Route("/search", name="search")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index()
     {
@@ -24,6 +28,9 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/search-result", name="search_result")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function result(Request $request) 
     {

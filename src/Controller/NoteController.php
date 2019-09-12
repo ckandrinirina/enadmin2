@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/note")
@@ -17,6 +19,9 @@ class NoteController extends AbstractController
 {
     /**
      * @Route("/", name="note_index", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(NoteRepository $noteRepository): Response
     {
@@ -29,6 +34,9 @@ class NoteController extends AbstractController
 
     /**
      * @Route("/new", name="note_new", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -54,6 +62,9 @@ class NoteController extends AbstractController
 
     /**
      * @Route("/{id}", name="note_show", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function show(Note $note): Response
     {
@@ -66,6 +77,9 @@ class NoteController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="note_edit", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Note $note): Response
     {
@@ -90,6 +104,9 @@ class NoteController extends AbstractController
 
     /**
      * @Route("/{id}", name="note_delete", methods={"DELETE"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Note $note): Response
     {

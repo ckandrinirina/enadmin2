@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/school")
@@ -17,6 +18,9 @@ class SchoolController extends AbstractController
 {
     /**
      * @Route("/", name="school_index", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(SchoolRepository $schoolRepository): Response
     {
@@ -29,6 +33,9 @@ class SchoolController extends AbstractController
 
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -54,6 +61,9 @@ class SchoolController extends AbstractController
 
     /**
      * @Route("show/{id}", name="school_show", methods={"GET"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function show(School $school): Response
     {
@@ -66,6 +76,9 @@ class SchoolController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, School $school): Response
     {
@@ -90,6 +103,9 @@ class SchoolController extends AbstractController
 
     /**
      * @Route("/{id}", name="school_delete", methods={"DELETE"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, School $school): Response
     {

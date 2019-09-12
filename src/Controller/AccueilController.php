@@ -21,11 +21,16 @@ use App\Entity\Jours;
 use App\Form\InformationChildrenType;
 use App\Entity\InformationChild;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AccueilController extends AbstractController
 {
     /**
      * @Route("/accueil", name="accueil" ,options = { "expose" = true })
+     * 
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, EtService $etService)
     {
@@ -113,7 +118,9 @@ class AccueilController extends AbstractController
 
     /**
      * @Route("/new-information/{route}", name="new-information")
-     * 
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function new_information(Request $request, $route = 0,FileUploader $fileUploader)
     {
@@ -161,7 +168,9 @@ class AccueilController extends AbstractController
 
     /**
      * @Route("/new-information-children/{id}/{route}/{pagination}", name="new-information-children")
-     * 
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function new_information_children(Information $information, Request $request, $route = 0,$pagination,FileUploader $fileUploader)
     {

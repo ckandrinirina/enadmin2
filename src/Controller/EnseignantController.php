@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Enseignant;
 use App\Entity\EnseignantType;
 use App\Form\EnseignantAddType;
-use function Sodium\add;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use App\Entity\User;
@@ -16,10 +15,14 @@ use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametrage;
 
+
 class EnseignantController extends AbstractController
 {
     /**
      * @Route("/enseignant/{type}", name="enseignant")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index($type)
     {
@@ -45,6 +48,9 @@ class EnseignantController extends AbstractController
 
     /**
      * @Route("/enseignant/pdf/{type}", name="enseignant_pdf")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function enseignant_pdf($type)
     {
@@ -126,6 +132,9 @@ class EnseignantController extends AbstractController
     }
     /**
      * @Route("/enseignant-profile/{enseignant}", name="enseignant_profile")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function enseignant_profile($enseignant)
     {
@@ -144,6 +153,9 @@ class EnseignantController extends AbstractController
     }
     /**
      * @Route("enseignant-edit/{id}/",name="enseignant_edit",methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      * 
      */
     public function edit(Request $request ,enseignant $enseignant ,FileUploader $fileUploader)

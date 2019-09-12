@@ -18,10 +18,14 @@ use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametrage;
 
+
 class EmploiDuTempsController extends AbstractController
 {
     /**
      * @Route("/emploi/du/temps/{type}/{niveaux}/{semestre}", name="etemps")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(EtService $etService, $type, $niveaux, $semestre)
     {
@@ -59,6 +63,9 @@ class EmploiDuTempsController extends AbstractController
 
     /**
      * @Route("/emploi/du/temps/pdf/{type}/{niveaux}/{semestre}", name="etemps_pdf")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index_pdf(EtService $etService, $type, $niveaux, $semestre)
     { 
@@ -152,6 +159,9 @@ class EmploiDuTempsController extends AbstractController
     }
     /**
      * @Route("/ec/choice/{niveau}/{jour}/{heure}/{semestre}" , name="ec_choice", options = { "expose" = true },methods={"GET","POST"})
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function ecChoice(Request $request, $niveau, $jour, $heure, $semestre)
     {
@@ -206,6 +216,9 @@ class EmploiDuTempsController extends AbstractController
 
     /**
      * @Route("/confirmeSupression_et/{niveau}/{jour}/{heure}/{semestre}" , name="confirmeSupression_et",options = { "expose" = true })
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function confirmeSupression($niveau, $jour, $heure, $semestre)
     {
@@ -222,6 +235,9 @@ class EmploiDuTempsController extends AbstractController
     }
     /**
      * @Route("emploi-du-temps/delete/{niveau}/{jour}/{heure}/{semestre}/{etId}", name="deletEt",options = { "expose" = true })
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function delete($niveau, $jour, $heure, $semestre, $etId)
     {

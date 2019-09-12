@@ -107,6 +107,9 @@ class NoteListController extends AbstractController
 
     /**
      * @Route("/noteresult/{type}/{niveaux}/{semestre}/{au}/{ratrapage}", name="note_result")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function note_result($type, $niveaux, $semestre, $au, $ratrapage, NoteService $noteService)
     {
@@ -192,6 +195,9 @@ class NoteListController extends AbstractController
     }
     /**
      * @Route("/noteresult/pdf/{type}/{niveaux}/{semestre}/{au}/{ratrapage}", name="note_result_pdf")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function note_result_pdf($type, $niveaux, $semestre, $au, $ratrapage, NoteService $noteService)
     {

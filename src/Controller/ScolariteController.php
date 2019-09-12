@@ -18,6 +18,9 @@ class ScolariteController extends AbstractController
 {
     /**
      * @Route("/scolarite/{id}", name="scolarite")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function index(Etudiant $etudiant, Request $request,FileUploader $fileUploader)
     {
@@ -139,6 +142,9 @@ class ScolariteController extends AbstractController
 
     /**
      * @Route("/scolarite-view/{etudiant}/{niveau}", name="scolarite_view")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function scolarite_niveau($etudiant,$niveau)
     {

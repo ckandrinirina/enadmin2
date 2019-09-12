@@ -22,7 +22,7 @@ class FicheIndividuelController extends AbstractController
      *
      * Require ROLE_ADMIN for only this controller method.
      *
-     *  @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index($etudiant, $type, $niveaux)
     {
@@ -54,6 +54,9 @@ class FicheIndividuelController extends AbstractController
 
     /**
      * @Route("/invalide/{etudiant}/{semestre}/{niveaux}" , name="premier_session")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function invalideNote($etudiant, $semestre, $niveaux)
     {
@@ -80,6 +83,9 @@ class FicheIndividuelController extends AbstractController
 
     /**
      * @Route("/invalide/{niveaux}/{semestre}" , name="deuxiem_session")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function invalideNote2($etudiant, $niveaux)
     {
@@ -106,6 +112,9 @@ class FicheIndividuelController extends AbstractController
 
     /**
      * @Route("/fiche-note/{etudiant}/{niveaux}/{semestre}/{au}/{ratrapage}", name="fiche_note")
+     * Vous n'avez pas le permission de voir cette page.
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage, NoteService $note_service)
     {
