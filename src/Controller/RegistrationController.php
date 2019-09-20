@@ -73,7 +73,8 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'status' => $status,
-            'test' => $test
+            'test' => $test,
+            'type' => 'add'
         ]);
     }
 
@@ -116,6 +117,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register_edit.html.twig', [
             'registrationForm' => $form->createView(),
             'status' => $status,
+            'type' => 'edit'
         ]);
     }
 }

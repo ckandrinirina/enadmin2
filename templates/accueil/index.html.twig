@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!
+{% block title %}ENTADMIN
 {% endblock %}
 
 {% block stylesheets %}
@@ -33,6 +33,12 @@
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
 <div class="callout callout-info">
     <h4 class="text-center">Nombres des acteurs au sein de la Mention Electronique</h4>
 </div>
@@ -247,7 +253,7 @@
                 <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
             </div>
             <!-- /.chat -->
-            <a href="{{path('list_all_info',{'pagination':'0'})}}" class="btn btn-block btn-info btn-xs">Afficher toute les informations</a>
+            <a href="{{path('list_all_info',{'pagination':'0'})}}" class="btn btn-block btn-info btn-xs">Afficher toutes les informations</a>
             <div class="box-footer">
                 {{ form_start(information_form_view,{'attr':{'novalidate' : 'novalidate'},'action': path('new-information'), 'method': 'POST'}) }}
                 <div class="input-group">

@@ -1,19 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter etudiant{% endblock %}
+{% block title %}Ajouter un etudiant{% endblock %}
 
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Ajouter étudiant
+            Ajouter un étudiant
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Ajouter étudiant</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Ajouter un étudiant</a></li>
         </ol>
     </section>
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="col-md-8 col-md-offset-2">
         <div class="box box-primary">
             <div class="box-header with-border">

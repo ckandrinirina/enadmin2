@@ -15,23 +15,25 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 class RegistrationEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username',TextType::class,[
+                'label' => 'Pseudo'
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Mot de passe different',
+                'invalid_message' => 'Mot de passe différent',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'mapped' => false,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer mot de passe'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Insérer les mots de passes',
+                        'message' => 'Insérer les mots de passe',
                     ]),
                     new Length([
                         'min' => 6,

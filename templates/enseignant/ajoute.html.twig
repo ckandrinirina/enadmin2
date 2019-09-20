@@ -1,27 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter enseignant
+{% block title %}{% if type == 'add' %}Ajouter un enseignant{% else %}Modifier profile {% endif %}
 {% endblock %}
 
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Ajouter enseignant
+            {% if type == 'add' %}Ajouter un enseignant{% else %}Modifier profile {% endif %}
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    <i class="fa fa-dashboard"></i>Ajouter enseignant</a>
+                    <i class="fa fa-dashboard"></i>{% if type == 'add' %}Ajouter un enseignant{% else %}Modifier profile {% endif %}</a>
             </li>
         </ol>
     </section>
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="col-md-8 col-md-offset-2">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Ajouter un enseignant</h3>
+                <h3 class="box-title">{% if type == 'add' %}Ajouter un enseignant{% else %}Modifier profile {% endif %}</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->

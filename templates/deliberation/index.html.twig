@@ -40,13 +40,13 @@
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Délibérations
+            Délibération
             <small>{{ parcour.type }}</small>
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
-                    <i class="fa fa-dashboard"></i>Délibérations</a>
+                    <i class="fa fa-dashboard"></i>Délibération</a>
             </li>
             <li class="active">{{ parcour.type }}</li>
         </ol>
@@ -54,6 +54,12 @@
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="row">
         <div
             class="col-md-12">
@@ -72,7 +78,7 @@
                             <div class="col-xs-12">
                                 <div class="box">
                                     <div class="box-header">
-                                        <h3 class="box-title col-md-4">Décisions sur les étudiants</h3>
+                                        <h3 class="box-title col-md-4">Décision sur les étudiants</h3>
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">

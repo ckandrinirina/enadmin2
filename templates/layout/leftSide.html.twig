@@ -86,7 +86,7 @@
             {# <li class="{% if status == "UCEC" %} {{ "active" }} {% endif %}"><a href="{{ path('ucList') }}"><i class="fa  fa-folder-open-o"></i> <span>Liste des EC par UE</span></a></li> #}
 
             <li class="treeview {% if status == "r_u_b_n" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-folder-open-o"></i> <span>Repartitions des UE et EC</span>
+                <a href="#"><i class="fa fa-folder-open-o"></i> <span>Repartition des UE et EC</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -213,7 +213,7 @@
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li class="treeview {% if status == "deliberation" %} {{ "active" }} {% endif %}">
-                <a href="#"><i class="fa fa-graduation-cap"></i> <span>Délibérations</span>
+                <a href="#"><i class="fa fa-graduation-cap"></i> <span>Délibération</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

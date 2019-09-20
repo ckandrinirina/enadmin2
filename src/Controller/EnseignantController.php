@@ -127,7 +127,8 @@ class EnseignantController extends AbstractController
 
         return $this->render('enseignant/ajoute.html.twig', [
             'form' => $form->createView(),
-            'status' => $status
+            'status' => $status,
+            'type' => 'add'
         ]);
     }
     /**
@@ -188,7 +189,8 @@ class EnseignantController extends AbstractController
 
         return $this->render('enseignant/ajoute.html.twig' , [
             'form' => $form->createView(),
-            'status' => $status
+            'status' => $status,
+            'type' => 'edit'
         ]);
     }
 }

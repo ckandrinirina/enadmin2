@@ -32,6 +32,7 @@ class UCType extends AbstractType
                 'entry_type' => NiveauxType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'label'=> 'Niveau'
             ])
         ;
     }

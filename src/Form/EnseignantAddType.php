@@ -38,7 +38,7 @@ class EnseignantAddType extends AbstractType
                 'label' => 'Adresse E-mail'
             ])
             ->add('matricule', TextType::class, [
-                'label' => 'Imatriculation'
+                'label' => 'Immatriculation'
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse'

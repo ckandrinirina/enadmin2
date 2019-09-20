@@ -67,9 +67,9 @@
                                                         <div class="btn-group">
                                                             <button class="btn btn-info" type="button">
                                                                 {% if rat == 0 %}
-                                                                    {{ 'Premier session' }}
+                                                                    {{ 'Première session' }}
                                                                 {% else  %}
-                                                                    {{ 'Ratrapage' }}
+                                                                    {{ 'Rattrapage' }}
                                                                 {% endif %}
                                                             </button>
                                                             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
@@ -78,10 +78,10 @@
                                                             </button>
                                                             <ul class="dropdown-menu" role="menu">
                                                                 <li>
-                                                                    <a href="{{ path('note_ajoute',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Premiére session</a>
+                                                                    <a href="{{ path('note_ajoute',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Première session</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ path('note_ajoute',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                    <a href="{{ path('note_ajoute',{'type':parcour.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Rattrapage</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -132,10 +132,6 @@
                                                                                                     </button>
                                                                                                 {% endif %}
                                                                                             {% endfor %}
-                                                                                            {# <button href="#" class="pull-right noteEdit" id="e{{i}}{{j}}" data-id="note{{i}}{{j}}" data-etudiant="{{idEtOrd[i]}}" data-ec="{{idEcOrd[j]}}" data-semestre="{{s}}" data-niveau="{{n}}" data-au="{{auid}}" data-ratrapage="{{rat}}" data-type="{{parcour.id}}" data-loader="{{asset('assets/loader/ajax-loader-4.gif')}}" data-nbrec="{{nbrEc}}" data-nbret="{{nbrEt}}" data-valeur="{{ value }}">
-                                                                                                                                                                                                                                                                                        <span class="fa fa-pencil"></span>
-                                                                                                                                                                                                                                                                                    </button> #}
-
                                                                                         </p>
                                                                                     {% else %}
                                                                                         {% set countDel = countDel + 1 %}
@@ -207,39 +203,12 @@
                                                                                                 valeur: valeur
                                                                                             }))
                                                                                         })
-                                                                                        // $('#e' + i + j).on('click', function (event) {
-                                                                                        //     var edit = 1
-                                                                                        //     let id = document.getElementById($(this).attr('id'))
-                                                                                        //     event.preventDefault()
-                                                                                        //     idA = '#' + id.dataset.id
-                                                                                        //     loader = id.dataset.loader
-                                                                                        //     $(idA).html('<img src="' + loader + '" class="text-center"/>')
-                                                                                        //     etudiant = id.dataset.etudiant
-                                                                                        //     ec = id.dataset.ec
-                                                                                        //     semestre = id.dataset.semestre
-                                                                                        //     niveau = id.dataset.niveau
-                                                                                        //     au = id.dataset.au
-                                                                                        //     ratrapage = id.dataset.ratrapage
-                                                                                        //     type = id.dataset.type
-                                                                                        //     valeur = id.dataset.valeur
-
-                                                                                        //     $(idA).load(Routing.generate('editNote', {
-                                                                                        //         etudiant: etudiant,
-                                                                                        //         ec: ec,
-                                                                                        //         semestre: semestre,
-                                                                                        //         niveau: niveau,
-                                                                                        //         au: au,
-                                                                                        //         ratrapage: ratrapage,
-                                                                                        //         valeur: valeur,
-                                                                                        //         edit: edit
-                                                                                        //     }))
-                                                                                        // })
                                                                                     });
                                                                                 </script>
                                                                                 {% set j = j+1 %}
                                                                             {% endfor %}
                                                                         </tr>
-                                                                        {% set i = i+1 %} 
+                                                                        {% set i = i+1 %}
                                                                     {% endfor %}
                                                                     <div id="idCount" data-countadd="{{countAdd}}" data-countdel="{{countDel}}"></div>
                                                             </tbody>

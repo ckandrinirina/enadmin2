@@ -18,6 +18,12 @@
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="row">
         <div
             class="col-md-12">
@@ -43,7 +49,7 @@
                                     <p class="pull-right">{{ enseignant.type.type }}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Imatriculation :</b>
+                                    <b>Immatriculation :</b>
                                     <p class="pull-right">{{ enseignant.matricule }}</p>
                                 </li>
                             </ul>
@@ -72,7 +78,7 @@
     <div class="row">
         {% if app.user.enseignant == null  %}
             {% elseif app.user.enseignant.id == enseignant.id %}
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a href="{{path('enseignant_edit',{'id':enseignant.id})}}" class="btn btn-block btn-social btn-bitbucket">
                         <i class="fa fa-edit"></i>Modifier profile
                     </a>
@@ -80,7 +86,7 @@
         {% endif %}
         {% if app.user.enseignant == null %}
             {% elseif app.user.enseignant.id == enseignant.id %}
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a href="{{path('app_edit_acces',{'id':app.user.id})}}" class="btn btn-block btn-social btn-bitbucket">
                         <i class="fa fa-lock"></i>Modifier l'accès
                     </a>

@@ -56,14 +56,14 @@
 {% block insideHeader %}
     <section class="content-header">
         <h1>
-            Gestions des accès
+            Gestion des accès
             {#<small>{{ parcour.type }}</small>#}
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
                     <i class="fa fa-dashboard"></i>
-                    Gestions des accès</a>
+                    Gestion des accès</a>
             </li>
             {#<li class="active">{{ parcour.type }}</li>#}
         </ol>
@@ -73,7 +73,7 @@
 {% block body %}
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Gestions des accès des étudiants</h3>
+            <h3 class="box-title">Gestion d'accès des étudiants</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -130,7 +130,7 @@
                                         url: Routing.generate('ajax_change_role', {'id': send}),
                                         data: 'mode=',
                                         success: function (data) {
-                                            alert('Statut changer');
+                                            swal('Statut changer');
                                         }
                                     });
                                 });

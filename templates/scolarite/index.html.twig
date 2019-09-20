@@ -45,7 +45,7 @@
                                 <p class="pull-right">{{ etudiant.lieuxNaissance }}</p>
                             </li>
                             <li class="list-group-item">
-                                <b>Parcour :</b>
+                                <b>Parcours :</b>
                                 <p class="pull-right">{{ etudiant.parcour.type }}</p>
                             </li>
                         </ul>
@@ -63,12 +63,6 @@
                             <li class="list-group-item">
                                 <b>Code identificateur :</b>
                                 <p class="pull-right">EN/{{ etudiant.parcour.type }}/{{ etudiant.niveaux.niveau }}/{{ etudiant.id }}</p>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Numero de scolarite actuel :</b>
-                                {% if scolarite_actuel != null %}
-                                <p class="pull-right">{{scolarite_actuel.numeroInscription}}</p>
-                                {% endif %}
                             </li>
                         </ul>
                     </div>

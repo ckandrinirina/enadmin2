@@ -16,6 +16,12 @@
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="row">
         {% for enseignant in enseignants %}
         <div class="col-md-12">

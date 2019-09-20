@@ -131,7 +131,7 @@
 <div class="col-md-12">
   <div class="box">
     <div class="box-header">
-      <h3 class="box-title">Nouvelle anné universitaire</h3>
+      <h3 class="box-title">Nouvelle année universitaire</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
@@ -142,7 +142,7 @@
       {% endfor %}
       <a href="{{ path('add-au') }}" class="btn btn-block btn-social btn-linkedin">
         <i class="fa fa-plus"></i>
-        Ajouter une anné universitaire
+        Ajouter une année universitaire
       </a>
     </div>
     <!-- /.box-body -->
@@ -249,7 +249,7 @@
         </button>
       </div>
       <div class="modal-body row">
-        <h2 class="modal-title text-center text-red">Voulez-vous vraiment suprimer?</h2>
+        <h2 class="modal-title text-center text-red">Voulez-vous vraiment supprimer?</h2>
       </div>
       <div class="modal-footer">
         <a href="{{path('delete-salle',{'id':salle.id})}}" class="btn btn-danger pull-right" type="button">Suprimer</a>
@@ -269,7 +269,7 @@
         </button>
       </div>
       <div class="modal-body row">
-        <h2 class="modal-title text-center">Renomer</h2>
+        <h2 class="modal-title text-center">Renommer</h2>
       </div>
       <div class="modal-footer">
         {{ form_start(view_form[salle.id],{'action': path('edit-salle',{'id':salle.id}), 'method': 'POST'}) }}

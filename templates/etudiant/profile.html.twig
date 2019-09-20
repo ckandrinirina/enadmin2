@@ -18,6 +18,12 @@
 {% endblock %}
 
 {% block body %}
+<style>
+    td, th {
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
     <div class="row">
         <div
             class="col-md-12">
@@ -50,7 +56,7 @@
                                     <p class="pull-right">{{ etudiant.parcour.type }}</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Année entrée à l'ESPA :</b>
+                                    <b>Année d'entrée à l'ESPA :</b>
                                     <p class="pull-right">{{ etudiant.anneEntre }}</p>
                                 </li>
                                 <li class="list-group-item">
