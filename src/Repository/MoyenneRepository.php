@@ -19,7 +19,7 @@ class MoyenneRepository extends ServiceEntityRepository
         parent::__construct($registry, Moyenne::class);
     }
 
-    public function find_by_e_s_n_au($etudiant, $semestre, $niveaux, $au)
+    public function find_by_e_s_n_au($etudiant, $semestre, $niveaux)
     {
         return $this->createQueryBuilder('m')
         ->innerJoin('m.etudiant','e','WITH','e.id = :val3')
@@ -31,9 +31,6 @@ class MoyenneRepository extends ServiceEntityRepository
         ->innerJoin('m.semestre','s','WITH','s.id = :val2')
         ->setParameter('val2',$semestre)
         ->addSelect('s')
-        ->innerJoin('m.anneUniversitaire','au','WITH','au.id = :val5')
-        ->setParameter('val5',$au)
-        ->addSelect('au')
         ->getQuery()
         ->getResult();   
     }

@@ -111,12 +111,12 @@ class FicheIndividuelController extends AbstractController
     }
 
     /**
-     * @Route("/fiche-note/{etudiant}/{niveaux}/{semestre}/{au}/{ratrapage}", name="fiche_note")
+     * @Route("/fiche-note/{etudiant}/{niveaux}/{semestre}/{ratrapage}", name="fiche_note")
      * Vous n'avez pas le permission de voir cette page.
      *
      * @IsGranted("ROLE_USER")
      */
-    public function fiche_de_note($etudiant, $niveaux, $semestre,$au, $ratrapage, NoteService $note_service)
+    public function fiche_de_note($etudiant, $niveaux, $semestre, $ratrapage, NoteService $note_service)
     {
         if($this->getUser()->getEtudiant() != null)
         {
@@ -133,12 +133,13 @@ class FicheIndividuelController extends AbstractController
         $moyenne_repository = $em->getRepository(Moyenne::class);
         $scolarite_repository = $em->getRepository(Scolarite::class);
 
-        $allAu = $auRepository->findAllByOrder();
-        $auNow = $auRepository->find($au);
+        // $allAu = $auRepository->findAllByOrder();
+        // $auNow = $auRepository->find($au);
         $etudiant_full = $etudiant_repository->find($etudiant);
 
-        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage ,$au);
-        $moyenne = $moyenne_repository->find_by_e_s_n_au($etudiant, $semestre, $niveaux, $au);
+        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage);
+        //dump($note_ue);die();
+        $moyenne = $moyenne_repository->find_by_e_s_n_au($etudiant, $semestre, $niveaux);
 
         $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant_full);
 
@@ -173,22 +174,19 @@ class FicheIndividuelController extends AbstractController
                 'r' => $ratrapage,
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
-                'allAu' => $allAu,
-                'auid' => $au,
-                'auNow' => $auNow,
                 'scolarite_actuel'=> $scolarite_actuel
             ]
         );
     }
 
     /**
-     * @Route("/fiche-note-pdf/{etudiant}/{niveaux}/{semestre}/{au}{ratrapage}", name="fiche_note_pdf")
+     * @Route("/fiche-note-pdf/{etudiant}/{niveaux}/{semestre}/{ratrapage}", name="fiche_note_pdf")
      *
      * Require ROLE_SUPER_ADMIN for only this controller method.
      *
      *  @IsGranted("ROLE_ADMIN")
      */
-    public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage,$au)
+    public function fiche_de_note_pdf($etudiant, $niveaux, $semestre, $ratrapage)
     {
         $em = $this->getDoctrine()->getManager();
         $status = 'fiche de note';
@@ -197,24 +195,14 @@ class FicheIndividuelController extends AbstractController
         $semestreRepository = $em->getRepository(Semestre::class);
         $note_ue_repository = $em->getRepository(NoteUc::class);
         $scolarite_repository = $em->getRepository(Scolarite::class);
+        $moyenne_repository = $em->getRepository(Moyenne::class);
 
-        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage,$au);
+        $note_ue = $note_ue_repository->fin_by_e_n_s_r($etudiant, $niveaux, $semestre, $ratrapage);
+        $moyenne = $moyenne_repository->find_by_e_s_n_au($etudiant, $semestre, $niveaux);
+
         $etudiant_info = $etudiant_repository->find($etudiant);
         $type = $etudiant_info->getParcour()->getId();
         $sem = $semestreRepository->findSemestreByNiveaux($niveaux);
-
-        $i = 0;
-        $somme = 0;
-        $credit_aquis = 0;
-        foreach ($note_ue as $n_ue) {
-            $somme = $somme + $n_ue->getValueCoeff();
-            $i = $i + 1;
-            $credit_aquis = $credit_aquis + $n_ue->getCredit();
-        }
-        if ($i != 0)
-            $moyenne = $somme / $i;
-        else
-            $moyenne = 0;
 
         $scolarite_actuel = $scolarite_repository->get_actual_scolarite($etudiant_info);
 
@@ -222,6 +210,11 @@ class FicheIndividuelController extends AbstractController
             $scolarite_actuel = $scolarite_actuel['0'];
         else
             $scolarite_actuel = null;
+        
+        if($moyenne != null)
+            $moyenne = $moyenne['0'];
+        else
+            $moyenne = null;
 
         $niv = $niveauxRepository->findByType($type);
         return $this->render(
@@ -238,8 +231,6 @@ class FicheIndividuelController extends AbstractController
                 'r' => $ratrapage,
                 'note_ue' => $note_ue,
                 'moyenne' => $moyenne,
-                'credit_aquis' => $credit_aquis,
-                'au'=>$au,
                 'scolarite'=>$scolarite_actuel
             ]
         );

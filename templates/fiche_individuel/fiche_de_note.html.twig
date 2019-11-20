@@ -7,7 +7,6 @@
     <section class="content-header">
         <h1>
             Fiche de notes
-            <span class="btn btn-info" type="button">{{ auNow.anneUniversitaire }}</span>
         </h1>
     </section>
 {% endblock %}
@@ -42,7 +41,7 @@
                 <ul class="nav nav-tabs">
                     {% for niveau in niveaux %}
                         <li class="{% if niveau.id == n %}{{ 'active' }}{% endif %}">
-                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'au':auid,'semestre':niveau.semestres['0'].id,'ratrapage':'0' })}}">{{ niveau.niveau }}</a>
+                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id ,'niveaux':niveau.id,'semestre':niveau.semestres['0'].id,'ratrapage':'0' })}}">{{ niveau.niveau }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -55,7 +54,7 @@
                                 <ul class="nav nav-tabs pull-right">
                                     {% for semestre in semestres %}
                                         <li class="{% if semestre.id == s %}{{ 'active' }}{% endif %}">
-                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'au':auid,'semestre':semestre.id,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
+                                            <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':semestre.id,'ratrapage':rat}) }}">{{ semestre.semestre }}</a>
                                         </li>
                                     {% endfor %}
                                     <li class="pull-left header">
@@ -66,11 +65,11 @@
                                     <div class="tab-pane active" id="tab_1-1">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <div class="box">
+                                                <div class="box"> 
                                                     <div class="box-header">
                                                         <h3 class="box-title">Listes des notes par niveau   :</h3>
                                                         {% if app.user.etudiant == null %}
-                                                            <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'au':auid,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
+                                                            <a href="{{path('fiche_note_pdf',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" class="pull-right btn  btn-social btn-flickr">
                                                                 <i class="fa fa-file-pdf-o"></i>
                                                                 Générer un PDF
                                                             </a>
@@ -97,10 +96,10 @@
                                                                                                                             <span class="sr-only">Toggle Dropdown</span>
                                                                                                                         </button> #}
                                                                 <ul class="dropdown-menu" role="menu"> <li>
-                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'0'}) }}">Premier session</a>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'0'}) }}">Premier session</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':auid,'ratrapage':'1'}) }}">Ratrapage</a>
+                                                                    <a href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'ratrapage':'1'}) }}">Ratrapage</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -142,18 +141,18 @@
                                                                         {% if note.isFinal == 1 %}
                                                                             <tr>
                                                                                 <td>{{ note.EC.nom }}</td>
-                                                                                <td>{{ note.EC.coefficient }}</td>
-                                                                                <td>{{ note.valeur }}</td>
-                                                                                <td>{{ note.valueCoeff }}</td>
+                                                                                <td>{{ note.EC.coefficient | number_format(2,'.','') }}</td>
+                                                                                <td>{{ note.valeur | number_format(2,'.','') }}</td>
+                                                                                <td>{{ note.valueCoeff | number_format(2,'.','') }}</td>
                                                                                 <td>{{ note.EC.credit }}</td>
                                                                             </tr>
                                                                         {% endif %}
                                                                         {% if note.isFinal == 0 %}
                                                                             <tr>
                                                                                 <td class="text-red">{{ note.EC.nom }}</td>
-                                                                                <td class="text-red">{{ note.EC.coefficient }}</td>
-                                                                                <td class="text-red">{{ note.valeur }}</td>
-                                                                                <td class="text-red">{{ note.valueCoeff }}</td>
+                                                                                <td class="text-red">{{ note.EC.coefficient | number_format(2,'.','') }}</td>
+                                                                                <td class="text-red">{{ note.valeur | number_format(2,'.','') }}</td>
+                                                                                <td class="text-red">{{ note.valueCoeff | number_format(2,'.','') }}</td>
                                                                                 <td class="text-red">{{ note.EC.credit }}</td>
                                                                             </tr>
                                                                         {% endif %}
@@ -162,9 +161,9 @@
                                                                 <tfoot>
                                                                     <tr>
                                                                         <th>Total</th>
-                                                                        <th>{{ n_ue.uc.coefficient }}</th>
+                                                                        <th>{{ n_ue.uc.coefficient | number_format(2,'.','') }}</th>
                                                                         <th></th>
-                                                                        <th>{{n_ue.valueCoeff}}</th>
+                                                                        <th>{{n_ue.valueCoeff | number_format(2,'.','') }}</th>
                                                                         <th>{{n_ue.credit}}</th>
                                                                     </tr>
                                                                     <tr>
@@ -187,7 +186,7 @@
                                                                 <tr>
                                                                     <th>Moyenne Semestrielle</th>
                                                                     {% if moyenne != null %}
-                                                                    <th>{{ moyenne.value }}
+                                                                    <th>{{ moyenne.value | number_format(2,'.','') }}
                                                                         /20</th>
                                                                     {% else %}
                                                                         <th>0
@@ -218,16 +217,6 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box box-default">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Historique par année universitaire</h3>
-                                </div>
-                                <div class="box-body">
-                                    {% for aun in allAu %}
-                                        <a type="button" class="btn btn-info" href="{{ path('fiche_note',{'etudiant':etudiant.id,'niveaux':n,'semestre':s,'au':aun.id,'ratrapage':r}) }}">
-                                            {{ aun.anneUniversitaire }}
-                                        </a>
-                                    {% endfor %}
-                                </div>
                             </div>
                         </div>
                     </div>

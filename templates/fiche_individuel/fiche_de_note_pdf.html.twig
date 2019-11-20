@@ -4,13 +4,13 @@
     {% endblock %}
 
     {% block return_top %}
-        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'au':au,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
             Retourner à la liste</a>
     {% endblock %}
 
     {% block return_bottom %}
-        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'au':au,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
+        <a href="{{path('fiche_note',{'etudiant':e ,'niveaux':n,'semestre':s,'ratrapage':r})}}" id="button_generate" class="btn btn-danger">
             <i class="glyphicon glyphicon-arrow-left"></i>
             Retourner à la liste</a>
     {% endblock %}
@@ -117,9 +117,9 @@
                             {% if note.isFinal == 1 %}
                                 <tr>
                                     <td>{{ note.EC.nom }}</td>
-                                    <td>{{ note.EC.coefficient }}</td>
-                                    <td>{{ note.valeur }}</td>
-                                    <td>{{ note.valueCoeff }}</td>
+                                    <td>{{ note.EC.coefficient | number_format(2,'.','') }}</td>
+                                    <td>{{ note.valeur | number_format(2,'.','') }}</td>
+                                    <td>{{ note.valueCoeff | number_format(2,'.','') }}</td>
                                     <td>{{ note.EC.credit }}</td>
                                 </tr>
                             {% endif %}
@@ -128,9 +128,9 @@
                     <tfoot>
                         <tr>
                             <th>Total</th>
-                            <th>{{ n_ue.uc.coefficient }}</th>
+                            <th>{{ n_ue.uc.coefficient | number_format(2,'.','')}}</th>
                             <th></th>
-                            <th>{{n_ue.valueCoeff}}</th>
+                            <th>{{n_ue.valueCoeff | number_format(2,'.','')}}</th>
                             <th>{{n_ue.credit}}</th>
                         </tr>
                         <tr>
@@ -149,16 +149,25 @@
         </div>
         <div class="col-md-3" style="width:10cm">
             <table class="table-bordered">
-                <tr>
-                    <th>Moyenne Semestrielle
-                    </th>
-                    <th>
-                        {{ moyenne }}
+                 <tr>
+                    <th>Moyenne Semestrielle</th>
+                    {% if moyenne != null %}
+                    <th>{{ moyenne.value | number_format(2,'.','') }}
                         /20</th>
+                    {% else %}
+                        <th>0
+                        /20</th>
+                    {% endif %}
                 </tr>
                 <tr>
-                    <th>Crédits Acquis</th>
-                    <th>{{ credit_aquis }}</th>
+                    <th>Crédit Acquis</th>
+                    {% if moyenne != null %}
+                    <th>{{ moyenne.credit }}
+                        /30</th>
+                    {% else %}
+                        <th>0
+                        /30</th>
+                    {% endif %}
                 </tr>
             </table>
         </div>
