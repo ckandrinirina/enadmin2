@@ -109,6 +109,7 @@
     <!-- /.box-header -->
     <div class="box-body no-padding">
       <div class="col-md-12" style="margin-bottom:5px">
+      {% if chef_mention.chefmention.id is defined %}
         <button class="btn btn-block btn-primary btn-sm" type="button">{{chef_mention.chefmention.nom}}
           {{chef_mention.chefmention.prenom}}</button>
       </div>
@@ -122,6 +123,7 @@
         </div>
         {{ form_end(form_chef) }}
       </div>
+      {% endif %}
     </div>
     <!-- /.box-body -->
   </div>

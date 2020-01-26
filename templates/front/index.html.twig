@@ -10,8 +10,10 @@
             <span class="flaticon-teacher"></span>
           </div>
           <div class="media-body p-2 mt-3">
+            {% if second_tranche['0'] is defined %}
             <h3 class="heading">{{second_tranche['0'].titre}}</h3>
             <p>{{second_tranche['0'].description}}</p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -21,8 +23,10 @@
             <span class="flaticon-reading"></span>
           </div>
           <div class="media-body p-2 mt-3">
+            {% if second_tranche['1'] is defined %}
             <h3 class="heading">{{second_tranche['1'].titre}}</h3>
             <p>{{second_tranche['0'].description}}</p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -32,8 +36,10 @@
             <span class="flaticon-books"></span>
           </div>
           <div class="media-body p-2 mt-3">
+            {% if second_tranche['2'] is defined %}
             <h3 class="heading">{{second_tranche['2'].titre}}</h3>
             <p>{{second_tranche['2'].description}}</p>
+             {% endif %}
           </div>
         </div>
       </div>
@@ -43,8 +49,10 @@
             <span class="flaticon-diploma"></span>
           </div>
           <div class="media-body p-2 mt-3">
+            {% if second_tranche['3'] is defined %}
             <h3 class="heading">{{second_tranche['3'].titre}}</h3>
             <p>{{second_tranche['3'].description}}</p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -57,8 +65,10 @@
 {% block description %}
 <div class="col-md-5 order-md-last wrap-about py-5 wrap-about bg-light">
   <div class="text px-4 ftco-animate">
+    {% if description['0'] is defined %}
     <h2 class="mb-4">{{description['0'].titre}}</h2>
     <p>{{description['0'].description}}</p>
+     {% endif %}
     <!-- <p><a href="#" class="btn btn-secondary px-4 py-3">Read More</a></p> -->
   </div>
 </div>
@@ -75,8 +85,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-security"></span></div>
         <div class="text">
+          {% if offre['0'] is defined %}
           <h3>{{offre['0'].titre}}</h3>
           <p>{{offre['0'].description}}</p>
+           {% endif %}
         </div>
       </div>
     </div>
@@ -85,8 +97,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-reading"></span></div>
         <div class="text">
+          {% if offre['1'] is defined %}
           <h3>{{offre['1'].titre}}</h3>
           <p>{{offre['1'].description}}</p>
+           {% endif %}
         </div>
       </div>
     </div>
@@ -95,8 +109,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-diploma"></span></div>
         <div class="text">
+          {% if offre['2'] is defined %}
           <h3>{{offre['2'].titre}}</h3>
           <p>{{offre['2'].description}}</p>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -105,8 +121,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-education"></span></div>
         <div class="text">
+          {% if offre['3'] is defined %}
           <h3>{{offre['3'].titre}}</h3>
           <p>{{offre['3'].description}}</p>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -115,8 +133,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-jigsaw"></span></div>
         <div class="text">
+        {% if offre['4'] is defined %}
           <h3>{{offre['4'].titre}}</h3>
           <p>{{offre['4'].description}}</p>
+        {% endif %}
         </div>
       </div>
     </div>
@@ -125,8 +145,10 @@
         <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span
             class="flaticon-kids"></span></div>
         <div class="text">
+        {% if offre['5'] is defined %}
           <h3>{{offre['5'].titre}}</h3>
           <p>{{offre['5'].description}}</p>
+        {% endif %}
         </div>
       </div>
     </div>
@@ -146,8 +168,10 @@
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="pricing-entry bg-light pb-4 text-center">
           <div>
+          {% if droit['0'] is defined %}
             <h3 class="mb-3">{{droit['0'].titre}}</h3>
             <p><span class="price">Droit:{{droit['0'].description}} Ar</span> <span class="per">/ans</span></p>
+          {% endif %}
           </div>
           <div class="img" style="background-image: url(images/bg_1.jpg);"></div>
           <!-- <div class="px-4">
@@ -160,8 +184,10 @@
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="pricing-entry bg-light pb-4 text-center">
           <div>
+          {% if droit['1'] is defined %}
             <h3 class="mb-3">{{droit['1'].titre}}</h3>
             <p><span class="price">Droit:{{droit['1'].description}} Ar</span> <span class="per">/ans</span></p>
+          {% endif %}
           </div>
           <div class="img" style="background-image: url(images/bg_2.jpg);"></div>
           <!-- <div class="px-4">
@@ -174,8 +200,10 @@
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="pricing-entry bg-light active pb-4 text-center">
           <div>
+          {% if droit['2'] is defined %}
             <h3 class="mb-3">{{droit['2'].titre}}</h3>
             <p><span class="price">Droit:{{droit['2'].description}} Ar</span> <span class="per">/ans</span></p>
+          {% endif %}
           </div>
           <div class="img" style="background-image: url(images/bg_3.jpg);"></div>
           <!-- <div class="px-4">
@@ -188,8 +216,10 @@
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="pricing-entry bg-light pb-4 text-center">
           <div>
+          {% if droit['3'] is defined %}
             <h3 class="mb-3">{{droit['3'].titre}}</h3>
             <p><span class="price">Droit:{{droit['3'].description}} Ar</span> <span class="per">/ans</span></p>
+          {% endif %}
           </div>
           <div class="img" style="background-image: url(images/bg_5.jpg);"></div>
           <!-- <div class="px-4">
